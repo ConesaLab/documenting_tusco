@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TUSCO Paper - Supplementary Note
+%% Formatted for Springer Nature journals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifdefined\SupplementMaster
+  \newcommand{\SupplementNoteAsset}[1]{../../supplementary-note/assets/pdf/#1}
+\else
+  \newcommand{\SupplementNoteAsset}[1]{../assets/pdf/#1}
+\fi
+
+\newcommand{\SupplementNoteContent}{%
+  \section{Supplementary Note: TUSCO False Positive Validation}
+  \label{suppnote:falsepositive}
+  \setcounter{figure}{0}
+  \renewcommand{\figurename}{Supplementary Notes}
+  \renewcommand{\thefigure}{\arabic{figure}}
+
+  TUSCO provides a curated ground truth for benchmarking long-read transcriptome reconstruction. This supplementary note documents specific genes that were flagged as false positive (FP) transcript models within the TUSCO evaluation, demonstrating why the observed deviations should not be interpreted as novel isoforms.
+
+  Each validation figure combines LRGASP coverage bigWig tracks (genome-wide per-base coverage merged from dRNA-ONT, cDNA-ONT, CapTrap-ONT, cDNA-PacBio, and CapTrap-PacBio pipelines) alongside Recount3 short-read support (\url{https://rna.recount.bio/}) to contextualize the findings. These complementary datasets provide independent evidence to distinguish genuine biological variation from technical artifacts.
+
+  \clearpage
+
+  \begin{figure}[p]
+      \centering
+      \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{\SupplementNoteAsset{ENSMUSG00000036376.pdf}}
+      \caption{\textbf{Validation of \textit{Abt1} (ENSMUSG00000036376) as a TUSCO false positive.}
+      \textbf{a}, Genomic view of the \textit{Abt1} locus showing the reference transcript structure (blue) and the putative novel isoform detected by long-read sequencing (red). \textbf{b}, LRGASP coverage tracks demonstrate absence of reads supporting the proposed alternative splice junction. The merged coverage from multiple long-read protocols (dRNA-ONT, cDNA-ONT, CapTrap-ONT, cDNA-PacBio, CapTrap-PacBio) shows consistent splicing patterns matching the reference annotation. Recount3 short-read data corroborate this finding, with no evidence of the suggested splice variant. The apparent deviation represents a sequencing artifact rather than a genuine biological isoform, validating the TUSCO false-positive classification.}
+      \label{fig:sn1}
+  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[p]
+      \centering
+      \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{\SupplementNoteAsset{ENSMUSG00000020671.pdf}}
+      \caption{\textbf{Validation of \textit{Rab10} (ENSMUSG00000020671) as a TUSCO false positive.}
+      \textbf{a}, Structural comparison between the reference \textit{Rab10} transcript and the candidate alternative isoform identified by transcript reconstruction algorithms. \textbf{b}, Comprehensive analysis of LRGASP coverage tracks reveals no supporting evidence for the proposed splice junction modification. The uniform coverage pattern across all long-read sequencing modalities aligns exclusively with the reference annotation. Short-read validation through Recount3 confirms the absence of reads supporting the putative variant junction. This evidence reinforces the classification of this detection as a technical artifact, demonstrating the utility of TUSCO in distinguishing genuine biological variation from reconstruction errors.}
+      \label{fig:sn2}
+  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[p]
+      \centering
+      \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{\SupplementNoteAsset{ENSMUSG00000031983.pdf}}
+      \caption{\textbf{Validation of \textit{2310022B05Rik} (ENSMUSG00000031983) as a TUSCO false positive.}
+      \textbf{a}, Comparative view of the reference transcript architecture versus the algorithmically predicted variant for this uncharacterized gene. \textbf{b}, Multi-platform coverage analysis using LRGASP bigWig tracks shows no evidence supporting the suggested splice site alteration. The coverage profiles from direct RNA, cDNA, and CapTrap methodologies across both ONT and PacBio platforms consistently match the reference exon-intron structure. Independent validation using Recount3 short-read data corroborates the absence of the proposed junction, confirming that this represents a false-positive detection attributable to technical limitations rather than biological splicing variation.}
+      \label{fig:sn3}
+  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[p]
+      \centering
+      \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{\SupplementNoteAsset{ENSMUSG00000045210.pdf}}
+      \caption{\textbf{Validation of \textit{Vcpip1} (ENSMUSG00000045210) as a TUSCO false positive.}
+      \textbf{a}, Detailed genomic view of the \textit{Vcpip1} locus highlighting the discrepancy between reference annotation and the computationally inferred transcript variant. \textbf{b}, High-resolution coverage analysis demonstrates the absence of supporting reads for the proposed single-nucleotide overhang modification. LRGASP tracks from the comprehensive panel of long-read protocols show consistent alignment with the reference transcript boundary, with no evidence of the suggested structural alteration. Recount3 short-read validation provides additional confirmation, showing uniform coverage patterns that match the reference annotation. This analysis conclusively demonstrates that the detected variant represents a mapping or basecalling artifact rather than a genuine transcript isoform, supporting its classification as a TUSCO false positive.}
+      \label{fig:sn4}
+  \end{figure}
+}
+
+\ifdefined\SupplementMaster
+  \SupplementNoteContent
+\else
+
+\documentclass[pdflatex,sn-nature]{sn-jnl}% Nature Portfolio style
+
+%%%% Standard Packages
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{ragged2e}
+\usepackage{caption}
+
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  labelsep=colon,
+  justification=justified,
+  singlelinecheck=false
+}
+
+\raggedbottom
+
+\begin{document}
+
+\title{Supplementary Note for:\\
+Transcriptome Universal Single-isoform COntrol: A Framework for Evaluating Transcriptome Reconstruction Quality}
+
+\author[1]{\fnm{Tianyuan} \sur{Liu}}
+\author[1]{\fnm{Alejandro} \sur{Paniagua}}
+\author[2]{\fnm{Fabian} \sur{Jetzinger}}
+\author[1,3]{\fnm{Luis} \sur{Ferrández-Peral}}
+\author[4]{\fnm{Adam} \sur{Frankish}}
+\author*[1]{\fnm{Ana} \sur{Conesa}}
+
+\affil[1]{Institute for Integrative Systems Biology (I2SysBio), Spanish National Research Council (CSIC), Paterna 46980, Spain}
+\affil[2]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
+\affil[3]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
+\affil[4]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
+
+\maketitle
+
+\SupplementNoteContent
+
+\end{document}
+\fi

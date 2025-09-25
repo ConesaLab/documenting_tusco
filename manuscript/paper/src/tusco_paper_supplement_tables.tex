@@ -1,0 +1,137 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TUSCO Paper - Supplementary Tables
+%% Formatted for Springer Nature journals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\SupplementTablesContent}{%
+  \section{Supplementary Tables}
+  \setcounter{table}{0}
+  \renewcommand{\tablename}{Supplementary Table}
+  \renewcommand{\thetable}{S\arabic{table}}
+
+  \begin{table}[htbp]
+      \centering
+      \caption{\textbf{Cosine similarity between TUSCO and SIRV benchmarks.} Six evaluation metrics---non-redundant sensitivity (Sn), non-redundant precision (nrPre), inverse redundancy (1/red), one minus false-discovery rate (1-FDR), positive detection rate (PDR), and redundant precision (rPre)---were computed as percentages for SIRVs and TUSCO across pipelines spanning distinct data modalities (direct RNA or cDNA; ONT or PacBio). ``LS'' indicates integration of long- and short-read evidence. Values near 1 denote closely matched benchmark performance.}
+      \label{tab:s1}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llr@{}}
+          \toprule
+          Cell type & Pipeline & Cosim \\
+          \midrule
+          Mouse ES & ES dRNA ONT & 0.9903 \\
+          Mouse ES & ES cDNA ONT & 0.9893 \\
+          Mouse ES & ES cDNA PacBio & 0.9992 \\
+          Mouse ES & ES dRNA ONT LS & 0.9903 \\
+          Mouse ES & ES cDNA ONT LS & 0.9882 \\
+          Mouse ES & ES cDNA PacBio LS & 0.9992 \\
+          Human WTC11 & WTC11 dRNA ONT & 0.9966 \\
+          Human WTC11 & WTC11 cDNA ONT & 0.9493 \\
+          Human WTC11 & WTC11 cDNA PacBio & 0.9973 \\
+          Human WTC11 & WTC11 dRNA ONT LS & 0.9977 \\
+          Human WTC11 & WTC11 cDNA ONT LS & 0.9493 \\
+          Human WTC11 & WTC11 cDNA PacBio LS & 0.9969 \\
+          \bottomrule
+      \end{tabular*}
+  \end{table}
+
+  \begin{table}[htbp]
+      \centering
+      \caption{\textbf{Area-based performance drop between native and TUSCO-novel evaluations.} Radar polygon areas were computed for native-reference and TUSCO-novel metrics per sample; the percentage drop is $(A_{\mathrm{ref}} - A_{\mathrm{novel}}) / A_{\mathrm{ref}} \times 100$. Values are summarised separately for human (WTC11) and mouse (ES) samples of each pipeline.}
+      \label{tab:s2}
+      {\footnotesize
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrr@{}}
+          \toprule
+          Tool & Species & $n_{\text{pairs}}$ & Median drop (\%) & Median area (ref) & Median area (novel) \\
+          \midrule
+          Bambu & Human & 4 & 81.25 & 2.598 & 0.484 \\
+          Bambu & Mouse & 4 & 74.41 & 2.499 & 0.639 \\
+          StringTie2 & Human & 4 & 55.35 & 1.454 & 0.666 \\
+          StringTie2 & Mouse & 4 & 80.12 & 1.733 & 0.355 \\
+          FLAIR & Human & 4 & 38.88 & 1.653 & 0.989 \\
+          FLAIR & Mouse & 4 & 43.77 & 1.571 & 0.864 \\
+          Iso-Seq + SQANTI3 ML & Human & 1 & -1.91 & 1.471 & 1.499 \\
+          Iso-Seq + SQANTI3 ML & Mouse & 1 & 2.71 & 1.345 & 1.309 \\
+          \bottomrule
+      \end{tabular*}
+      }
+  \end{table}
+
+  \begin{table}[htbp]
+      \centering
+      \caption{\textbf{PacBio Iso-Seq read counts.} Full-length non-chimeric (FLNC) HiFi read counts for PacBio Iso-Seq samples from mouse kidney (K31--K35) and brain (B31--B35). Each value represents the total number of mapped reads per sample, as determined by samtools.}
+      \label{tab:s3}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrl@{}}
+          \toprule
+          Sample & Read Count & Tissue \\
+          \midrule
+          K31 & 4,593,279 & Kidney \\
+          K32 & 5,136,502 & Kidney \\
+          K33 & 3,902,779 & Kidney \\
+          K34 & 5,436,609 & Kidney \\
+          K35 & 5,096,149 & Kidney \\
+          B31 & 3,684,709 & Brain \\
+          B32 & 3,854,778 & Brain \\
+          B33 & 4,413,078 & Brain \\
+          B34 & 3,888,139 & Brain \\
+          B35 & 3,914,079 & Brain \\
+          \bottomrule
+      \end{tabular*}
+  \end{table}
+}
+
+\ifdefined\SupplementMaster
+  \SupplementTablesContent
+\else
+
+\documentclass[pdflatex,sn-nature]{sn-jnl}% Nature Portfolio style
+
+%%%% Standard Packages
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{ragged2e}
+\usepackage{caption}
+
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  labelsep=colon,
+  justification=justified,
+  singlelinecheck=false
+}
+
+\raggedbottom
+
+\begin{document}
+
+\title{Supplementary Tables for:\\
+Transcriptome Universal Single-isoform COntrol: A Framework for Evaluating Transcriptome Reconstruction Quality}
+
+\author[1]{\fnm{Tianyuan} \sur{Liu}}
+\author[1]{\fnm{Alejandro} \sur{Paniagua}}
+\author[2]{\fnm{Fabian} \sur{Jetzinger}}
+\author[1,3]{\fnm{Luis} \sur{Ferrández-Peral}}
+\author[4]{\fnm{Adam} \sur{Frankish}}
+\author*[1]{\fnm{Ana} \sur{Conesa}}
+
+\affil[1]{Institute for Integrative Systems Biology (I2SysBio), Spanish National Research Council (CSIC), Paterna 46980, Spain}
+\affil[2]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
+\affil[3]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
+\affil[4]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
+
+\maketitle
+
+\clearpage
+
+\SupplementTablesContent
+
+\end{document}
+\fi

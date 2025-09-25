@@ -1,0 +1,11 @@
+# Build artefacts (LaTeX)
+paper/build/
+supplementary-note/build/
+
+# Synctex and latexmk cache files
+**/*.synctex.gz
+**/*.fdb_latexmk
+**/*.fls
+**/*.aux
+**/*.log
+**/*.out

@@ -1,0 +1,343 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TUSCO Paper - LaTeX version
+%% Formatted for Springer Nature journals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[pdflatex,sn-nature]{sn-jnl}% Nature Portfolio style
+
+%%%% Standard Packages
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{ragged2e}
+\usepackage{caption}
+\usepackage{placeins}
+
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  labelsep=colon,
+  justification=justified,
+  singlelinecheck=false
+}
+
+\raggedbottom
+
+% Increase bottom margin to keep the footer clear of body text
+\geometry{footskip=18mm,textheight=189mm}
+
+\begin{document}
+
+\title[TUSCO: Transcriptome Universal Single-isoform COntrol]{Transcriptome Universal Single-isoform COntrol: A Framework for Evaluating Transcriptome Reconstruction Quality}
+
+%%=============================================================%%
+%% Author information
+%%=============================================================%%
+
+\author[1]{\fnm{Tianyuan} \sur{Liu}}
+\author[1]{\fnm{Alejandro} \sur{Paniagua}}
+\author[2]{\fnm{Fabian} \sur{Jetzinger}}
+\author[1,3]{\fnm{Luis} \sur{Ferrández-Peral}}
+\author[4]{\fnm{Adam} \sur{Frankish}}
+\author*[1]{\fnm{Ana} \sur{Conesa}}
+\email{ana.conesa@csic.es}
+
+\affil[1]{Institute for Integrative Systems Biology (I2SysBio), Spanish National Research Council (CSIC), Paterna 46980, Spain}
+\affil[2]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
+\affil[3]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
+\affil[4]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
+
+%%==================================%%
+%% Abstract
+%%==================================%%
+
+\abstract{Long-read sequencing (LRS) platforms, such as Oxford Nanopore and Pacific Biosciences, enable comprehensive transcriptome analysis but face challenges such as sequencing errors, sample quality variability, and library preparation biases. Current benchmarking approaches address these issues insufficiently: BUSCO assesses transcriptome completeness using conserved single-copy orthologous genes but can misinterpret alternative splicing as gene duplications, while SIRV spike-ins and ERCCs oversimplify real sample complexity, neglecting RNA degradation and RNA-extraction artifacts, thus inflating performance metrics. Simulation algorithms are limited in their ability to recapitulate the complexity of real samples. To overcome these limitations, we introduce the Transcriptome Universal Single-isoform COntrol (TUSCO), a curated reference set of genes lacking alternative isoforms that can be confidently considered as an internal ground truth. TUSCO evaluates precision by identifying transcripts deviating from reference annotations and assesses sensitivity by verifying detection completeness in human and mouse samples. Masking TUSCO transcripts---and optionally inserting decoy splice variants in the annotation---creates a ``novel-isoform'' challenge that assesses recovery of the true, now-unannotated isoforms. Our validation demonstrates that TUSCO provides accurate and reliable benchmarking without external controls, significantly improving quality control standards for transcriptome reconstruction using LRS.}
+
+\keywords{Long-read sequencing, Transcriptomics, Benchmarking, Quality control, Alternative splicing}
+
+\maketitle
+
+% Restore top-of-page floats disabled by the class after \maketitle
+\makeatletter
+\setcounter{topnumber}{5}% keep in sync with class defaults
+\global\@topnum\c@topnumber
+\makeatother
+
+%%==================================%%
+%% Introduction
+%%==================================%%
+
+\section{Introduction}
+
+Advances in long-read sequencing (LRS) technologies, such as Oxford Nanopore Technologies (ONT) and Pacific Biosciences (PacBio), have revolutionized transcriptomic studies by enabling the comprehensive profiling of full-length RNA molecules~\cite{Marx2023Method}. These emerging LRS platforms allow precise quantification of isoform diversity and in-depth characterization of alternative splicing at bulk~\cite{Chen2023Context,Prjibelski2023Accurate} and single-cell~\cite{Philpott2021Nanopore,Kabza2024Accurate} levels, tasks that short-read methods struggle to accomplish~\cite{Conesa2016survey} (reviewed in~\cite{Monzo2025Transcriptomics}). Despite these breakthroughs, the Long-read RNA-Seq Genome Annotation Assessment Project (LRGASP) Consortium and other benchmarking efforts~\cite{Weirather2017Comprehensive,Soneson2019comprehensive,Dong2023Benchmarking,Su2024Comprehensive,Chen2025systematic} have shown that transcript identification, particularly the accurate detection of novel isoforms absent from current annotations, remains challenging. Factors such as sample quality, library preparation, RNA capture by the instrument, sequencing errors, and processing choices of analysis method may introduce biases and compromise the accuracy of transcript calls. This has motivated the development of tools and strategies for the quality evaluation of long-read transcriptomics data.
+
+Comprehensive quality control (QC) is critical for identifying potential biases and technical artifacts in LRS data. Read-level QC tools, such as LongQC~\cite{Fukasawa2020LongQC}, MinKNOW (\url{https://github.com/nanoporetech/minknow_api}), SQANTI-reads~\cite{Keil2024SQANTI}, and PycoQC~\cite{Leger2019pycoQC}, assess sequencing quality using metrics including read counts, length distribution, basecalling accuracy, adapter contamination, GC content, and coverage, among others. At the transcript level, SQANTI3 is widely used for evaluating the structural novelty of transcripts, integrating complementary data such as short-read alignments, CAGE peaks, poly(A) motifs and poly(A) sites, and machine learning to improve confidence and curation of the long-read-defined transcriptome~\cite{PardoPalacios2024SQANTI3}. Although these tools yield valuable insights into data quality, they do not offer an absolute ground truth and therefore cannot provide formal benchmarking capabilities.
+
+Current long-read benchmarking frameworks have adopted and adapted existing short-read methods. For example, BUSCO, which measures completeness by comparing reconstructed transcriptomes against a database of conserved single-copy orthologous genes~\cite{Simao2015BUSCO}, has been used by several LRS assessment studies~\cite{Velasco2022Longread,Nip2023Reference,PardoPalacios2024Systematic}. However, BUSCO is limited in its capacity to evaluate isoform diversity, often misinterpreting alternatively spliced transcripts as gene duplications~\cite{Nenasheva2024Annotation,Paniagua2025Evaluation}. Another strategy is the utilization of spiked-in RNAs mimicking alternatively spliced transcripts, such as ERCCs~\cite{Jiang2011Synthetic}, SIRVs (\url{https://lexogen.com/sirvs/}), and Sequins~\cite{Hardwick2016Spliced}. These products offer LRS-tailored benchmarking capabilities but fail to capture the complexity of actual RNA samples, including RNA degradation patterns. As such, spike-in controls tend to overestimate the performance of LRS methods. Finally, several data simulation algorithms, including computational strategies to simulate novel transcripts, have been proposed~\cite{Coombe2023NanoSim,Ono2022PBSIM3,MestreTomas2023SQANTI}. While these tools can generate comprehensive ground truth datasets for method evaluation, they face challenges in faithfully simulating the complexity of the different sources of bias present in the data, and their results need to be complemented with additional benchmarking solutions.
+
+Given these limitations, we developed the Transcriptome Universal Single-isoform COntrol (TUSCO), an internal ground truth for LRS transcript identification that evaluates both real-sample artifacts and technological artifacts. TUSCO comprises a curated set of widely expressed genes characterized by highly conserved splice sites and the absence of evidence for alternative isoforms in the recount3\cite{Wilks2021recount3} database. TUSCO offers several benchmarking advantages. First, it detects false positives by identifying TUSCO-mapped transcripts that deviate from established annotations, providing a measure of precision in transcript identification and revealing partial transcripts that may result from low sample quality. Second, it uncovers false negatives by leveraging the widespread expression of TUSCO transcripts across human or mouse samples, thereby assessing the sensitivity and completeness of transcript detection methods. Third, in its novel mode, TUSCO enables the evaluation of performance in detecting novel transcripts under conditions of incomplete annotation. Moreover, TUSCO provides direct and effortless assessment, as it eliminates the need to manage spike-in control reagents or synthetic data. Our development of TUSCO satisfies a requirement in the LRS transcriptomics field by providing an internal standard for quality control.
+
+%%==================================%%
+%% Results
+%%==================================%%
+
+\section{Results}
+
+\subsection{Selection and Validation of TUSCO Genes for Transcript Benchmarking}
+
+We built TUSCO by enforcing cross-annotation single-isoform agreement and population evidence of splice/transcription start site (TSS) invariance (Fig.~\ref{fig:figure2}a). Candidate genes had to have one annotated isoform with identical exon-intron structure and strand across GENCODE and RefSeq (plus MANE Select for human)~\cite{Mudge2025GENCODE,Goldfarb2025NCBI,Morales2022Joint}. We then screened for unannotated alternative splicing using large Illumina-based splice junction compendia: IntroVerse (human)~\cite{GarciaRuiz2023IntroVerse} and recount3 junctions (human and mouse)~\cite{Wilks2021recount3}, removing loci with intragenic novel junction support above predefined thresholds (see Methods). TSS consistency was evaluated using refTSS (integrating FANTOM5, DBTSS, EPDnew, ENCODE)~\cite{Abugessaisa2019refTSS}; in human, we applied both exon-overlap and $\pm 300$ bp CAGE window checks, and in mouse, we required the exon-overlap rule for single-exon genes (Methods).
+
+Expression prevalence was defined using Bgee present/absent calls with stringent prevalence cutoffs ($\geq$ 95\% of retained tissues for both species), reinforced by housekeeping genes from HRT Atlas~\cite{Bastian2021Bgee,Hounkpe2020HRT}. Bgee integrates multiple expression data types (RNA-Seq, Affymetrix, in situ hybridization, ESTs) curated from healthy wild-type samples, including large resources such as GTEx~\cite{Lonsdale2013GTEx} alongside many smaller datasets, to provide a comparable reference of normal expression across species. To further favor widely expressed, splice-invariant loci, we applied AlphaGenome-based filters~\cite{Avsec2025AlphaGenome} on two metrics: Expression, defined as the tissue-median RPKM across reference RNA-seq panels, and Splice ratio, defined as the ratio of AlphaGenome-predicted counts for unannotated versus annotated splice junctions. Fixed species-specific cutoffs were used, and remaining edge cases underwent manual review by GENCODE curators.
+
+This process yielded tissue-resolved TUSCO gene sets (human: 36--113 per tissue; mouse: 34--461) and universal cores (human $n = 46$; mouse $n = 32$) consistently expressed across all tested tissues (Fig.~\ref{fig:figure1}a,b). Compared with reference annotations and spike-ins, TUSCO spans endogenous size/structure ranges relevant for full-length detection: transcripts are comparable to RefSeq transcripts and longer than SIRVs/ERCCs; sets include both single- and multi-exon loci (Fig.~\ref{fig:figure1}c; Fig.~S1). TUSCO genes also show expression distributions similar to those of medium to highly expressed genes across tissues (Fig.~\ref{fig:figure1}d) and demonstrate, by AlphaGenome-predicted analysis, higher expression and lower novel-junction usage than all single-isoform genes annotated in both GENCODE and RefSeq (Fig.~S2), indicating that our filtering criteria were effective in selecting consistently expressed genes with minimal chances of containing hidden alternative isoforms. Together, these properties support TUSCO as an endogenous, broadly expressed, splice-invariant ground truth for benchmarking transcript identification and completeness in long-read data.
+
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../assets/fig/fig-1.pdf}
+    \caption{\textbf{Overview of TUSCO gene sets in human and mouse.} \textbf{a--b}, Tissue distribution of TUSCO genes in human and mouse. Values denote retained genes per tissue; universal cores are expressed in $\geq$95\% of human and $\geq$90\% of mouse tissues. \textbf{c}, Transcript length distributions with the x-axis on a log10 scale for TUSCO transcripts in human and mouse compared with all GENCODE transcripts from the corresponding species; ERCC and SIRV spike-ins are overlaid for reference. Transcript length is defined as the sum of non-overlapping exonic bases per transcript. \textbf{d}, Cross-tissue median expression in log10 TPM for TUSCO genes shown in green versus a background of the top 10,000 most highly expressed genes per tissue shown in gray, computed from GTEx for human and ENCODE for mouse. Violin plots show the distribution; embedded boxplots indicate the median as the center line, the interquartile range as the box, and whiskers extending to $1.5 \times \mathrm{IQR}$; outliers are omitted. A small offset of $1 \times 10^{-4}$ was added before log transformation. GENCODE versions: human v49 and mouse vM38.}
+    \label{fig:figure1}
+\end{figure}
+
+\subsection{TUSCO-SQANTI3: A Unified Framework for Transcript Benchmarking}
+
+TUSCO leverages the SQANTI3 framework to assign LRS transcript models to benchmarking labels (Fig.~\ref{fig:figure2}b). We applied consistent classification criteria for both TUSCO genes and SIRV spike-ins. True Positives (TP) include: (i) transcripts classified by SQANTI3 as Reference Match (RM); (ii) mono-exonic FSM transcripts with TSS and transcription termination site (TTS) within $\pm 50$ bp of annotated boundaries; and (iii) for transcripts longer than 3000 bp, FSM with TSS and TTS within $\pm 100$ bp. Partial True Positives (PTP) comprise remaining FSM, incomplete-splice matches (ISM), and mono-exon by intron retention calls, indicating deviations from reference boundaries that may reflect RNA degradation or incomplete sequencing. False Negatives (FN) represent reference units (TUSCO genes or SIRV transcripts) that remain undetected, possibly due to insufficient sequencing depth or biases in RNA capture. False Positives (FP) are transcripts mapped to TUSCO genes classified as Novel in Catalog (NIC), Novel not in Catalog (NNC), Genic Intron, Genic Genomic, or Fusion events, which may arise from sequencing artifacts, incorrect transcript reconstruction, or mapping errors.
+
+These benchmarking labels allow for the calculation of standard performance metrics: sensitivity, precision, and redundancy, which are provided in a dedicated TUSCO report. Seamlessly integrated with SQANTI3, TUSCO operates without requiring additional user input, enabling users to execute TUSCO analyses directly after completing SQANTI3 processing. The incorporation of the TUSCO report within SQANTI3 results in an enhanced, comprehensive, and unified quality control resource that both describes the properties of the long-read data and provides rigorous and standard performance metrics. Additionally, TUSCO enables a more complete assessment of the RNA sequencing workflow by capturing biases at every stage---from sample preparation to RNA extraction, library preparation, sequencing, and transcript reconstruction---unlike synthetic spike-ins such as SIRVs, which only gauge library preparation, sequencing, and transcript reconstruction (Fig.~\ref{fig:figure2}c).
+
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../assets/fig/fig-2.pdf}
+    \caption{\textbf{Overview of TUSCO gene selection and benchmarking framework.} \textbf{a}, Schematic illustration of the four-step pipeline for identifying single-isoform genes suitable for benchmarking. Candidate genes are cross-referenced across multiple annotation databases (MANE, RefSeq, and Ensembl for human; RefSeq and GENCODE for mouse), evaluated for potential alternative splice sites, and checked for broad, consistent expression in multiple tissues. \textbf{b}, TUSCO leverages SQANTI3 structural categories to define benchmarking labels. True Positives (TP) are TUSCO transcripts correctly identified as Reference Match (RM); Partial True Positives (PTP) are those that align to alternative categories (FSM\_non-RM or ISM). False Negatives (FN) indicate undetected TUSCO transcripts, whereas False Positives (FP) are transcripts with Novel in Catalog, Novel not in Catalog, Genic Intron, and Genic Genomic categories. \textbf{c}, High-level workflow from sample preparation to computational analysis, highlighting how different biases (sample, protocol, platform, and transcript reconstruction) can affect the user-defined transcriptome and how different benchmarking approaches assess these biases.}
+    \label{fig:figure2}
+\end{figure}
+
+\subsection{Validation and Comparison between TUSCO and SIRVs}
+
+To assess TUSCO as an endogenous benchmark, we first compared its performance to SIRVs using comprehensive datasets from the LRGASP Consortium. Three major library preparation workflows---direct RNA (dRNA) ONT, cDNA ONT, and cDNA PacBio---were applied to both human WTC11 iPSCs and mouse ES cells. Transcript models were generated using the FLAIR~\cite{Tang2024FLAIR2} pipeline and evaluated against either TUSCO or SIRVs (Fig.~\ref{fig:figure3}a).
+
+Across all library types and samples, TUSCO-derived metrics closely mirrored those obtained with SIRVs in sensitivity, precision, and redundancy (Fig.~\ref{fig:figure3}a). To quantify this concordance, we calculated cosine similarity (cosim) scores between the two benchmarking approaches (Supplementary Table~S1). Values approaching 1 indicate strong agreement in evaluating transcript reconstruction performance but do not necessarily reflect absolute performance quality. The cDNA PacBio libraries, which were the best-performing experimental option according to LRGASP results, consistently achieved cosim values ranging from 0.9969 to 0.9992 in both human and mouse samples, demonstrating that TUSCO and SIRV benchmarks equally recognize the performance of high-quality data. Likewise, cDNA ONT, dRNA ONT, and hybrid long+short read pipelines (LS) also exhibited high agreement (cosim: 0.9493--0.9977), reinforcing TUSCO's utility as a reliable internal benchmark comparable to established spike-in controls, while also revealing small differences between the two QC datasets.
+
+\subsection{TUSCO More Stringently Reflects Sample Preparation and Sequencing Depth}
+
+To understand the differences between TUSCO and SIRV-based metrics, we performed a detailed analysis of TUSCO genes across primary performance indicators. We compared the frequencies of true positives (TP), partial true positives (PTP), false positives (FP), and false negatives (FN) under the TUSCO or SIRVs benchmarks for human and mouse datasets (Fig.~\ref{fig:figure3}b). We found no significant increase in TP and FP under TUSCO relative to SIRVs. To verify that TUSCO-identified FPs correspond to technical errors rather than alternative isoforms, we manually inspected representative transcripts and consistently observed sequencing, mapping, or reconstruction artifacts unsupported by long- and short-read evidence (Supplementary Notes~1--4). In contrast, PTP and FN were significantly higher under TUSCO (one-sided paired $t$-test, $n = 6$ pipelines per species, $df = 5$: human PTP $p = 3.95 \times 10^{-2}$, FN $p = 2.44 \times 10^{-4}$; mouse PTP $p = 2.75 \times 10^{-4}$, FN $p = 5.27 \times 10^{-4}$) (Fig.~\ref{fig:figure3}b), with both metrics higher under TUSCO. We hypothesize that because TUSCO represents endogenous transcripts, it is more sensitive to partial degradation or incomplete capture issues in sample quality and extraction that synthetic spike-ins like SIRVs or Sequins cannot fully replicate. To test this hypothesis, we applied TUSCO benchmarking to a set of ONT cDNA samples spanning a broad range of RNA integrity (RIN) values (Fig.~\ref{fig:figure3}c)~\cite{Prawer2023Pervasive}. TUSCO assessment revealed a higher number of PTP at lower RINs, reflecting the enhanced RNA degradation associated with low RIN samples. Notably, the fraction of fully recovered TUSCO transcripts---calculated as $\frac{TP}{TP + PTP}$---strongly correlated with the RIN value (Pearson correlation, $n = 17$, $R = 0.810$, $p = 4.60 \times 10^{-5}$), whereas Sequins showed no correlation ($R = 0.075$, $p = 0.77$). Accordingly, $\frac{TP}{TP + PTP}$ values separate clearly between benchmarks: TUSCO declines at low RIN and spans a wider range, while Sequins stay consistently high across the RIN spectrum. This consistently high performance arises because spike-ins are intact and insulated from extraction and degradation, so they fail to expose partial-transcript artifacts that TUSCO detects.
+
+We further examined false-negative (FN) TUSCO genes across diverse assembly pipelines and sequencing technologies within the LRGASP Consortium dataset. We investigated whether evidence of expression existed for all TUSCO genes in any of the LRGASP biological samples. We calculated the number of datasets where TUSCO genes were detected by at least one mapped read. We found that all TUSCO genes were detected in at least one dataset (Fig.~\ref{fig:figure3}d), confirming their expression in the biological samples and their true false-negative status when not detected. Subsequently, we investigated the impact of sequencing depth and read-length quality on the occurrence of false negatives (Fig.~S3). Specifically, we correlated the number of false negatives with a composite metric defined as the logarithm of the total read count multiplied by the median read length. This analysis was conducted on pipelines utilizing exclusively long-read data as well as on those integrating both long-read and short-read sequencing. A pronounced negative correlation (Pearson $r = -0.8$, $p = 1.7 \times 10^{-3}$; $n = 12$ pipelines) was observed, indicating that as sequencing coverage and read length increase, the number of false negatives decreases. These findings suggest that the absence of TUSCO transcripts in specific pipelines predominantly reflects technical or coverage-based limitations, rather than a genuine lack of transcript expression, further validating the TUSCO dataset for benchmarking purposes.
+
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{../assets/fig/fig-3.pdf}
+    \caption{\textbf{Performance comparison of TUSCO and SIRVs across isoform-detection pipelines, including RNA degradation and false-negative analyses.} \textbf{a}, Radar plots of sensitivity (Sn), redundant precision (rPre), positive detection rate (PDR), $1 - \mathrm{FDR}$, inverse redundancy ($\mathrm{Redundancy}^{-1}$), and non-redundant precision (nrPre) for human WTC11 and mouse ES processed with dRNA ONT, cDNA ONT, or cDNA PacBio libraries. TUSCO (green) and SIRVs (purple) lines summarise metrics per dataset. \textbf{b}, Bar charts showing the proportion of true positives (TP), partial true positives (PTP), false positives (FP), and false negatives (FN) for long-read-only (left) and hybrid long-plus-short-read (right) pipelines; bars show means with SD, points indicate individual pipelines, and one-sided paired $t$-tests evaluate TUSCO $>$ SIRVs (ns, *, **, ***). \textbf{c}, RNA degradation experiment schematic and scatter plots relating RIN to fully recovered transcripts for TUSCO (top) and Sequins (bottom), with dataset-specific fits ($R^2$, $p$). TP correspond to reference matches (RM); PTP include FSM or ISM transcripts that retain annotated junctions but shift 5'/3' ends. \textbf{d}, False-negative (FN) TUSCO genes across transcript reconstruction pipelines for human WTC11 and mouse ES; bars count FN genes present in exactly $k$ of six long-read protocols plus one Illumina dataset, highlighting that none are absent from all datasets.}
+    \label{fig:figure3}
+\end{figure}
+
+We concluded that by reflecting real-sample pitfalls---including RNA degradation, library preparation biases, and variable read depth---TUSCO provides a realistic, endogenously anchored benchmark strategy that surpasses synthetic controls such as SIRVs and Sequins.
+
+\subsection{TUSCO-novel Evaluates the Capacity of Reconstruction Tools to Detect Unannotated Isoforms}
+
+Since the TUSCO genes are well-annotated, they assess the capacity of long-read methods to detect known transcripts but do not reveal the accuracy of these methods in detecting novel transcripts, which often correspond to alternative isoforms of annotated genes~\cite{Wang2008Alternative,Pan2008Deep,Su2024Comprehensive}. To address this shortcoming, we developed a strategy to use the TUSCO framework to assess novel transcript calls. For each single-isoform TUSCO gene, we modified its transcript model in the reference annotation by creating an entirely different splice pattern with artificial donor and acceptor sites at all junctions and supplying the artificially modified transcript as the sole reference. This effectively updates the annotation of the single-isoform genes to reflect a nonexistent transcript while omitting the real, expressed transcript (Fig.~\ref{fig:figure4}a). Isoform reconstruction tools with the capacity to detect novel transcripts should call the true isoform despite a misleading annotation. We applied TUSCO-novel to Bambu, StringTie2, FLAIR, and the Iso-Seq + SQANTI3 ML pipeline across PacBio and ONT CapTrap and cDNA libraries in human and mouse (LRGASP Consortium). Performance with the native reference annotation (solid polygons, Fig.~\ref{fig:figure4}b) was contrasted with that under TUSCO-novel (dashed polygons).
+
+The results reveal clear distinctions in tool behavior. Bambu and StringTie2, which rely heavily on reference guidance, exhibited high performance when the true annotation was available but failed almost completely to recover the true TUSCO isoforms when only the novel simulation was provided. This sharp drop indicates that reference-driven tools struggle to detect truly novel splice junctions, even when read support is present (Fig.~\ref{fig:figure4}b, Fig.~S4a,d). FLAIR demonstrated a more balanced profile, partially recovering the original TUSCO isoforms in the simulated novel context. However, the number of FP and FN remains elevated (Fig.~\ref{fig:figure4}b, Fig.~S4e,f) under TUSCO-novel. Iso-Seq and SQANTI3 ML controlled FP best across all pipelines, with 0 FP reported under TUSCO-novel (Fig.~S4g,h). Quantitatively, this pattern is reflected in the radar-polygon areas: the median area decreased by $81.3\%$ (human median area $2.60 \to 0.48$) and $74.4\%$ (mouse $2.50 \to 0.64$) for Bambu and by $55.4\%$ (human $1.45 \to 0.67$) and $80.1\%$ (mouse $1.73 \to 0.36$) for StringTie2, whereas FLAIR lost $38.9\%$ (human $1.65 \to 0.99$) and $43.8\%$ (mouse $1.57 \to 0.86$), and Iso-Seq + SQANTI3 ML showed minimal change ($-1.9\%$ with medians $1.47 \to 1.50$ in human; $2.7\%$ with $1.35 \to 1.31$ in mouse) (Supplementary Table~S2). We hypothesize that this minimal change arises because the pipeline combines the ability of Iso-Seq---a reference-free, data-driven method---for transcript discovery with the SQANTI3 filter that removes transcript models lacking junction support from complementary data, thereby improving precision for novel transcripts. However, the relatively lower sensitivity and non-redundant precision reflect the lack of TSS or TTS adjustment to the reference in the Iso-Seq pipeline, which results in non-RM transcripts classified as partial true positives (Fig.~\ref{fig:figure4}, Fig.~S4g,h). To verify this hypothesis, we calculated per-read coverage $f = \frac{L_{\mathrm{read}}}{L_{\mathrm{exonic}}}$ for TUSCO transcripts, stratified by TP and PTP in human and mouse. In human, TP coverage averaged $84.30\% \pm 26.52\%$ (median $98.3\%$, $n = 4,892$), while PTP averaged $54.68\% \pm 43.09\%$ (median $31.7\%$, $n = 633$); in mouse, TP averaged $79.73\% \pm 25.02\%$ (median $94.7\%$, $n = 8,920$) and PTP $62.10\% \pm 30.50\%$ (median $53.7\%$, $n = 2,564$). These patterns are consistent with partial transcript coverage effects (Fig.~S5).
+
+Collectively, these findings demonstrate that TUSCO-novel provides a realistic, controlled framework to evaluate novel isoform discovery under practical conditions where the available reference may be misleading or incomplete. By simulating biologically plausible isoforms at real genomic loci, TUSCO-novel distinguishes between tools that strongly base their transcript calls on the annotation and those capable of reference-agnostic, data-driven transcript reconstruction---a key requirement for transcriptomics in emerging models, under-characterized tissues, or disease contexts.
+
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../assets/fig/fig-4.pdf}
+    \caption{\textbf{TUSCO-novel benchmark for evaluating multi-exon transcript discovery.} \textbf{a}, Schematic of the TUSCO-novel approach. The native TUSCO multi-exon isoform is removed from the annotation and replaced with a simulated transcript model carrying artificial donor and acceptor splice sites. The modified annotation is used as input to reconstruction pipelines to assess their ability to recover the true (but now unannotated) isoform. \textbf{b}, Radar plots of six TUSCO metrics (Sn, nrPre, $\mathrm{Redundancy}^{-1}$, $1 - \mathrm{FDR}$, PDR, rPre) comparing native-reference evaluation (solid) versus TUSCO-novel (dashed) across Bambu, StringTie2, FLAIR, and Iso-Seq + SQANTI3 machine learning (ML) for PacBio and ONT CapTrap/cDNA libraries in human (WTC11) and mouse (ES). Bambu and StringTie2 perform well with the true reference annotation but drop sharply under TUSCO-novel, indicating strong reliance on annotation. FLAIR partially recovers true isoforms in the novel context but with elevated false positives and false negatives. Iso-Seq + SQANTI3 ML best controls false positives under TUSCO-novel (0 FP across human and mouse), consistent with reference-free discovery followed by junction-support filtering. Lower sensitivity and precision reflect the lack of TSS/TTS adjustment in the Iso-Seq pipeline, yielding partial true positives. Area-based performance drops derived from the radar polygons are summarised in Supplementary Table~S2.}
+    \label{fig:figure4}
+\end{figure}
+
+\subsection{TUSCO helps assess replication in PacBio long-read transcriptomics}
+
+With increasing throughput of long-read sequencing technologies, we asked whether TUSCO could assist in experimental design decisions. Specifically, we used TUSCO to assess how biological replicates affect sensitivity and precision. Five cDNA libraries were prepared from mouse brain and kidney and sequenced on the PacBio Sequel IIe (approximately 5 million reads per sample; Supplementary Table~S3). TUSCO metrics were computed in smart intersection (consensus) mode, i.e., considering the transcripts consistently detected across an increasing number of replicates to detect consistently-expressed transcripts. All possible combinations for a given replicate number were computed, and the mean and 95\% confidence intervals were computed (Fig.~\ref{fig:figure5}a). FLAIR was used as the transcript reconstruction method.
+
+With a single replicate of approximately 5 million reads, most TUSCO transcripts were recovered, but precision was modest: brain sensitivity was 81.3\% (95\% CI, 74.5--88.0) with PDR 93.1\% (95\% CI, 89.9--96.4) and non-redundant precision 67.1\% (95\% CI, 61.4--72.8; FDR 32.9\%); kidney sensitivity was 71.9\% (95\% CI, 66.4--77.4) with PDR 90.6\% (95\% CI, 85.9--95.4) and non-redundant precision 65.2\% (95\% CI, 61.0--69.4; FDR 34.8\%). Requiring concordant detection in at least two replicates markedly reduced false positives: non-redundant precision increased to 87.8\% (95\% CI, 86.5--89.1) in brain and 81.0\% (95\% CI, 79.2--82.8) in kidney, while sensitivity was 81.3\% (95\% CI, 79.4--83.1) and 70.6\% (95\% CI, 67.8--73.5), respectively. With three to five replicates, brain precision stabilized near 88.7--90.0\%, at sensitivity of 83.1--84.4\%. In kidney, sensitivity increased with replicate number---from 74.7\% (three replicates) to 78.1\% with five---while precision plateaued near 79.7--80.6\%. We attribute the larger gain in kidney sensitivity at three versus two replicates to boundary refinement through replicate consensus, whereby additional replicates help refine transcription start site (TSS)/transcription termination site (TTS) and junction boundaries, converting borderline partial matches into exact TUSCO-concordant structures.
+
+Collectively, these results indicate that TUSCO effectively reveals the effect of replication on transcript detection accuracy and suggest that, for this particular experiment (mouse brain/kidney, PacBio cDNA, FLAIR), an optimal design includes at least three biological replicates (Fig.~\ref{fig:figure5}b; Supplementary Table~S3). By contrast, analyses of SIRV spike-in controls yielded highly consistent concordance metrics across 1--5 replicates, providing little guidance on replicate number optimization (Fig.~S6).
+
+\subsection{TUSCO universal and tissue-specific sets give similar results}
+
+Previous analyses were conducted with the universal set of TUSCO genes, which is rather small ($n = 32$). We built tissue-specific TUSCO sets to expand locus coverage and tested whether conclusions persisted (Fig.~\ref{fig:figure1}a,b). Tissue sets were constructed using the same single-isoform and invariance filters, requiring only consistent expression in the focal tissue; additionally, tissue-specific sets used a stricter tissue-level AlphaGenome-predicted screen (human RPKM $> 2.0$ and splice ratio $< 0.001$; mouse RPKM $> 1.5$ and splice ratio $< 0.001$), as detailed in Methods. Using the same data, the brain (63 genes) and kidney (44 genes) panels produced benchmarking metrics that were minimally lower than those of the universal set in all cases, with cosine similarity between universal and tissue results of 0.9999 for brain and 0.9992 for kidney (Fig.~\ref{fig:figure5}c). We concluded that the universal TUSCO set is a suitable benchmarking option for human and mouse samples, while tissue-specific sets provide slightly higher coverage to fine-tune results.
+
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../assets/fig/fig-5.pdf}
+    \caption{\textbf{Replication gains and agreement between universal and tissue-specific TUSCO panels in mouse PacBio cDNA data.} \textbf{a}, Multi-sample (``consensus'') evaluation: five biological replicates per tissue (brain, kidney) were sequenced; SQANTI3 assigns transcript models; TUSCO metrics are computed on the transcript set common to the selected replicates. \textbf{b}, Performance versus replication (1$\rightarrow$5 replicates) for brain and kidney. Bars show Sensitivity (Sn), non-redundant Precision (nrPre), inverse Redundancy ($\mathrm{Redundancy}^{-1}$), $1 - \mathrm{FDR}$, PDR, and redundant Precision (rPre). Red callouts mark percentage-point changes relative to one replicate; note the large FDR reduction from one to two replicates, especially in kidney. \textbf{c}, Benchmark agreement between the universal mouse set ($|U| = 32$) and tissue-specific panels requiring only tissue-consistent expression (brain: 63 genes; kidney: 44 genes). Values shown in the radar plots are computed per sample and then averaged across biological replicates within each tissue and panel type.}
+    \label{fig:figure5}
+\end{figure}
+
+%%==================================%%
+%% Discussion
+%%==================================%%
+
+\section{Discussion}
+
+The reconstruction of full-length transcriptomes using long-read sequencing technologies has revolutionized our understanding of transcript diversity. Yet, this advancement brings with it a pressing need for accurate and realistic benchmarking strategies. Our study demonstrates that synthetic spike-in controls, while useful, present significant limitations when used as stand-alone benchmarks. Tools like SIRVs and Sequins offer a controlled environment to assess transcript identification, but they fail to replicate key biological and technical variables that are intrinsic in real samples---such as RNA degradation, extraction bias, and natural variability across tissues. These shortcomings may result in artificially inflated performance estimates and obscure technology-specific limitations that are critical in challenging experimental contexts, such as clinical or disease-focused transcriptomic studies.
+
+To address these gaps, we developed TUSCO, a benchmarking framework built around a highly curated set of single-isoform endogenous genes. These genes are robustly and consistently expressed across tissues, offering a more biologically relevant and nuanced ground truth to evaluate transcriptome reconstruction performance. TUSCO surpasses synthetic benchmarks by reflecting the same degradation, extraction biases, and length distribution characteristics of native RNAs, particularly in the medium-to-long transcript length range, which is underrepresented in many synthetic datasets. This results in a more representative assessment of sequencing performance.
+
+Moreover, because TUSCO genes are endogenous and tissue-resolved, they enable benchmarking across a wide variety of experimental settings and sample qualities. This versatility makes TUSCO particularly valuable for several practical applications. For example, we show that the framework can inform trade-offs between sequencing depth and number of replicates, a common dilemma in experimental design. TUSCO also enables structured evaluation of novel transcript detection. While the current implementation focuses on novel splice junctions, the method can be easily adapted to assess alternative transcription start sites (TSS), transcription termination sites (TTS), or transcript disambiguation by modifying the underlying GTF annotations. We demonstrated the utility of TUSCO in both human and mouse samples, with gene sets adaptable to tissue-specific or cross-tissue applications. This flexibility ensures that researchers working on tissues not directly included in the resource can still leverage the TUSCO framework. If the community widely adopts this approach, it could be extended to additional species where sufficient transcriptomic data exist to define a reliable set of single-isoform genes.
+
+Despite its advantages, TUSCO also has limitations. It is inherently restricted to single-isoform loci and thus cannot evaluate transcript reconstruction accuracy within highly complex multi-isoform genes---a domain where synthetic spike-ins, with alternatively spliced genes, remain useful. However, our comparison with SIRVs shows that true positive (TP) rates were similar across both approaches, suggesting similar capacity for assessing the identification of the right junction chain. However, synthetic controls failed to capture sample-specific variation in pre-sequencing biases, as reflected by greater discrepancies in precision and false negative rates, which are better illuminated by the TUSCO gene set. As sequencing error rates continue to drop, biases introduced during RNA extraction and library preparation are likely to become the dominant limiting factors. In this context, the endogenous nature of TUSCO genes offers a crucial advantage.
+
+Another important consideration is the potential for the future discovery of alternative isoforms in currently annotated single-isoform genes. As GENCODE annotations evolve---with the likely addition of new transcripts across the genome---some current TUSCO genes may eventually reveal alternative isoforms. While the current TUSCO set is based on extensive sequencing evidence from multiple large-scale databases, we anticipate that regular updates and cross-referencing with evolving annotations will be necessary to maintain its accuracy.
+
+Looking forward, the TUSCO framework could be extended beyond strictly single-isoform genes. As our understanding of tissue-specific and condition-specific isoform expression patterns matures, a complementary approach could leverage dominantly expressed transcripts at multi-isoform loci---where one isoform represents $>$95\% of expression in specific tissues or conditions. While implementing such an approach would present additional complexity in defining expression thresholds and handling tissue-specificity, it would substantially expand the number of benchmark loci and could provide continuity even as annotations evolve. The modular design of TUSCO within SQANTI3 would facilitate such extensions, allowing the community to adapt the framework to emerging transcriptomic knowledge while maintaining the core principle of using endogenous, well-characterized transcripts as internal controls.
+
+
+In summary, TUSCO provides a powerful, biologically grounded framework to evaluate the performance of long-read transcriptomics across real-world conditions. By bridging the gap between synthetic controls and complex biological samples, it offers a more realistic benchmark to guide method development, protocol optimization, and experimental design.
+
+%%==================================%%
+%% Methods
+%%==================================%%
+
+\section{Methods}
+
+\subsection{TUSCO gene selection pipeline}
+
+TUSCO was constructed with a single, reproducible pipeline that integrates multi-source annotations, population splicing and TSS evidence, and broad expression compendia, and then enforces strict ``no evidence for alternative isoforms'' criteria. For human, we retrieved and harmonized GENCODE ~\cite{Harrow2012GENCODE} v49, RefSeq ~\cite{OLeary2016RefSeq} GRCh38.p14 (GCF\_000001405.40), and MANE\cite{Morales2022Joint} v1.4 annotations together with an Ensembl BioMart Ensembl$\leftrightarrow$RefSeq/NCBI mapping\cite{Kinsella2011Ensembl}; for mouse, we used GENCODE vM38 and RefSeq GRCm39 with the corresponding Ensembl BioMart mapping. After normalizing chromosome labels where needed, we identified genes that are single-isoform in each source and required exact identity of exon-intron structure and strand across all GTFs; only those cross-annotation matches were retained and propagated with synchronized mapping subsets.
+
+We next screened for population-level alternative splicing and TSS inconsistencies. Splice evidence was derived from recount3 junction BED files ~\cite{Wilks2021recount3}. For each multi-exon gene, we computed the mean coverage of annotated junctions, $\mu$, and declared a novel junction as supporting an alternative isoform if it was fully intragenic, strand-consistent, and its coverage exceeded $T = \alpha\mu$, where $\alpha$ is species-specific (human: 0.01; mouse: 0.05), with a minimum absolute cutoff of one supporting read; novel junctions with length shorter than 80 bp were ignored. TSS evidence was assessed with refTSS v4.1~\cite{Abugessaisa2019refTSS}. Our TSS filtering primarily focused on single-exon genes: in human, we required single-exon loci to pass both an exon-overlap check (exactly one refTSS interval must overlap the TSS exon and contain the transcript's TSS coordinate) and a CAGE window check centered at the transcript TSS that removed loci with more than one peak in a $\pm 300$ bp window. In mouse, TSS screening was restricted to single-exon genes using the exon-overlap rule. For human only, we further removed genes flagged by IntroVerse\_80 as having widespread novel isoform usage in population data ($>$80\% of samples)~\cite{GarciaRuiz2023IntroVerse}.
+
+Expression-based universality and tissue sets were then established using a hybrid approach that leverages multiple expression data sources. For human, we employed an automatic selection strategy: Bgee\cite{Bastian2021Bgee} present/absent calls for defining universal expression patterns, supplemented by GTEx\cite{Lonsdale2013GTEx} data when available for tissue-specific validation. For Bgee analysis, we retained calls of ``gold quality'', ``silver quality'', or ``bronze quality'', and restricted analysis to tissues with at least 25,000 distinct expressed genes; genes were called universal if present in at least 95\% of retained tissues. When GTEx data were available, we applied additional filters requiring a prevalence expression cutoff of 0.1 TPM, median expression $\geq$ 1.0 TPM, and presence in $\geq$ 95\% of samples. For mouse, we used Bgee with the same minimum tissue gene coverage (25,000) and accepted ``gold quality'' and ``silver quality'' calls, calling universal genes at a 90\% prevalence threshold across retained tissues. Anatomical entity IDs were mapped to tissue names, and per-tissue gene sets were emitted using those IDs. HRT Atlas housekeeping genes meeting our single-isoform criteria were included to ensure universal expression\cite{Hounkpe2020HRT}. For mouse tissue-specific sets, we optionally augmented expression data with ENCODE RNA-seq when available, requiring median RPKM $\geq$ 1.0 and prevalence $\geq$ 95\% at RPKM $>$ 0.1.
+
+To ensure consistency at the population level beyond presence/absence, we applied an AlphaGenome-based screen with species- and class-specific thresholds\cite{Avsec2025AlphaGenome}. AlphaGenome provides two key metrics for each gene across tissues: (i) Expression, defined as the tissue-median RPKM across reference RNA-seq panels, and (ii) Splice ratio, defined as the ratio of AlphaGenome-predicted counts for unannotated versus annotated splice junctions. We defined splice purity as the fraction of tissues where the splice ratio falls below a specified threshold:
+\begin{equation}
+\operatorname{SP} = \frac{\left|\left\{ t \in \mathcal{T} : r_t < \tau \right\}\right|}{\left|\left\{ t \in \mathcal{T} : r_t \text{ observed}\right\}\right|}
+\end{equation}
+where $r_t$ denotes the splice ratio in tissue $t$, $\tau$ is the species- and class-specific splice ratio threshold, and $\mathcal{T}$ the set of tissues with available data. This metric quantifies how consistently a gene maintains its annotated splicing pattern across tissues, with higher values indicating lower evidence of alternative splicing.
+
+For human universal genes, we required: (i) single-exon genes to have median RPKM $\geq$ 1.0 and $\geq$ 95\% of tissues with RPKM $>$ 0.05; (ii) multi-exon genes to have median RPKM $\geq$ 1.0 and $\geq$ 95\% of tissues with RPKM $>$ 0.05; and (iii) splice purity $\geq$ 95\% with a splice ratio threshold $<$ 0.001. For mouse universal genes, the criteria were: (i) single-exon genes with median RPKM $\geq$ 0.5 and $\geq$ 90\% of tissues with RPKM $>$ 0.01; (ii) multi-exon genes with median RPKM $\geq$ 0.25 and $\geq$ 90\% of tissues with RPKM $>$ 0.005; and (iii) splice purity $\geq$ 90\% with a splice ratio threshold $<$ 0.01. When generating tissue-specific sets, we applied stricter tissue-level AlphaGenome-predicted screens: human required RPKM $>$ 2.0 and splice ratio $<$ 0.001 in the tissue of interest, while mouse required RPKM $>$ 1.5 and splice ratio $<$ 0.001. A small, curated exclusion list was applied at the end to remove remaining edge cases. The pipeline writes synchronized mapping subsets alongside each GTF subset and records, for every removed gene, the first filter responsible for the removal.
+
+\subsection{Sample Preparation, Library Construction, and Computational Pipeline Parameters}
+
+Long-read RNA-seq datasets used in this study were derived from multiple sources to enable a robust evaluation of transcriptome reconstruction using the TUSCO framework. Data were collected from both public repositories and our laboratory to provide diverse experimental conditions.
+
+The LRGASP Consortium dataset comprises LRS data generated using Oxford Nanopore Technologies (ONT) and Pacific Biosciences (PacBio) platforms. These data, which include samples from human WTC11 induced pluripotent stem cells (iPSC) and mouse embryonic stem (ES) cells, were retrieved from the Synapse repository (\url{https://www.synapse.org/Synapse:syn25007472/wiki/608702}). The RNA degradation experiment data were obtained to assess the impact of sample quality on transcript recovery. FAST5 and FASTQ files for these experiments are available via the European Nucleotide Archive (ENA) under accession PRJEB53210, and additional FASTQ files from a post-mortem brain sample are accessible from the European Genome-Phenome Archive (EGA) under accession EGAS00001006542.
+
+Mouse kidney dataset (PacBio Iso-Seq, 3-month-old cohort). Kidneys were dissected from five male C57BL/6J wild-type mice (3-month-old). Brain samples used in this study were obtained from the same cohort of 3-month-old male C57BL/6J mice. Tissues were homogenized using FastPrep, and total RNA was extracted with the Maxwell 16 LEV simplyRNA Purification Kit. cDNA synthesis and sample barcoding followed PacBio Iso-Seq recommendations using the NEBNext Single Cell/Low Input cDNA Synthesis \& Amplification kit. Five barcoded Iso-Seq libraries (K31--K35) were prepared with the Iso-Seq SMRTbell prep kit 3.0 and sequenced on a PacBio Sequel IIe. This dataset will be made publicly available upon publication.
+
+Mouse-specific laboratory procedures. RNA quantity and integrity were assessed prior to library preparation (e.g., Agilent Bioanalyzer to obtain RIN values). Library preparation strictly followed the PacBio Iso-Seq workflow: full-length cDNA amplification and barcoding, SMRTbell construction with the Iso-Seq SMRTbell prep kit 3.0, and sequencing on the Sequel IIe platform. Run and enzyme/incubation parameters followed the manufacturer's recommendations for Iso-Seq libraries. Lexogen SIRV-Set 1 spike-in controls were added at 3\% (E0 mix to brain samples and E1 mix to kidney samples).
+
+For all datasets, alignment of reads to the reference genome was conducted using minimap2 (version 2.0). The reference genome FASTA assemblies were GRCh38/hg38 primary assembly for human and GRCm39/mm39 for mouse, and alignments were performed with parameters specifically tuned for long-read RNA-seq data. Presets were stratified by platform: PacBio Iso-Seq (HiFi) used \texttt{-ax splice:hq}, while ONT cDNA or direct RNA used \texttt{-ax splice} (with \texttt{-k14}). Key settings included the use of the \texttt{-ax splice} option for spliced alignment (as applicable), \texttt{--secondary=no} to suppress secondary alignments, and \texttt{-C5} to penalize ambiguous mappings. The flag \texttt{-uf} was enabled to guide canonical splice-site discovery and strand/orientation inference during spliced alignment, and the maximum intron length was set to 2,000,000 nucleotides via the \texttt{-G 2000000} parameter. Platform-specific options recommended by minimap2 for PacBio and ONT long-read RNA-seq were applied where relevant.
+
+For transcript quality control and classification, the SQANTI3 pipeline (version 5.0) was applied. In general, the pipeline uses reference annotation, genome, and CAGE peak data specific to the organism under study. The workflow is divided into three major stages: a quality control (QC) stage using \texttt{sqanti3\_qc.py}, a filtering stage using \texttt{sqanti3\_filter.py} that applies criteria defined in a default JSON configuration file to remove low-confidence transcript models, and a rescue stage using \texttt{sqanti3\_rescue.py} to recover valid transcripts that may have been overly filtered\cite{PardoPalacios2024SQANTI3}.
+
+We ran the pipeline with common options such as \texttt{--skipORF} to bypass open reading frame prediction and provided coverage files---STAR-derived splice-junction files (SJ.out.tab) generated from Illumina short-read alignments to support splice-junction validation. Illumina reads were mapped with STAR in two-pass mode against GRCh38/hg38 or GRCm39/mm39 using standard RNA-seq settings, and the resulting junctions were supplied to SQANTI3.
+
+\subsection{Transcriptome Reconstruction with FLAIR}
+
+We reconstructed transcriptomes for three datasets---(i) the LRGASP Consortium project (Oxford Nanopore [MinION R10.4.1] and PacBio Sequel II), (ii) the RNA degradation dataset (Oxford Nanopore direct RNA [GridION R9.4.1]), and (iii) the replicated Mouse Brain \& Kidney dataset (PacBio Sequel IIe and Oxford Nanopore cDNA [R9.4.1])---using FLAIR v2.0\cite{Tang2024FLAIR2}. Briefly, raw long-read sequencing data were first converted to FASTQ format. Reads were then aligned to the reference genome (GRCh38/hg38 for human; GRCm39/mm39 for mouse) using FLAIR's align functionality, which internally wraps minimap2 to produce BED-formatted alignments. Alignment files were refined with the FLAIR \texttt{correct} subcommand to adjust splice junctions and transcript boundaries based on an external reference GTF annotation, with Illumina short-read support applied only in the LRGASP long+short (LS) dataset.
+
+\subsection{TUSCO and SIRV metrics calculation}
+
+We implemented unified metrics for both TUSCO genes and SIRV spike-ins based on SQANTI3 structural classifications. For TUSCO, we curated a single-isoform GTF reference (``TUSCO reference set'') comprising genes with no evidence of alternative splicing. For SIRVs, we used the provided SIRV reference annotations. Using the SQANTI3 classification file, we restricted evaluation to reconstructed transcripts mapping to either TUSCO genes (matched by the predominant identifier present in the classification: Ensembl, RefSeq, or gene symbol) or SIRV chromosomes.
+
+For both TUSCO and SIRVs, we applied consistent classification criteria:
+
+\textbf{True Positives (TP):} Transcripts meeting any of the following criteria:
+\begin{itemize}
+  \item SQANTI3 structural category ``reference\_match''
+  \item Full-splice\_match transcripts with single exons where TSS and TTS are within $\pm$ 50 bp of the annotated boundaries
+  \item For transcripts with reference length $>$ 3000 bp: full-splice\_match transcripts where TSS and TTS are within $\pm$ 100 bp of the annotated boundaries
+\end{itemize}
+
+\textbf{Partial True Positives (PTP):} Transcripts classified as:
+\begin{itemize}
+  \item Full-splice\_match (excluding those already classified as TP)
+  \item Incomplete-splice\_match
+  \item Mono-exon\_by\_intron\_retention (subcategory)
+\end{itemize}
+
+\textbf{False Positives (FP):} For TUSCO genes, transcripts labeled as novel\_in\_catalog, novel\_not\_in\_catalog, genic (including genic\_intron and genic\_genomic), or fusion. For SIRVs, any transcript mapping to SIRV chromosomes that is neither TP nor PTP.
+
+\textbf{False Negatives (FN):} TUSCO genes (or SIRV transcripts) with no observed transcript in any structural category.
+
+Let $G$ be the number of reference units (TUSCO genes or SIRV transcripts), $N$ the number of observed transcripts mapping to reference units, $TP$ the number of TP transcripts, $PTP$ the number of PTP transcripts, $FP$ the number of FP transcripts, $TP_{u}$ the number of reference units with at least one TP, $D$ the number of reference units detected by either TP or PTP, and $T_{\mathrm{FSM+ISM}}$ the total number of full-splice\_match plus incomplete-splice\_match transcripts. From these quantities we calculated:
+\begin{align}
+\mathrm{Sn} &= 100 \times \frac{TP_{u}}{G}, \\
+\mathrm{nrPre} &= 100 \times \frac{TP}{N}, \\
+\mathrm{rPre} &= 100 \times \frac{TP + PTP}{N}, \\
+\mathrm{PDR} &= 100 \times \frac{D}{G}, \\
+\mathrm{FDR} &= 100 \times \frac{N - TP}{N}, \\
+\mathrm{FDeR} &= 100 \times \frac{FP}{N}, \quad \text{(False Detection Rate)} \\
+\mathrm{Redundancy} &= \frac{T_{\mathrm{FSM+ISM}}}{D}.\end{align}
+
+To quantify the concordance between TUSCO and SIRV benchmarking approaches, we computed cosine similarity (cosim) scores using the six performance metrics as a vector. For two benchmark approaches yielding metric vectors $\boldsymbol{v}_{\mathrm{TUSCO}}$ and $\boldsymbol{v}_{\mathrm{SIRV}}$, cosine similarity is defined as:
+\begin{equation}
+\operatorname{cosim} = \frac{\sum_{i=1}^{6} v_{\mathrm{TUSCO}, i} v_{\mathrm{SIRV}, i}}{\sqrt{\sum_{i=1}^{6} v_{\mathrm{TUSCO}, i}^2}\, \sqrt{\sum_{i=1}^{6} v_{\mathrm{SIRV}, i}^2}}
+\end{equation}
+where the six-dimensional metric vectors comprise $\mathrm{Sn}$, $\mathrm{nrPre}$, $\mathrm{Redundancy}^{-1}$, $1 - \mathrm{FDR}$, $\mathrm{PDR}$, and $\mathrm{rPre}$, all expressed as percentages.
+
+For native-versus-novel comparisons (Fig.~\ref{fig:figure4}b) we instead quantified changes in the radar polygon area. Ordered metric vectors $\boldsymbol{m}_{\mathrm{ref}}$ and $\boldsymbol{m}_{\mathrm{novel}}$ (scaled 0--100) were converted to Cartesian coordinates on the unit circle and evaluated with the shoelace formula to obtain polygon areas $A_{\mathrm{ref}}$ and $A_{\mathrm{novel}}$. The area-based performance drop was then defined as
+\begin{equation}
+\Delta_{\mathrm{area}} = 100 \times \frac{A_{\mathrm{ref}} - A_{\mathrm{novel}}}{A_{\mathrm{ref}}},
+\end{equation}
+which is reported only when $A_{\mathrm{ref}} > 0$. We summarized mean and median $\Delta_{\mathrm{area}}$ values together with median $A_{\mathrm{ref}}$ and $A_{\mathrm{novel}}$ separately for human and mouse samples of each pipeline (Supplementary Table~S2).
+
+\subsection{Statistical Analysis}
+
+All statistical analyses were performed using R version 4.3.0 or later. For the comparison between TUSCO and SIRV benchmarking approaches (Fig.~\ref{fig:figure3}b), we applied one-sided paired $t$-tests to evaluate whether TUSCO yielded higher percentages than SIRVs for each metric category (TP, PTP, FP, FN). The paired design accounted for the fact that both benchmarks were applied to the same six sequencing pipelines per species ($n = 6$ pairs per test), with degrees of freedom $df = 5$. No correction for multiple testing was applied, as the four comparisons addressed distinct, biologically motivated hypotheses about the relative sensitivity of endogenous versus synthetic benchmarks.
+
+Correlation analyses between RNA integrity number (RIN) values and transcript recovery rates (Fig.~\ref{fig:figure3}c) employed Pearson product-moment correlation with $n = 17$ samples spanning RIN values from 7.2 to 9.9. The fraction of fully recovered transcripts was calculated as $\frac{TP}{TP + PTP}$ for both TUSCO and Sequins benchmarks. For the analysis of sequencing depth effects on false negatives (Fig.~S3), Pearson correlation was computed between the composite metric $\log\!\left(\text{total reads} \times \text{median read length}\right)$ and the percentage of TUSCO false negatives across all available LRGASP Consortium pipelines ($n = 12$).
+
+For the multi-replicate analysis (Fig.~\ref{fig:figure5}), 95\% confidence intervals were computed using the exact binomial method for sensitivity, precision, and positive detection rate metrics. When multiple combinations of $k$ replicates were possible, we calculated the mean and confidence interval across all combinations, weighting each combination equally.
+
+\subsection{Intersection mode across replicates}
+
+For replicate analyses, we computed TUSCO metrics on a $k$-way intersection call set that retains only transcript structures reconstructed in all of the $k$ selected replicates. Within each replicate, SQANTI3-classified transcripts were first assigned to TUSCO genes and collapsed by structure (identical junction chain; TSS/TTS considered equivalent within $\pm$ 50 bp). A structure entered the intersection if an equivalent collapsed transcript appeared in every replicate; one representative was then chosen by (i) minimum summed 5'/3' end deviation from the TUSCO model, (ii) higher read support, (iii) longer length. Correctness labels (TP, PTP, FP) and all downstream metrics ($\mathrm{Sn}$, $\mathrm{nrPre}$, $\mathrm{rPre}$, $\mathrm{PDR}$, $\mathrm{FDR}$, $\mathrm{FDeR}$, $\mathrm{Redundancy}$) were computed exclusively on this intersection set; FN were TUSCO genes lacking TP or PTP in the intersection. This conservative strategy emphasizes reproducibility, sharply reducing spurious calls while preserving consistently detected transcripts.
+
+%%==================================%%
+%% Data and Code Availability
+%%==================================%%
+
+\section{Data and code availability}
+
+Publicly available LRS datasets used in this study include the LRGASP Consortium data for human WTC11 iPSC and mouse ES cells, accessible at the Synapse repository under accession syn25007472/wiki/608702. The RNA degradation datasets are deposited in the European Nucleotide Archive (ENA) under accession PRJEB53210, with supplementary FASTQ data for post-mortem brain samples available from the European Genome-Phenome Archive (EGA) under accession EGAS00001006542. The Replicated Mouse Brain and Kidney dataset, generated in-house, has been submitted in its entirety to the ENA under accession PRJEB94912 (secondary accession ERP177675, ``Sequencing of mice kidneys using Iso-Seq''). The dataset will be released publicly upon publication.
+
+For benchmarking, the universal and tissue-specific TUSCO gene sets for human and mouse can be freely obtained at \url{https://github.com/ConesaLab/SQANTI3} and at the dedicated TUSCO portal \url{https://tusco.uv.es}.
+
+All scripts used to generate the Figures in this study and to implement the TUSCO gene selector are available at \url{https://github.com/ConesaLab/documenting_tusco}.
+
+%%==================================%%
+%% Figures (Main)
+%%==================================%%
+
+%%==================================%%
+%% Tables
+%%==================================%%
+
+%%==================================%%
+%% Bibliography
+%%==================================%%
+
+\bibliography{../assets/reference/ref-tusco}
+
+%%==================================%%
+%% Supplementary Information
+%%==================================%%
+
+\newpage
+\section*{Supplementary Information}
+
+Supplementary Figures S1--S6, Supplementary Tables S1--S3, and additional Supplementary Notes are provided as Supplementary Information file.
+ 
+\end{document}

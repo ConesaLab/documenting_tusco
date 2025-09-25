@@ -1,0 +1,9 @@
+figure_id	metric_name	value	ci_lower	ci_upper	notes
+fig-3c	TUSCO_R_correlation	0.8101			Pearson correlation: RIN vs TP/(TP+PTP)
+fig-3c	TUSCO_p_value	4.6e-05			Pearson correlation: RIN vs TP/(TP+PTP)
+fig-3c	Sequins_R_correlation	0.0753			Pearson correlation: RIN vs TP/(TP+PTP)
+fig-3c	Sequins_p_value	0.767			Pearson correlation: RIN vs TP/(TP+PTP)
+fig-3b	human_PTP_pvalue	0.03945			One-sided paired t-test (TUSCO > SIRVs)
+fig-3b	human_FN_pvalue	0.0002438			One-sided paired t-test (TUSCO > SIRVs)
+fig-3b	mouse_PTP_pvalue	0.0002745			One-sided paired t-test (TUSCO > SIRVs)
+fig-3b	mouse_FN_pvalue	0.0005271			One-sided paired t-test (TUSCO > SIRVs)

@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TUSCO Paper - Supplementary Figures
+%% Formatted for Springer Nature journals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\SupplementFiguresContent}{%
+  \section{Supplementary Figures}
+  This section compiles visual summaries referenced throughout the manuscript.
+  Supplementary Figure S1 contrasts fundamental transcript properties between
+  TUSCO controls and canonical annotations in human and mouse, while
+  Supplementary Figure~S2 benchmarks expression and splicing invariance of
+  TUSCO genes against other single-isoform loci. Figure~S3 links sequencing
+  yield with TUSCO false negatives, Figure~S4 profiles long-read reconstruction
+  pipelines under native and TUSCO-novel evaluations, and Figure~S5 examines
+  per-read coverage distributions supporting TUSCO transcripts. Finally,
+  Figure~S6 evaluates how SIRV-based concordance metrics respond to replicate
+  number, contextualising the stability of spike-in controls relative to
+  endogenous benchmarks.
+  \setcounter{figure}{0}
+  \renewcommand{\figurename}{Supplementary Figure}
+  \renewcommand{\thefigure}{S\arabic{figure}}
+
+  \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=\textwidth]{../assets/fig/fig-s1.pdf}
+      \caption{\textbf{Comparative properties of TUSCO transcripts versus reference annotations in human and mouse.} \textbf{a--b}, Kernel density of transcript lengths (log10) for human \textbf{a}, and mouse \textbf{b}. \textbf{c--d}, Exon count per transcript shown as frequency within each dataset (\%) for human \textbf{c}, and mouse \textbf{d}; the ``10+'' bin groups transcripts with $\geq$10 exons. \textbf{e--f}, Kernel density of intron lengths (log10) for human \textbf{e}, and mouse \textbf{f}. \textbf{g--h}, Density of exonic GC content (\%) for human \textbf{g}, and mouse \textbf{h}; x-axis truncated to 20--80\%.}
+      \label{fig:s1}
+  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=\textwidth]{../assets/fig/fig-s2.pdf}
+      \caption{\textbf{TUSCO genes are highly expressed and display minimal novel splicing signal.} Violin--box plots compare AlphaGenome-predicted scores for TUSCO genes with single-isoform genes annotated in both GENCODE and RefSeq for human and mouse. The top row shows the Expression score (gene-level tissue-median RPKM); the bottom row shows the Splicing score (for each gene, the maximum AlphaGenome-predicted unannotated-to-annotated splice-junction count ratio across tissues). Values are plotted as $\log_{10}$ (score $+ 1 \times 10^{-4}$). Across both species, TUSCO genes exhibit substantially higher expression and lower novel splicing score ratios than other single-isoform genes, consistent with their selection as widely expressed, splicing-invariant controls. Box centers mark medians; boxes span the interquartile range; whiskers extend $1.5 \times$ IQR. Colors: Human TUSCO (light green), Mouse TUSCO (darker green), Human Other (light gray), Mouse Other (dark gray).}
+      \label{fig:s2}
+  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=\textwidth]{../assets/fig/fig-s3.pdf}
+      \caption{\textbf{False negatives decrease with effective sequencing yield.} Scatter plot showing the percentage of recomputed TUSCO false negatives (y-axis) versus a composite metric, $\log(\text{Total Reads}) \times \text{Median Read Length}$ (x-axis), across LRGASP datasets. Point shape encodes method (triangle: ONT-cDNA; diamond: ONT-dRNA; circle: PacBio-cDNA), color indicates cell line (ES, WTC11), and point size denotes short-read support (larger = yes). Labels include dataset names; ``-LS'' marks libraries with length selection. A linear fit with 95\% confidence band (gray) reveals a strong negative correlation (Pearson $r$ and $p$ shown on plot), indicating that higher effective depth and longer reads substantially reduce false negatives, consistent with technical rather than biological causes. Total TUSCO genes: human $n=57$; mouse $n=30$.}
+      \label{fig:s3}
+  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=\textwidth]{../assets/fig/fig-s4.pdf}
+      \caption{\textbf{Performance of long-read transcriptome reconstruction pipelines on the TUSCO benchmark for discovering unannotated genes.} Panels \textbf{a--h} (\textbf{a}, Bambu-Novel; \textbf{b}, Bambu-Reference; \textbf{c}, StringTie-Novel; \textbf{d}, StringTie-Reference; \textbf{e}, FLAIR-Novel; \textbf{f}, FLAIR-Reference; \textbf{g}, Iso-Seq-Novel; \textbf{h}, Iso-Seq-Reference) show stacked-bar summaries for each human (WTC11-*) and mouse (ES-*) sample: total bar height equals the number of multi-exon TUSCO genes assessed, colors indicate reconstruction outcomes (complete, truncation, false positive, false negative), and hatched areas denote genes lacking short-read support. Percentages inside bars refer to complete (green) calls. Panels \textbf{i--p} summarize concordance metrics (non-redundant sensitivity, non-redundant precision, inverse redundancy, 1-FDR, positive detection rate, F1 score) using radar plots comparing human and mouse performance for each pipeline.}
+      \label{fig:s4}
+  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=\textwidth]{../assets/fig/fig-s5.pdf}
+      \caption{\textbf{Per-read coverage of TUSCO transcripts in LRGASP Iso-Seq cDNA data.} Violin-plus-box plots show the distribution of per-read coverage $f = L_{\text{read}}/L_{\text{exonic}}$ for TUSCO-mapped reads, separated by species (human WTC11, mouse ES). Reads are labeled by SQANTI as TP (full-splice match; reference\_match) or PTP (incomplete/partial splice match). Only multi-exon TUSCO transcripts are included; reference- and novel-evaluation classifications are combined; no TSS-based filtering; outliers retained; y-axis 0--2.0. Human: TP 84.3\% (median 98.3\%, $n=4,892$); PTP 54.7\% (median 31.7\%, $n=633$). Mouse: TP 79.7\% (median 94.7\%, $n=8,920$); PTP 62.1\% (median 53.7\%, $n=2,564$).}
+      \label{fig:s5}
+  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[htbp]
+      \centering
+      \includegraphics[width=\textwidth]{../assets/fig/fig-s6.pdf}
+      \caption{\textbf{SIRV spike-in controls exhibit minimal dependence on replicate number.} Concordance metrics (sensitivity, non-redundant precision, inverse redundancy, 1-FDR, PDR, F1) were computed on FLAIR-identified SIRV transcripts from PacBio Sequel IIe cDNA libraries ($\sim$5 M reads per library). Metrics were summarized across all replicate combinations for 1--5 biological replicates (bars: mean with 95\% CI; points: individual combinations). Performance was essentially invariant with replicate number: precision, inverse redundancy and 1-FDR were $\sim$100\% at all levels; brain sensitivity was 86.1\% (83.7--88.5) at 1 replicate and $\sim$85.5\% at 3--5; kidney sensitivity ranged 80.3\% (78.4--82.1; 2 replicates) to 87.0\% (5 replicates). F1 remained stable (brain $\sim$92.2\%; kidney $\sim$89.0--93.0\%). These results indicate that SIRV spike-ins yield highly consistent concordance irrespective of replicate count.}
+      \label{fig:s6}
+  \end{figure}
+}
+
+\ifdefined\SupplementMaster
+  \SupplementFiguresContent
+\else
+
+\documentclass[pdflatex,sn-nature]{sn-jnl}% Nature Portfolio style
+
+%%%% Standard Packages
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\raggedbottom
+
+\begin{document}
+
+\title{Supplementary Figures for:\\
+Transcriptome Universal Single-isoform COntrol: A Framework for Evaluating Transcriptome Reconstruction Quality}
+
+\author[1]{\fnm{Tianyuan} \sur{Liu}}
+\author[1]{\fnm{Alejandro} \sur{Paniagua}}
+\author[2]{\fnm{Fabian} \sur{Jetzinger}}
+\author[1,3]{\fnm{Luis} \sur{Ferrández-Peral}}
+\author[4]{\fnm{Adam} \sur{Frankish}}
+\author*[1]{\fnm{Ana} \sur{Conesa}}
+
+\affil[1]{Institute for Integrative Systems Biology (I2SysBio), Spanish National Research Council (CSIC), Paterna 46980, Spain}
+\affil[2]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
+\affil[3]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
+\affil[4]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
+
+\maketitle
+
+\clearpage
+
+\SupplementFiguresContent
+
+\end{document}
+\fi

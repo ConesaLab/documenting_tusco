@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "office-word": {
+      "command": "python3",
+      "args": ["/Users/tianyuan/Desktop/github_dev/tusco-paper/scripts/mcp-servers/Office-Word-MCP-Server/server.py"],
+      "env": {
+        "PYTHONPATH": "/Users/tianyuan/Desktop/github_dev/tusco-paper/scripts/mcp-servers/Office-Word-MCP-Server",
+        "MCP_LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}

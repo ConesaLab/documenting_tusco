@@ -1,0 +1,69 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TUSCO Paper - Combined Supplementary Information
+%% Includes Supplementary Note, Figures, and Tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[pdflatex,sn-nature]{sn-jnl}% Nature Portfolio style
+
+%%%% Standard Packages
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{ragged2e}
+\usepackage{caption}
+
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  labelsep=colon,
+  justification=justified,
+  singlelinecheck=false
+}
+
+\raggedbottom
+
+\newcommand{\SupplementMaster}{}
+
+\begin{document}
+
+\title{Supplementary Information for:\\
+Transcriptome Universal Single-isoform COntrol: A Framework for Evaluating Transcriptome Reconstruction Quality}
+
+\author[1]{\fnm{Tianyuan} \sur{Liu}}
+\author[1]{\fnm{Alejandro} \sur{Paniagua}}
+\author[2]{\fnm{Fabian} \sur{Jetzinger}}
+\author[1,3]{\fnm{Luis} \sur{Ferrández-Peral}}
+\author[4]{\fnm{Adam} \sur{Frankish}}
+\author*[1]{\fnm{Ana} \sur{Conesa}}
+
+\affil[1]{Institute for Integrative Systems Biology (I2SysBio), Spanish National Research Council (CSIC), Paterna 46980, Spain}
+\affil[2]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
+\affil[3]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
+\affil[4]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
+
+\maketitle
+
+\tableofcontents
+
+\clearpage
+
+\input{../../supplementary-note/src/supplementary_note.tex}
+
+\clearpage
+
+\input{tusco_paper_supplement_figures.tex}
+
+\clearpage
+
+\input{tusco_paper_supplement_tables.tex}
+
+\end{document}

@@ -16,7 +16,7 @@ Project structure (reorganized for clarity and reproducibility):
 - `workflows/`: Pipelines and SLURM jobs (optional)
 
 Notes
-- All scripts now read from `data/raw` and write reusable results to `data/processed`.
+- Figure and analysis scripts load inputs from the paths defined inside each script (for example `figs/figure-05/analysis/generate_kidney_missing_gene_stats.R:8` sets `project_root` explicitly), falling back on the resolver in `scripts/figure_utils.R`; they do not regenerate data under `data/processed/` by default, and instead emit results alongside each figure in its `plots/` and `tables/` subdirectories.
 - Run Python modules from repo root with `export PYTHONPATH=src`.
 - Download the Tusco dataset archive from https://tusco-paper-data.s3.eu-north-1.amazonaws.com/data.zip and extract it into the repository root so a `data/` directory is available (the helper script below will do this automatically if missing).
 - Run `/Users/tianyuan/Desktop/github_dev/documenting_tusco/scripts/run_all_figs.sh` from the repository root to regenerate the figure outputs; it downloads the dataset on-demand and executes every figure script.
