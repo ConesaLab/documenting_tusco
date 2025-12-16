@@ -23,7 +23,7 @@ if (file.exists("../../scripts/figure_utils.R")) {
     if (length(args) > 2) result$height <- as.numeric(args[3])
     return(result)
   }
-  
+
   create_output_dirs <- function(base_dir = ".") {
     plot_dir <- file.path(base_dir, "plots")
     table_dir <- file.path(base_dir, "tables")
@@ -31,12 +31,14 @@ if (file.exists("../../scripts/figure_utils.R")) {
     dir.create(table_dir, recursive = TRUE, showWarnings = FALSE)
     list(plot_dir = plot_dir, table_dir = table_dir)
   }
-  
-  save_figure <- function(plot_obj, fig_id, plot_dir = "plots", table_dir = "tables", 
-                         width = 3.35, height = 4.0, data = NULL, data_suffix = NULL) {
+
+  save_figure <- function(plot_obj, fig_id, plot_dir = "plots", table_dir = "tables",
+                          width = 3.35, height = 4.0, data = NULL, data_suffix = NULL) {
     plot_file <- file.path(plot_dir, paste0(fig_id, ".pdf"))
-    ggsave(plot_file, plot_obj, width = width, height = height, 
-           units = "in", device = "pdf", dpi = 300)
+    ggsave(plot_file, plot_obj,
+      width = width, height = height,
+      units = "in", device = "pdf", dpi = 300
+    )
     message("Saved plot: ", plot_file)
     if (!is.null(data)) {
       data_name <- if (is.null(data_suffix)) fig_id else paste0(fig_id, "-", data_suffix)
@@ -50,9 +52,9 @@ if (file.exists("../../scripts/figure_utils.R")) {
 
 # Parse arguments
 params <- parse_figure_args(defaults = list(
-  out_dir = "..",           # Output to parent directory (figure-XX/)
-  width = 3.35,            # Nature single column width
-  height = 4.0             # Default height
+  out_dir = "..", # Output to parent directory (figure-XX/)
+  width = 3.35, # Nature single column width
+  height = 4.0 # Default height
 ))
 
 # =============================================================================
@@ -94,11 +96,26 @@ if (exists("resolve_data_path")) {
   # Manual resolution fallback
   data_candidates <- c(
     "../../data/raw/example/data.tsv",
-    "../../../data/raw/example/data.tsv", 
+    "../../../data/raw/example/data.tsv",
     "../../data/processed/example/data.tsv"
   )
   example_data_file <- data_candidates[file.exists(data_candidates)][1]
   if (is.na(example_data_file)) stop("Required data file not found")
+}
+
+# Optional: Download data from S3 if missing
+if (!file.exists(example_data_file) && exists("download_s3_parallel")) {
+  message("Data file not found: ", example_data_file)
+  message("Attempting download from S3...")
+
+  # Configure your S3 credentials and path
+  # download_s3_parallel(
+  #   bucket = "your-bucket-name",
+  #   key = "path/to/data.tsv",
+  #   outfile = example_data_file,
+  #   ak = Sys.getenv("AWS_ACCESS_KEY_ID"),
+  #   sk = Sys.getenv("AWS_SECRET_ACCESS_KEY")
+  # )
 }
 
 # Read data files
@@ -140,7 +157,7 @@ main_plot <- ggplot(sample_data, aes(x = x, y = y, color = group)) +
   geom_line() +
   labs(
     title = "Example Figure",
-    x = "X Value", 
+    x = "X Value",
     y = "Y Value",
     color = "Group"
   ) +
@@ -153,7 +170,7 @@ main_plot <- ggplot(sample_data, aes(x = x, y = y, color = group)) +
 # Save figure and data
 save_figure(
   plot_obj = main_plot,
-  fig_id = "fig-example",  # Change this to match your figure
+  fig_id = "fig-example", # Change this to match your figure
   plot_dir = plot_dir,
   table_dir = table_dir,
   width = params$width,
@@ -172,8 +189,8 @@ summary_data <- sample_data %>%
   )
 
 save_figure(
-  plot_obj = NULL,  # No plot, just data
-  fig_id = "fig-example", 
+  plot_obj = NULL, # No plot, just data
+  fig_id = "fig-example",
   plot_dir = plot_dir,
   table_dir = table_dir,
   data = summary_data,

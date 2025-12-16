@@ -19,9 +19,11 @@ if [[ ! -d "$DATA_DIR" ]]; then
   mkdir -p "$ROOT_DIR/tmp"
 
   if command -v curl >/dev/null 2>&1; then
-    curl --fail --location --show-error --output "$DATA_ARCHIVE" "$DATA_URL"
+    # -C - tells curl to automatically find where to resume
+    curl --fail --location --show-error -C - --output "$DATA_ARCHIVE" "$DATA_URL"
   elif command -v wget >/dev/null 2>&1; then
-    wget -nv -O "$DATA_ARCHIVE" "$DATA_URL"
+    # -c tells wget to continue getting a partially-downloaded file
+    wget -nv -c -O "$DATA_ARCHIVE" "$DATA_URL"
   else
     echo "Neither curl nor wget is available to download data." >&2
     exit 1

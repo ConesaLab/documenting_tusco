@@ -24,7 +24,27 @@ from tusco_selector.utils import (
     generate_tusco_tables,
 )
 
-# Configure basic logging
+# Define custom logging levels
+TRACE = 5
+VERBOSE = 15
+
+# Add custom levels to logging module
+logging.addLevelName(TRACE, "TRACE")
+logging.addLevelName(VERBOSE, "VERBOSE")
+
+# Add convenience methods for custom levels
+def _log_trace(self, message, *args, **kwargs):
+    if self.isEnabledFor(TRACE):
+        self._log(TRACE, message, args, **kwargs)
+
+def _log_verbose(self, message, *args, **kwargs):
+    if self.isEnabledFor(VERBOSE):
+        self._log(VERBOSE, message, args, **kwargs)
+
+logging.Logger.trace = _log_trace
+logging.Logger.verbose = _log_verbose
+
+# Configure basic logging (will be overridden by setup_logging)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -42,9 +62,58 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 # Total number of pipeline steps (used for consistent progress output)
-TOTAL_STEPS: int = 7
+# Note: Step 6 (AlphaGenome) is now integrated into Step 5 (Expression filtering)
+TOTAL_STEPS: int = 6
 
 # (Removed verbose step-specific debug configuration to simplify CLI)
+
+def setup_logging(log_level: str = "INFO", file_log_level: str = "VERBOSE", log_file: str | None = None) -> None:
+    """Setup enhanced logging configuration with custom levels.
+    
+    Parameters
+    ----------
+    log_level : str
+        Console logging level (TRACE, DEBUG, VERBOSE, INFO, WARNING, ERROR)
+    file_log_level : str
+        File logging level (TRACE, DEBUG, VERBOSE, INFO, WARNING, ERROR)
+    log_file : str, optional
+        Path to log file. If None, no file logging.
+    """
+    # Clear existing handlers
+    root_logger = logging.getLogger()
+    root_logger.handlers.clear()
+    
+    # Console handler with cleaner format
+    console_handler = logging.StreamHandler()
+    console_level = getattr(logging, log_level.upper(), None)
+    if console_level is None:
+        console_level = {'TRACE': TRACE, 'VERBOSE': VERBOSE}.get(log_level.upper(), logging.INFO)
+    console_handler.setLevel(console_level)
+    
+    # Simple format for console
+    console_format = logging.Formatter(
+        "%(message)s" if console_level >= logging.INFO else "%(levelname)s - %(message)s"
+    )
+    console_handler.setFormatter(console_format)
+    root_logger.addHandler(console_handler)
+    
+    # File handler with detailed format
+    if log_file:
+        file_handler = logging.FileHandler(log_file, mode='w')
+        file_level = getattr(logging, file_log_level.upper(), None)
+        if file_level is None:
+            file_level = {'TRACE': TRACE, 'VERBOSE': VERBOSE}.get(file_log_level.upper(), VERBOSE)
+        file_handler.setLevel(file_level)
+        
+        file_format = logging.Formatter(
+            "%(asctime)s - %(levelname)s - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S"
+        )
+        file_handler.setFormatter(file_format)
+        root_logger.addHandler(file_handler)
+    
+    # Set root logger to lowest level to allow handlers to filter
+    root_logger.setLevel(TRACE)
 
 
 # Built-in mapping from common tissue names to UBERON IDs per species.
@@ -166,6 +235,42 @@ def print_summary(gtf_path: str | os.PathLike[str]) -> None:
         logger.error(f"Failed to count exons in {gtf_path}: {e}")
 
 
+def log_step_summary(step_name: str, genes_in: int, genes_out: int, reasons: dict = None, time_elapsed: float = None) -> None:
+    """Log a clean summary for a pipeline step.
+    
+    Parameters
+    ----------
+    step_name : str
+        Name of the step
+    genes_in : int
+        Number of genes entering the step
+    genes_out : int
+        Number of genes after the step
+    reasons : dict, optional
+        Dictionary of removal reasons and counts
+    time_elapsed : float, optional
+        Time taken for the step in seconds
+    """
+    logger.info("=" * 60)
+    logger.info(f"Step Summary: {step_name}")
+    logger.info(f"  Genes in:  {genes_in:,}")
+    logger.info(f"  Genes out: {genes_out:,}")
+    logger.info(f"  Removed:   {genes_in - genes_out:,}")
+    
+    if reasons:
+        logger.info("  Removal reasons:")
+        for reason, count in sorted(reasons.items(), key=lambda x: x[1], reverse=True):
+            logger.info(f"    - {reason}: {count}")
+    
+    if time_elapsed:
+        if time_elapsed < 60:
+            logger.info(f"  Time:      {time_elapsed:.1f}s")
+        else:
+            logger.info(f"  Time:      {time_elapsed/60:.1f}m")
+    
+    logger.info("=" * 60)
+
+
 # (BioMart helpers removed as part of deprecating BioMart-based validation.)
 
 
@@ -199,18 +304,12 @@ def run(species: str, output_dir: str | None = None, **threshold_kwargs) -> None
         - novel_threshold : float (default: 0.01)
         - min_novel_length : int (default: 80)
 
-        Expression data source selection:
-        - expression_source : str (default: "auto") - Sets both universal and tissue sources
-        - universal_expression_source : str (default: "auto") - Bgee for both human and mouse
-        - tissue_expression_source : str (default: "auto") - GTEx for human, Bgee for mouse
-
-        GTEx expression filtering (for tissue-specific genes):
+        GTEx expression filtering (human tissue-specific):
         - gtex_prevalence_expression_cutoff : float (default: 0.1)
         - gtex_median_expression_cutoff : float (default: 1.0)
         - gtex_prevalence_threshold : float (default: 0.95)
-        - gtex_universal_tissue_fraction : float (default: 1.0)
 
-        Bgee expression filtering (for universal genes and mouse tissue-specific):
+        Bgee expression filtering (mouse and other species):
         - min_genes_per_tissue : int (default: 25000)
         - bgee_quality : list (default: ["gold quality", "silver quality"])
         - bgee_prevalence_threshold : float (default: 0.95)
@@ -344,13 +443,8 @@ def _save_step_outputs(
 # ---------------------------------------------------------------------------
 
 
-def _process_bgee_expression_data_unified(cache_dir, species, bgee_thresholds, include_universal=True, include_tissue_specific=True):
-    """Process Bgee expression data for both human and mouse.
-    
-    Parameters:
-    - include_universal: Whether to compute universal genes (default: True)
-    - include_tissue_specific: Whether to compute tissue-specific genes (default: True)
-    """
+def _process_bgee_expression_data_unified(cache_dir, species, bgee_thresholds):
+    """Process Bgee expression data for both human and mouse."""
     from tusco_selector.pipeline.expression_filter import (
         get_universal_high_expression_genes_bgee_with_ids,
     )
@@ -510,11 +604,23 @@ def _process_bgee_expression_data_unified(cache_dir, species, bgee_thresholds, i
     # Process Bgee data if both files are found
     print_info("Processing Bgee expression data...")
 
+    # Check for GTEx mapping file (for human only)
+    gtex_mapping_file_path = None
+    if species == "hsa":
+        gtex_mapping_file = os.path.join(cache_dir, "expression", "gtex", "uberon-map-gtex-subgroup.tsv")
+        if os.path.exists(gtex_mapping_file):
+            gtex_mapping_file_path = gtex_mapping_file
+            logger.info(f"Found GTEx tissue mapping file: {gtex_mapping_file_path}")
+        else:
+            logger.warning(f"GTEx tissue mapping file not found: {gtex_mapping_file}")
+
     bgee_processing_kwargs = {
         "bgee_mapping_file_path": bgee_mapping_tsv_path,
         "min_genes_per_tissue": bgee_thresholds["min_genes_per_tissue"],
         "qual_ok": bgee_thresholds["qual_ok"],
         "prevalence_threshold": bgee_thresholds["prevalence_threshold"],
+        "species": species,
+        "gtex_mapping_file_path": gtex_mapping_file_path,
     }
 
     try:
@@ -533,16 +639,40 @@ def _process_bgee_expression_data_unified(cache_dir, species, bgee_thresholds, i
     return universal_genes_bgee, high_exp_per_tissue_bgee
 
 
-def _process_gtex_expression_data_unified(cache_dir, species, gtex_thresholds, include_universal=True, include_tissue_specific=True):
+def _process_hybrid_expression_data_human(cache_dir, species, expression_thresholds):
+    """Process both Bgee (for universal genes) and GTEx (for tissue-specific genes) for human.
+    
+    Returns:
+        Tuple of (universal_genes_from_bgee, tissue_specific_genes_from_gtex)
+    """
+    print_info("Processing hybrid expression data for human...")
+    print_info("  • Using Bgee for universal gene identification")
+    print_info("  • Using GTEx for tissue-specific gene identification")
+    
+    # Get universal genes from Bgee
+    universal_genes_bgee, _ = _process_bgee_expression_data_unified(
+        cache_dir, species, expression_thresholds["bgee"]
+    )
+    
+    # Get tissue-specific genes from GTEx (ignore universal genes from GTEx)
+    _, high_exp_per_tissue_gtex = _process_gtex_expression_data_unified(
+        cache_dir, species, expression_thresholds["gtex"]
+    )
+    
+    print_info(f"Hybrid processing complete:")
+    print_info(f"  • Bgee universal genes: {len(universal_genes_bgee)}")
+    print_info(f"  • GTEx tissue-specific sets: {len(high_exp_per_tissue_gtex)} tissues")
+    
+    return universal_genes_bgee, high_exp_per_tissue_gtex
+
+
+def _process_gtex_expression_data_unified(cache_dir, species, gtex_thresholds):
     """Process GTEx (.gct.gz) expression data for human.
 
     Returns a tuple of (universal_gene_ids, high_exp_per_tissue) where the
     second element maps (UBERON/EFO anatomical ID, tissue name) to the set of
-    gene IDs passing per-tissue thresholds. 
-    
-    Parameters:
-    - include_universal: Whether to compute universal genes (default: True)
-    - include_tissue_specific: Whether to compute tissue-specific genes (default: True)
+    gene IDs passing per-tissue thresholds. Behaviour is unchanged; this only
+    centralizes a few path utilities and adds clearer logging.
     """
     from tusco_selector.pipeline.expression_filter import (
         get_universal_high_expression_genes,
@@ -595,7 +725,7 @@ def _process_gtex_expression_data_unified(cache_dir, species, gtex_thresholds, i
             prevalence_expression_cutoff=gtex_thresholds.get("prevalence_expression_cutoff", 0.1),
             median_expression_cutoff=gtex_thresholds.get("median_expression_cutoff", 1.0),
             prevalence_threshold=gtex_thresholds.get("prevalence_threshold", 0.95),
-            universal_tissue_fraction=gtex_thresholds.get("universal_tissue_fraction", 1.0),
+            universal_tissue_fraction=1.0,  # Set to 1.0 for semantic correctness (universal genes discarded in hybrid mode)
         )
         
         print_success(f"GTEx processing complete: {len(universal_genes_gtex)} universal genes found")
@@ -950,6 +1080,197 @@ def _apply_alphagenome_filter(
     return passing_genes, removed_genes
 
 
+def _determine_tissue_data_sources(tissues, alphagenome_data, tissue_mapping, expression_source="bgee"):
+    """Determine which data sources are available for each tissue.
+    
+    Args:
+        tissues: List of (tissue_id, tissue_name) tuples
+        alphagenome_data: Alphagenome data if available
+        tissue_mapping: Tissue mapping data if available  
+        expression_source: "bgee" or "gtex" indicating the source of tissue data
+    
+    Returns:
+        dict: {tissue_id: {'sources': ['bgee'|'gtex'|'alphagenome'], 'name': tissue_name}}
+    """
+    tissue_data_sources = {}
+    
+    # Determine primary expression source based on parameter
+    primary_source = 'gtex' if expression_source == 'gtex' else 'bgee'
+    
+    # Get tissues from the expression source (tissue_id, tissue_name tuples)
+    for tissue_id, tissue_name in tissues:
+        tissue_data_sources[tissue_id] = {
+            'sources': [primary_source],
+            'name': tissue_name
+        }
+    
+    # Check which expression source tissues also have Alphagenome data
+    if alphagenome_data and tissue_mapping:
+        # Get all tissues that have data in Alphagenome
+        alphagenome_tissue_ids = set()
+        for gene_data in alphagenome_data:
+            tissue_expression, _ = _process_alphagenome_gene_data(gene_data)
+            alphagenome_tissue_ids.update(tissue_expression.keys())
+        
+        # Add Alphagenome as a source for tissues that have it
+        for tissue_id in tissue_data_sources:
+            if tissue_id in alphagenome_tissue_ids:
+                tissue_data_sources[tissue_id]['sources'].append('alphagenome')
+        
+        # Add tissues that only exist in Alphagenome
+        for tissue_id in alphagenome_tissue_ids:
+            if tissue_id not in tissue_data_sources:
+                # Get tissue name from mapping if available, ensure it's a string
+                tissue_name = tissue_mapping.get(tissue_id, tissue_id)
+                if not isinstance(tissue_name, str):
+                    tissue_name = str(tissue_name) if tissue_name is not None else str(tissue_id)
+                tissue_data_sources[tissue_id] = {
+                    'sources': ['alphagenome'],
+                    'name': tissue_name
+                }
+    
+    return tissue_data_sources
+
+
+def _apply_tissue_specific_filtering(
+    tissue_genes,
+    tissue_id,
+    tissue_name,
+    data_sources,
+    expression_genes,
+    alphagenome_data,
+    tissue_mapping,
+    alphagenome_thresholds,
+):
+    """Apply appropriate filtering based on available data sources for this tissue.
+    
+    Logic:
+    - Bgee/GTEx only: Use expression source genes (already filtered)
+    - Alphagenome only: Apply Alphagenome filtering
+    - Both expression source and Alphagenome: Gene must pass BOTH sources (intersection)
+    """
+    
+    # Log initial status
+    logger.info(f"\n=== Tissue: {tissue_name} ({tissue_id}) ===")
+    logger.info(f"  Input genes (from previous filters): {len(tissue_genes)}")
+    logger.info(f"  Data sources available: {', '.join(data_sources)}")
+    
+    if ('bgee' in data_sources or 'gtex' in data_sources) and 'alphagenome' not in data_sources:
+        # Expression source only (Bgee or GTEx) - use expression filtered genes
+        expr_present = tissue_genes & expression_genes
+        result = expr_present
+        
+        source_name = 'GTEx' if 'gtex' in data_sources else 'Bgee'
+        logger.info(f"  {source_name} filtering:")
+        logger.info(f"    - Genes present in {source_name}: {len(expression_genes)}")
+        logger.info(f"    - Overlap with input genes: {len(expr_present)}")
+        logger.info(f"  Final genes for this tissue: {len(result)}")
+        
+        print_info(f"  • {tissue_name}: {len(result)}/{len(tissue_genes)} genes ({source_name} only)")
+        return result
+        
+    elif 'alphagenome' in data_sources and 'bgee' not in data_sources and 'gtex' not in data_sources:
+        # Alphagenome only - apply Alphagenome filtering
+        alphagenome_passing = _apply_alphagenome_filter_only(
+            tissue_genes, tissue_id, alphagenome_data, tissue_mapping, alphagenome_thresholds
+        )
+        result = alphagenome_passing
+        
+        logger.info(f"  Alphagenome filtering:")
+        logger.info(f"    - Genes passing Alphagenome thresholds: {len(alphagenome_passing)}")
+        logger.info(f"  Final genes for this tissue: {len(result)}")
+        
+        print_info(f"  • {tissue_name}: {len(result)}/{len(tissue_genes)} genes (Alphagenome only)")
+        return result
+        
+    elif ('bgee' in data_sources or 'gtex' in data_sources) and 'alphagenome' in data_sources:
+        # Both expression source and Alphagenome available - gene must pass BOTH sources (intersection)
+        expr_present = tissue_genes & expression_genes
+        alphagenome_passing = _apply_alphagenome_filter_only(
+            tissue_genes, tissue_id, alphagenome_data, tissue_mapping, alphagenome_thresholds
+        )
+        result = expr_present & alphagenome_passing
+        
+        source_name = 'GTEx' if 'gtex' in data_sources else 'Bgee'
+        logger.info(f"  {source_name} filtering:")
+        logger.info(f"    - Genes present in {source_name}: {len(expression_genes)}")
+        logger.info(f"    - Overlap with input genes: {len(expr_present)}")
+        logger.info(f"  Alphagenome filtering:")
+        logger.info(f"    - Genes passing Alphagenome thresholds: {len(alphagenome_passing)}")
+        logger.info(f"  Combined filtering (intersection):")
+        logger.info(f"    - Genes passing BOTH {source_name} AND Alphagenome: {len(result)}")
+        logger.info(f"  Final genes for this tissue: {len(result)}")
+        
+        print_info(f"  • {tissue_name}: {len(result)}/{len(tissue_genes)} genes ({source_name}: {len(expr_present)}, Alpha: {len(alphagenome_passing)}, Both: {len(result)})")
+        return result
+    
+    else:
+        # No data sources available - shouldn't happen
+        logger.warning(f"  No data sources available for tissue {tissue_name}")
+        print_warning(f"  • {tissue_name}: No data sources available")
+        return set()
+
+
+def _apply_alphagenome_filter_only(tissue_genes, tissue_id, alphagenome_data, tissue_mapping, alphagenome_thresholds):
+    """Apply only Alphagenome filtering to genes."""
+    if not alphagenome_data:
+        return tissue_genes
+        
+    alphagenome_lookup = {gene["gene_id"]: gene for gene in alphagenome_data}
+    passing_genes = set()
+    
+    # Track statistics for logging
+    genes_not_in_alphagenome = 0
+    genes_without_tissue_data = 0
+    genes_failed_tpm = 0
+    genes_failed_splice = 0
+    genes_passed = 0
+    
+    for gene_id in tissue_genes:
+        lookup_gene_id = gene_id.split(".")[0]
+        
+        if lookup_gene_id not in alphagenome_lookup:
+            # Gene not in Alphagenome - pass through
+            passing_genes.add(gene_id)
+            genes_not_in_alphagenome += 1
+            continue
+            
+        gene_data = alphagenome_lookup[lookup_gene_id]
+        tissue_expression, tissue_splice_ratios = _process_alphagenome_gene_data(gene_data)
+        
+        if tissue_id not in tissue_expression:
+            # No tissue data - pass through  
+            passing_genes.add(gene_id)
+            genes_without_tissue_data += 1
+            continue
+            
+        tpm = tissue_expression[tissue_id]
+        splice_ratio = tissue_splice_ratios.get(tissue_id, 0.0)
+        
+        if (
+            tpm > alphagenome_thresholds["expression_threshold"]
+            and splice_ratio < alphagenome_thresholds["splice_ratio_threshold"]
+        ):
+            passing_genes.add(gene_id)
+            genes_passed += 1
+        else:
+            # Track why genes failed
+            if tpm <= alphagenome_thresholds["expression_threshold"]:
+                genes_failed_tpm += 1
+            if splice_ratio >= alphagenome_thresholds["splice_ratio_threshold"]:
+                genes_failed_splice += 1
+    
+    # Log detailed statistics
+    logger.debug(f"    Alphagenome filter details:")
+    logger.debug(f"      - Genes not in Alphagenome DB (passed through): {genes_not_in_alphagenome}")
+    logger.debug(f"      - Genes without tissue data (passed through): {genes_without_tissue_data}")
+    logger.debug(f"      - Genes passing TPM > {alphagenome_thresholds['expression_threshold']} and splice < {alphagenome_thresholds['splice_ratio_threshold']}: {genes_passed}")
+    logger.debug(f"      - Genes failed TPM threshold: {genes_failed_tpm}")
+    logger.debug(f"      - Genes failed splice ratio threshold: {genes_failed_splice}")
+    
+    return passing_genes
+
+
 def _apply_alphagenome_tissue_filter(
     tissue_genes,
     tissue_id,
@@ -961,19 +1282,28 @@ def _apply_alphagenome_tissue_filter(
     """Apply Alphagenome filtering to genes in a specific tissue."""
 
     if not alphagenome_data or not tissue_mapping:
+        logger.info(f"No Alphagenome data available for tissue {tissue_name} ({tissue_id}) - passing through all {len(tissue_genes)} genes")
         return tissue_genes
 
     # Create a lookup dict for faster access
     alphagenome_lookup = {gene["gene_id"]: gene for gene in alphagenome_data}
 
     passing_genes = set()
+    genes_without_alphagenome_data = 0
+    genes_without_tissue_expression = 0
+    genes_filtered_out = 0
+    genes_failed_tpm = 0
+    genes_failed_splice = 0
 
     for gene_id in tissue_genes:
         # Strip version from gene ID if present for lookup
         lookup_gene_id = gene_id.split(".")[0]
 
         if lookup_gene_id not in alphagenome_lookup:
-            continue  # Skip genes not in Alphagenome data
+            # Pass through genes not in Alphagenome data without filtering
+            genes_without_alphagenome_data += 1
+            passing_genes.add(gene_id)
+            continue
 
         gene_data = alphagenome_lookup[lookup_gene_id]
         tissue_expression, tissue_splice_ratios = _process_alphagenome_gene_data(
@@ -982,7 +1312,10 @@ def _apply_alphagenome_tissue_filter(
 
         # Check if this specific tissue has data
         if tissue_id not in tissue_expression:
-            continue  # Skip if no expression data for this tissue
+            # Pass through genes without tissue expression data - no filtering applied
+            genes_without_tissue_expression += 1
+            passing_genes.add(gene_id)
+            continue
 
         # For tissue-specific filtering, only check expression and splicing in this specific tissue
         tpm = tissue_expression[tissue_id]
@@ -990,14 +1323,226 @@ def _apply_alphagenome_tissue_filter(
             tissue_id, 0.0
         )  # Default to 0 if missing
 
-        # Apply tissue-specific criteria
-        if (
-            tpm > alphagenome_thresholds["expression_threshold"]
-            and splice_ratio < alphagenome_thresholds["splice_ratio_threshold"]
-        ):
+        # Apply tissue-specific criteria and track reasons
+        if tpm <= alphagenome_thresholds["expression_threshold"]:
+            genes_filtered_out += 1
+            genes_failed_tpm += 1
+        elif splice_ratio >= alphagenome_thresholds["splice_ratio_threshold"]:
+            genes_filtered_out += 1
+            genes_failed_splice += 1
+        else:
             passing_genes.add(gene_id)
 
+    # Log the filtering results with detailed breakdown
+    total_genes = len(tissue_genes)
+    genes_evaluated = total_genes - genes_without_alphagenome_data - genes_without_tissue_expression
+    
+    logger.verbose(f"Alphagenome tissue filter for {tissue_name} ({tissue_id}):")
+    logger.verbose(f"  Total genes: {total_genes}")
+    logger.verbose(f"  Genes passing: {len(passing_genes)} ({100*len(passing_genes)/total_genes:.1f}%)")
+    logger.verbose(f"  Genes without Alphagenome data (passed): {genes_without_alphagenome_data}")
+    logger.verbose(f"  Genes without tissue expression (passed): {genes_without_tissue_expression}")
+    if genes_filtered_out > 0:
+        logger.verbose(f"  Genes filtered out: {genes_filtered_out}")
+        if genes_failed_tpm > 0:
+            logger.verbose(f"    - Below TPM threshold (≤{alphagenome_thresholds['expression_threshold']}): {genes_failed_tpm}")
+        if genes_failed_splice > 0:
+            logger.verbose(f"    - Above splice ratio threshold (≥{alphagenome_thresholds['splice_ratio_threshold']}): {genes_failed_splice}")
+
     return passing_genes
+
+
+def _load_ontology_tissue_mapping(species: str) -> Dict[str, str]:
+    """Load tissue name mapping from ontology_term_to_tissue_mapping.json and GTEx mapping for human."""
+    project_root = _project_root()
+    ontology_file = os.path.join(project_root, "data", "common", "ontology_term_to_tissue_mapping.json")
+    
+    try:
+        import json
+        with open(ontology_file, 'r') as f:
+            ontology_data = json.load(f)
+        
+        if species == "hsa":
+            species_key = "human"
+        elif species == "mmu":
+            species_key = "mouse"
+        else:
+            species_key = species
+            
+        mapping = ontology_data.get(species_key, {})
+        
+        # For human, also load GTEx mapping file to handle UBERON/EFO codes
+        if species == "hsa":
+            gtex_mapping_file = os.path.join(project_root, "data", "hsa", "expression", "gtex", "uberon-map-gtex-subgroup.tsv")
+            if os.path.exists(gtex_mapping_file):
+                import pandas as pd
+                df = pd.read_csv(gtex_mapping_file, sep='\t')
+                for _, row in df.iterrows():
+                    tissue_name = row['uberon_description_gtex_subgroup']
+                    # Add UBERON mapping with both formats
+                    if pd.notna(row['uberon_code']):
+                        uberon_code = row['uberon_code']
+                        mapping[uberon_code] = tissue_name  # UBERON_xxxx
+                        mapping[uberon_code.replace('_', ':')] = tissue_name  # UBERON:xxxx
+                    # Add EFO mapping with both formats
+                    if pd.notna(row['efo_code']):
+                        efo_code = row['efo_code']
+                        mapping[efo_code] = tissue_name  # EFO_xxxx
+                        mapping[efo_code.replace('_', ':')] = tissue_name  # EFO:xxxx
+        
+        logger.verbose(f"Loaded {len(mapping)} tissue mappings for species {species}")
+        return mapping
+    except Exception as e:
+        logger.error(f"Failed to load ontology tissue mapping: {e}")
+        return {}
+
+
+def _create_tissue_tsv(output_file: str, tissue_name: str, gene_ids: Set[str], mapping_file: str = None) -> None:
+    """Create a TSV file with tissue name and corresponding TUSCO genes in the 6-column format."""
+    import csv
+    
+    try:
+        # Load mapping data if available
+        mapping_data = {}
+        if mapping_file and os.path.exists(mapping_file):
+            with open(mapping_file, 'r') as mf:
+                reader = csv.reader(mf, delimiter='\t')
+                for row in reader:
+                    if row and not row[0].startswith('#'):
+                        # Mapping format: Gene_ID, Transcript_ID, Gene_Symbol, EntrezGene_ID, RefSeq_mRNA_ID, RefSeq_Protein_ID
+                        if len(row) >= 6:
+                            gene_id = row[0].split('.')[0]  # Remove version if present
+                            mapping_data[gene_id] = row
+        
+        with open(output_file, 'w') as f:
+            # Write header
+            f.write(f"# Tissue: {tissue_name}\n")
+            f.write(f"# Gene Count: {len(gene_ids)}\n")
+            f.write("Gene_ID\tTranscript_ID\tGene_Symbol\tEntrezGene_ID\tRefSeq_mRNA_ID\tRefSeq_Protein_ID\n")
+            
+            # Write gene data with all 6 columns
+            for gene_id in sorted(gene_ids):
+                lookup_id = gene_id.split('.')[0]  # Remove version for lookup
+                if lookup_id in mapping_data:
+                    # Use the full row from mapping
+                    row = mapping_data[lookup_id]
+                    f.write('\t'.join(row[:6]) + '\n')  # Ensure we only write 6 columns
+                else:
+                    # If not in mapping, write gene_id with empty fields
+                    f.write(f"{gene_id}\t\t\t\t\t\n")
+                
+        logger.verbose(f"Created tissue TSV file: {output_file} ({len(gene_ids)} genes)")
+    except Exception as e:
+        logger.error(f"Failed to create tissue TSV file {output_file}: {e}")
+
+
+def _create_tissue_statistics_tsv(output_file: str, tissue_stats: List[Tuple[str, str, int]]) -> None:
+    """Create a statistical TSV file with tissue names and corresponding TUSCO gene counts.
+    
+    Parameters
+    ----------
+    output_file : str
+        Path to the output statistics TSV file
+    tissue_stats : List[Tuple[str, str, int]]
+        List of tuples containing (tissue_name, anatomical_id, gene_count)
+    """
+    try:
+        with open(output_file, 'w') as f:
+            # Write header
+            f.write("Anatomical_Entity_Name\tNumber_of_TUSCO_Genes\n")
+            
+            # Write tissue statistics (sorted by gene count, descending)
+            for tissue_name, anatomical_id, gene_count in tissue_stats:
+                f.write(f"{tissue_name}\t{gene_count}\n")
+                
+        logger.info(f"Created tissue statistics TSV file: {output_file} ({len(tissue_stats)} tissues)")
+    except Exception as e:
+        logger.error(f"Failed to create tissue statistics TSV file {output_file}: {e}")
+
+
+def _create_comprehensive_statistics_tsv(output_dir: str, species: str) -> None:
+    """Create comprehensive statistics TSV file including universal and tissue-specific gene counts.
+    
+    Parameters
+    ----------
+    output_dir : str
+        Output directory containing the TUSCO files
+    species : str  
+        Species code (hsa, mmu, dre)
+    """
+    import glob
+    import os
+    
+    try:
+        # Get universal gene count from the main TUSCO file
+        universal_file = None
+        if species == "hsa":
+            universal_file = os.path.join(output_dir, "tusco_human.tsv")
+        elif species == "mmu": 
+            universal_file = os.path.join(output_dir, "tusco_mouse.tsv")
+        
+        universal_count = 0
+        universal_genes = {}
+        
+        if universal_file and os.path.exists(universal_file):
+            with open(universal_file, 'r') as f:
+                for line in f:
+                    if line.startswith('#'):
+                        continue
+                    parts = line.strip().split('\t')
+                    if len(parts) >= 6:
+                        universal_count += 1
+                        gene_id = parts[0]
+                        universal_genes[gene_id] = parts
+        
+        # Collect tissue-specific data
+        data = [['Universal', universal_count]]
+        
+        # Map species codes to full names (same as in tissue file creation)
+        species_name_map = {"hsa": "human", "mmu": "mouse", "dre": "zebrafish"}
+        species_name = species_name_map.get(species, species)
+        
+        # Find all tissue-specific TSV files using the full species name (exclude statistics and detailed files)
+        tissue_pattern = os.path.join(output_dir, f"tusco_{species_name}_*.tsv")
+        tissue_files = glob.glob(tissue_pattern)
+        tissue_files = [f for f in tissue_files if not f.endswith('tissue_statistics.tsv') and not f.endswith('comprehensive_statistics.tsv')]
+        
+        # Load ontology mapping for proper tissue name resolution
+        ontology_mapping = _load_ontology_tissue_mapping(species)
+        
+        for tissue_file in sorted(tissue_files):
+            # Extract tissue name from filename using the full species name
+            raw_name = os.path.basename(tissue_file).replace(f'tusco_{species_name}_', '').replace('.tsv', '')
+            
+            # Check if it's a UBERON/EFO code and map it, otherwise clean the name
+            if raw_name.startswith('UBERON:') or raw_name.startswith('EFO:'):
+                # The mapping now handles both UBERON: and UBERON_ formats
+                tissue_name = ontology_mapping.get(raw_name, raw_name)
+            else:
+                tissue_name = raw_name.replace('_', ' ')
+            
+            # Count genes in file (excluding header lines starting with #)
+            count = 0
+            with open(tissue_file, 'r') as f:
+                for line in f:
+                    if not line.strip().startswith('#') and line.strip() and not line.strip().startswith('Gene_ID'):
+                        count += 1
+            
+            data.append([tissue_name, count])
+        
+        # Write comprehensive statistics file
+        stats_file = os.path.join(output_dir, f"tusco_{species}_comprehensive_statistics.tsv")
+        with open(stats_file, 'w') as f:
+            f.write('Anatomical_Entity_Name\tNumber_of_TUSCO_Genes\n')
+            for row in data:
+                f.write(f'{row[0]}\t{row[1]}\n')
+        
+        logger.info(f"Created comprehensive statistics TSV file: {stats_file} ({len(data)} entities)")
+        print_success(f"Created comprehensive statistics file: {stats_file}")
+        
+    except Exception as e:
+        logger.error(f"Failed to create comprehensive statistics TSV file: {e}")
+        print_warning(f"Failed to create comprehensive statistics: {e}")
 
 
 def _save_expression_outputs_with_ids(
@@ -1007,9 +1552,10 @@ def _save_expression_outputs_with_ids(
     step4_gtf,
     output_dir,
     mapping_file,
+    species,
 ):
     """Save universal and tissue-specific expression outputs using anatomical entity IDs."""
-    from tusco_selector.utils import subset_gtf_by_gene_ids, subset_mapping_file
+    from tusco_selector.utils import subset_gtf_by_gene_ids, subset_mapping_file, generate_tusco_tables
 
     if passing_universal_genes:
         # Write universal gene output
@@ -1034,11 +1580,29 @@ def _save_expression_outputs_with_ids(
             f"Universal genes: {len(passing_universal_genes)} genes expressed in all tissues"
         )
 
-        # Save tissue-specific high-expression genes using anatomical entity IDs
+        # Load tissue name mapping for proper naming
+        ontology_mapping = _load_ontology_tissue_mapping(species)
+        
+        # Save tissue-specific high-expression genes with proper naming
+        from tusco_selector.optional_deps import tqdm, HAS_TQDM
+        
+        # Map species codes to full names for file naming
+        species_name_map = {"hsa": "human", "mmu": "mouse", "dre": "zebrafish"}
+        species_name = species_name_map.get(species, species)
+
         tissue_stats = []
-        for tissue_info, genes in high_exp_per_tissue.items():
+        logger.info(f"Generating tissue-specific outputs for {len(high_exp_per_tissue)} tissues...")
+        
+        # Use progress bar if available and progress flag is set
+        iterator = tqdm(high_exp_per_tissue.items(), desc="Tissues", disable=not HAS_TQDM) if HAS_TQDM else high_exp_per_tissue.items()
+        
+        for tissue_info, genes in iterator:
             # tissue_info is a tuple of (anatomical_entity_id, tissue_name)
             anatomical_id, tissue_name = tissue_info
+            
+            # Ensure both anatomical_id and tissue_name are strings
+            anatomical_id = str(anatomical_id) if anatomical_id is not None else ""
+            tissue_name = str(tissue_name) if tissue_name is not None else ""
 
             tissue_passing_genes = (
                 genes & initial_genes
@@ -1046,31 +1610,52 @@ def _save_expression_outputs_with_ids(
             if not tissue_passing_genes:
                 continue
 
+            # Get proper tissue name from ontology mapping
+            clean_tissue_name = ontology_mapping.get(anatomical_id, tissue_name)
+            # Ensure tissue name is a string
+            if not isinstance(clean_tissue_name, str):
+                clean_tissue_name = str(clean_tissue_name) if clean_tissue_name is not None else str(tissue_name)
+            # Sanitize filename - replace spaces and special characters
+            safe_tissue_name = clean_tissue_name.replace(" ", "_").replace("/", "_").replace("(", "").replace(")", "").replace("-", "_")
+            
             # Track stats for reporting
-            tissue_stats.append((tissue_name, anatomical_id, len(tissue_passing_genes)))
+            tissue_stats.append((clean_tissue_name, anatomical_id, len(tissue_passing_genes)))
 
-            # Use anatomical entity ID for filename (e.g., UBERON:0002048.tsv)
-            tissue_gtf = os.path.join(output_dir, f"{anatomical_id}.gtf.gz")
+            # Use new naming scheme: tusco_{species_name}_{tissue_name}.gtf/.tsv
+            tissue_gtf = os.path.join(output_dir, f"tusco_{species_name}_{safe_tissue_name}.gtf.gz")
             subset_gtf_by_gene_ids(step4_gtf, tissue_passing_genes, tissue_gtf)
 
-            # Subset mapping file for tissue-specific genes
-            if os.path.exists(mapping_file):
-                tissue_mapping = os.path.join(output_dir, f"{anatomical_id}.tsv")
-                subset_mapping_file(
-                    list(tissue_passing_genes),
-                    mapping_file,
-                    tissue_mapping,
-                    f"expressed in {tissue_name} ({anatomical_id})",
-                )
+            # Create TSV file with tissue name and genes
+            tissue_tsv = os.path.join(output_dir, f"tusco_{species_name}_{safe_tissue_name}.tsv")
+            _create_tissue_tsv(tissue_tsv, clean_tissue_name, tissue_passing_genes, mapping_file)
 
-        # Print tissue statistics
+        # Create statistical summary TSV file
         if tissue_stats:
             tissue_stats.sort(key=lambda x: x[2], reverse=True)
-            logger.info("Tissue-specific genes (saved as anatomical entity IDs):")
+            
+            # Create statistical summary file
+            stats_file = os.path.join(output_dir, f"tusco_{species_name}_tissue_statistics.tsv")
+            _create_tissue_statistics_tsv(stats_file, tissue_stats)
+            
+            # Calculate statistics for summary
+            gene_counts = [count for _, _, count in tissue_stats]
+            total_tissues = len(tissue_stats)
+            min_genes = min(gene_counts) if gene_counts else 0
+            max_genes = max(gene_counts) if gene_counts else 0
+            avg_genes = sum(gene_counts) / total_tissues if total_tissues > 0 else 0
+            
+            # Print compact summary
+            logger.info(f"Generated {total_tissues} tissue-specific files:")
+            logger.info(f"  • Gene range: {min_genes}-{max_genes} genes/tissue")
+            logger.info(f"  • Average: {avg_genes:.1f} genes/tissue")
+            
+            # Show top tissues at VERBOSE level
             for tissue_name, anatomical_id, count in tissue_stats[:5]:
-                logger.info(f"  • {tissue_name} ({anatomical_id}): {count} genes")
+                logger.verbose(f"  • {tissue_name} ({anatomical_id}): {count} genes")
             if len(tissue_stats) > 5:
-                logger.info(f"  ... and {len(tissue_stats) - 5} more tissues")
+                logger.verbose(f"  ... and {len(tissue_stats) - 5} more tissues")
+            
+            logger.info(f"Created tissue statistics TSV file: {stats_file} ({total_tissues} tissues)")
     else:
         print_warning("No universal genes detected in Bgee data")
 
@@ -1278,23 +1863,18 @@ def run_pipeline_steps(args, cache_dir, files, template_gtf, thresholds):
         filter_log_df,
         thresholds["expression"],
         expression_source=args.expression_source,
-        universal_expression_source=args.universal_expression_source,
-        tissue_expression_source=args.tissue_expression_source,
         encode_tissues=args.encode_tissues,
     )
     print_summary(step5_gtf)
 
-    # Step 6: Apply Alphagenome filter
-    print_step(6, TOTAL_STEPS, "Applying Alphagenome filtering criteria")
-    transcripts, step6_gtf, filter_log_df = apply_alphagenome_filter(
-        transcripts,
-        args.species,
-        cache_dir,
-        args.output_dir,
-        step5_gtf,
-        filter_log_df,
-        thresholds["expression"]["alphagenome"],
-    )
+    # Step 6: Alphagenome filtering is now integrated into Step 5
+    # Universal genes require both Bgee AND Alphagenome criteria
+    # Tissue-specific genes use per-tissue logic based on data source availability
+    print_step(6, TOTAL_STEPS, "Alphagenome filtering (integrated into Step 5)")
+    print_info("Alphagenome filtering has been integrated into expression filtering (Step 5)")
+    print_info("- Universal genes: Must pass BOTH Bgee AND Alphagenome criteria")  
+    print_info("- Tissue-specific genes: Per-tissue logic (Bgee only, Alphagenome only, or BOTH when available)")
+    step6_gtf = step5_gtf  # Use the same GTF as Step 5 since filtering is integrated
     print_summary(step6_gtf)
 
     # Step 7: Apply manual filters
@@ -1377,40 +1957,25 @@ def initialize_filter_log(output_dir, transcripts):
     return filter_log_df
 
 
-def setup_logging(args, output_dir):
-    """Set up file and console logging."""
-    log_file = os.path.join(output_dir, f"tusco_{args.species}.log")
-
-    # Remove all existing handlers
-    root_logger = logging.getLogger()
-    for handler in root_logger.handlers[:]:
-        root_logger.removeHandler(handler)
-
-    # Create file handler (always DEBUG level)
-    file_handler = logging.FileHandler(log_file, mode="w")
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(
-        logging.Formatter(
-            "%(asctime)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
-        )
+def setup_file_and_console_logging(args, output_dir):
+    """Set up file and console logging with custom levels."""
+    log_file_path = os.path.join(output_dir, f"tusco_{args.species}.log")
+    
+    # Handle backward compatibility with --verbose flag
+    if args.verbose and args.log_level == "info":
+        console_level = "debug"
+    else:
+        console_level = args.log_level
+    
+    # Setup the enhanced logging
+    setup_logging(
+        log_level=console_level.upper(),
+        file_log_level=args.file_log_level.upper(),
+        log_file=log_file_path
     )
-    root_logger.addHandler(file_handler)
-
-    # Create console handler with appropriate level
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(
-        logging.Formatter(
-            "%(asctime)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
-        )
-    )
-    console_handler.setLevel(logging.DEBUG if args.verbose else logging.INFO)
-    root_logger.addHandler(console_handler)
-
-    # Set root logger to DEBUG to capture all messages
-    root_logger.setLevel(logging.DEBUG)
-    logger.info(f"Log file created at: {os.path.abspath(log_file)}")
-
-    return log_file
+    
+    logger.verbose(f"Log file created at: {os.path.abspath(log_file_path)}")
+    return log_file_path
 
 
 def display_welcome_banner(species: str) -> None:
@@ -1445,7 +2010,7 @@ def download_resources(species, cache_dir):
 def select_single_isoform_genes(files, species, output_dir, template_gtf, cache_dir):
     """Step 2: Select matched single-isoform genes."""
     from tusco_selector.pipeline.single_isoform import (
-        filter_mrna_transcripts,
+        filter_genes_present_in_mapping,
         select_matched_single_isoforms,
     )
     from tusco_selector.utils import (
@@ -1466,7 +2031,7 @@ def select_single_isoform_genes(files, species, output_dir, template_gtf, cache_
         transcripts = select_matched_single_isoforms(files, species=species)
 
         # Filter out non-mRNA transcripts using the mapping file
-        transcripts = filter_mrna_transcripts(transcripts, mapping_file)
+        transcripts = filter_genes_present_in_mapping(transcripts, mapping_file)
 
     # Save step-2 outputs reflecting the selected single-isoform set
     _save_step_outputs(
@@ -1563,7 +2128,6 @@ def check_splice_and_tss(
             tss_scope=splice_tss_thresholds["tss_scope"],
             tss_region_bp=splice_tss_thresholds.get("tss_region_bp"),
         )
-        # No verbose per-gene debug reporting
 
         # Update filter log using the helper function
         filter_log_df = _update_filter_log(
@@ -1718,8 +2282,6 @@ def filter_by_expression(
     filter_log_df,
     expression_thresholds,
     expression_source: str = "auto",
-    universal_expression_source: str = "auto",
-    tissue_expression_source: str = "auto",
     encode_tissues: List[str] | None = None,
 ):
     """Step 5: Filter by expression level."""
@@ -1747,35 +2309,16 @@ def filter_by_expression(
             get_universal_high_expression_genes_bgee_with_ids,
         )
 
-        # Resolve expression sources based on user selection
-        # If expression_source is specified and the specific sources are "auto", use expression_source for both
-        resolved_universal_source = universal_expression_source
-        resolved_tissue_source = tissue_expression_source
-        
-        if resolved_universal_source == "auto":
-            if expression_source != "auto":
-                resolved_universal_source = expression_source
-            else:
-                # Default behavior: use Bgee for universal genes (both human and mouse)
-                resolved_universal_source = "bgee"
-        
-        if resolved_tissue_source == "auto":
-            if expression_source != "auto":
-                resolved_tissue_source = expression_source
-            else:
-                # Default behavior: use GTEx for human tissue-specific, Bgee for mouse
-                resolved_tissue_source = "gtex" if species == "hsa" else "bgee"
-        
-        print_info(f"Using {resolved_universal_source} for universal genes and {resolved_tissue_source} for tissue-specific genes")
-        
-        # Process universal genes
-        print_info(f"Processing universal genes with {resolved_universal_source}...")
-        if resolved_universal_source == "gtex":
+        # Choose expression source based on user selection
+        selected_source = (expression_source or "auto").lower()
+
+        if selected_source == "gtex":
             if species != "hsa":
                 print_warning(
-                    f"GTEx selected for universal genes but species is {species}. Results may be empty if data is unavailable."
+                    f"GTEx selected explicitly but species is {species}. Proceeding with GTEx; results may be empty if data is unavailable."
                 )
-            universal_genes, _ = _process_gtex_expression_data_unified(
+            print_info("Processing GTEx expression data...")
+            universal_genes, high_exp_per_tissue = _process_gtex_expression_data_unified(
                 cache_dir,
                 species,
                 expression_thresholds.get(
@@ -1784,47 +2327,25 @@ def filter_by_expression(
                         "prevalence_expression_cutoff": 0.1,
                         "median_expression_cutoff": 1.0,
                         "prevalence_threshold": 0.95,
-                        "universal_tissue_fraction": 1.0,
                     },
                 ),
-                include_universal=True,
-                include_tissue_specific=False
             )
-        else:  # bgee
-            universal_genes, _ = _process_bgee_expression_data_unified(
-                cache_dir, species, expression_thresholds["bgee"],
-                include_universal=True,
-                include_tissue_specific=False
+        elif selected_source == "bgee":
+            print_info(f"Processing Bgee expression data for {species}...")
+            universal_genes, high_exp_per_tissue = _process_bgee_expression_data_unified(
+                cache_dir, species, expression_thresholds["bgee"]
             )
-        
-        # Process tissue-specific genes
-        print_info(f"Processing tissue-specific genes with {resolved_tissue_source}...")
-        if resolved_tissue_source == "gtex":
-            if species != "hsa":
-                print_warning(
-                    f"GTEx selected for tissue-specific genes but species is {species}. Results may be empty if data is unavailable."
+        else:  # auto behavior (new hybrid approach for human)
+            if species == "hsa":
+                # Use hybrid approach: Bgee for universal genes, GTEx for tissue-specific genes
+                universal_genes, high_exp_per_tissue = _process_hybrid_expression_data_human(
+                    cache_dir, species, expression_thresholds
                 )
-            _, high_exp_per_tissue = _process_gtex_expression_data_unified(
-                cache_dir,
-                species,
-                expression_thresholds.get(
-                    "gtex",
-                    {
-                        "prevalence_expression_cutoff": 0.1,
-                        "median_expression_cutoff": 1.0,
-                        "prevalence_threshold": 0.95,
-                        "universal_tissue_fraction": 1.0,
-                    },
-                ),
-                include_universal=False,
-                include_tissue_specific=True
-            )
-        else:  # bgee
-            _, high_exp_per_tissue = _process_bgee_expression_data_unified(
-                cache_dir, species, expression_thresholds["bgee"],
-                include_universal=False,
-                include_tissue_specific=True
-            )
+            else:
+                print_info(f"Processing Bgee expression data for {species}...")
+                universal_genes, high_exp_per_tissue = _process_bgee_expression_data_unified(
+                    cache_dir, species, expression_thresholds["bgee"]
+                )
 
         if not universal_genes:
             print_warning(
@@ -1848,18 +2369,97 @@ def filter_by_expression(
             except Exception as e:
                 print_warning(f"Error processing housekeeping genes: {e}")
 
-        # Keep only genes present after previous steps (already implicitly handled by initial_genes)
-        passing_universal_genes = universal_genes & initial_genes
+        # For universal genes, require passing BOTH expression source and Alphagenome filters
+        # First get expression-based universal genes
+        expression_universal_genes = universal_genes & initial_genes
         
-        # DEBUG: Print the number of genes passing the universal filter
-        print_info(f"Number of genes passing the universal filter: {len(passing_universal_genes)}")
+        # Determine which expression source was used for logging
+        if selected_source == "gtex":
+            expression_source_name = "GTEx"
+        elif selected_source == "bgee":
+            expression_source_name = "Bgee"
+        else:  # auto mode
+            if species == "hsa":
+                expression_source_name = "Bgee (universal) + GTEx (tissue-specific)"
+            else:
+                expression_source_name = "Bgee"
+        print_info(f"{expression_source_name} universal genes (expression-based): {len(expression_universal_genes)}")
+        
+        # Apply Alphagenome filter to get Alphagenome universal genes  
+        alphagenome_data, tissue_mapping = _load_alphagenome_data(cache_dir, species)
+        if alphagenome_data and tissue_mapping:
+            # Classify genes by exon counts for Alphagenome filtering
+            try:
+                from tusco_selector.utils import classify_genes_by_exons
+                single_exon_genes, multi_exon_genes = classify_genes_by_exons(step4_gtf)
+            except Exception:
+                single_exon_genes, multi_exon_genes = set(), set()
+            
+            # Apply Alphagenome universal filter to all initial genes
+            alphagenome_universal_genes, alphagenome_removed = _apply_alphagenome_filter(
+                initial_genes,
+                alphagenome_data,
+                tissue_mapping,
+                expression_thresholds["alphagenome"]["universal"],
+                single_exon_genes,
+                multi_exon_genes,
+            )
+            
+            # Analyze removal reasons for Alphagenome
+            thr = expression_thresholds["alphagenome"]["universal"]
+            alpha_reason_counts = {
+                "median": 0,
+                "prevalence": 0,
+                "splice_purity": 0,
+                "not_in_db": 0,
+                "no_tissue": 0,
+            }
+            for reason in alphagenome_removed.values():
+                r = str(reason).lower()
+                if "median" in r and "rpkm" in r:
+                    alpha_reason_counts["median"] += 1
+                elif r.startswith("prevalence"):
+                    alpha_reason_counts["prevalence"] += 1
+                elif r.startswith("splice purity"):
+                    alpha_reason_counts["splice_purity"] += 1
+                elif "not in alphagenome" in r:
+                    alpha_reason_counts["not_in_db"] += 1
+                elif "no expression data" in r:
+                    alpha_reason_counts["no_tissue"] += 1
+            
+            logger.info("=" * 60)
+            logger.info("Expression Filter Summary (Step 5):")
+            logger.info(f"  {expression_source_name} universal genes: {len(expression_universal_genes):,}")
+            logger.info(f"  Alphagenome universal genes: {len(alphagenome_universal_genes):,}")
+            logger.info(f"  Alphagenome filter breakdown:")
+            if alpha_reason_counts["median"] > 0:
+                logger.info(f"    - Below median RPKM: {alpha_reason_counts['median']:,}")
+            if alpha_reason_counts["prevalence"] > 0:
+                logger.info(f"    - Below prevalence: {alpha_reason_counts['prevalence']:,}")
+            if alpha_reason_counts["splice_purity"] > 0:
+                logger.info(f"    - Below splice purity: {alpha_reason_counts['splice_purity']:,}")
+            if alpha_reason_counts["not_in_db"] > 0:
+                logger.info(f"    - Not in Alphagenome: {alpha_reason_counts['not_in_db']:,}")
+            if alpha_reason_counts["no_tissue"] > 0:
+                logger.info(f"    - No tissue data: {alpha_reason_counts['no_tissue']:,}")
+            
+            # Universal genes must pass BOTH expression source AND Alphagenome criteria
+            passing_universal_genes = expression_universal_genes & alphagenome_universal_genes
+            logger.info(f"  Final universal genes (intersection): {len(passing_universal_genes):,}")
+            logger.info(f"  Total genes removed in Step 5: {len(initial_genes) - len(passing_universal_genes):,}")
+            logger.info("=" * 60)
+            
+        else:
+            # Fallback: only expression source filtering available
+            passing_universal_genes = expression_universal_genes
+            print_warning(f"No Alphagenome data available - universal genes based only on {expression_source_name}")
 
-        # Determine removed IDs from expression filtering
+        # Determine removed IDs from combined expression and Alphagenome filtering  
         removed_ids = initial_genes - passing_universal_genes
 
         # Update filter log using the helper function
         filter_log_df = _update_filter_log(
-            filter_log_df, removed_ids, "Expression Filter"
+            filter_log_df, removed_ids, "Expression+Alphagenome Filter"
         )
         
         # Optionally augment tissue-specific sets with ENCODE data before Alphagenome filtering
@@ -1874,41 +2474,83 @@ def filter_by_expression(
         except Exception as e:
             print_warning(f"Skipping ENCODE augmentation due to error: {e}")
 
-        # Apply Alphagenome tissue-specific filtering to tissue-specific outputs (uses --tissue-* thresholds)
+        # Apply tissue-specific filtering based on data source availability
         filtered_high_exp_per_tissue = {}
         try:
             alphagenome_data, tissue_mapping = _load_alphagenome_data(cache_dir, species)
-            if alphagenome_data and tissue_mapping and high_exp_per_tissue:
+            
+            if high_exp_per_tissue:
+                # Determine which data sources are available for each tissue
+                tissue_list = list(high_exp_per_tissue.keys())  # (tissue_id, tissue_name) tuples
+                
+                # Determine the expression source used for tissue-specific genes
+                tissue_expression_source = "bgee"  # default
+                if selected_source == "gtex":
+                    tissue_expression_source = "gtex"
+                elif selected_source == "auto" and species == "hsa":
+                    tissue_expression_source = "gtex"  # hybrid mode uses GTEx for tissue-specific
+                
+                tissue_data_sources = _determine_tissue_data_sources(
+                    tissue_list, alphagenome_data, tissue_mapping, tissue_expression_source
+                )
+                
                 tissue_thresholds = expression_thresholds["alphagenome"]["tissue_specific"]
                 kept_counts = []
-                for tissue_info, genes in high_exp_per_tissue.items():
+                
+                print_info(f"\n=== Processing {len(high_exp_per_tissue)} tissues with tissue-specific filtering ===")
+                print_info(f"Genes entering tissue-specific filtering: {len(initial_genes)}")
+                print_info(f"Expression thresholds: TPM > {tissue_thresholds.get('expression_threshold', 'N/A')}, Splice ratio < {tissue_thresholds.get('splice_ratio_threshold', 'N/A')}")
+                
+                for tissue_info, expression_genes in high_exp_per_tissue.items():
                     anatomical_id, tissue_name = tissue_info
-                    candidate_genes = genes & initial_genes
-                    if not candidate_genes:
+                    candidate_genes = expression_genes & initial_genes
+                    
+                    if anatomical_id not in tissue_data_sources:
+                        logger.warning(f"Tissue {tissue_name} ({anatomical_id}) not found in data source mapping")
                         continue
-                    passing_genes_in_tissue = _apply_alphagenome_tissue_filter(
+                    
+                    data_sources = tissue_data_sources[anatomical_id]['sources']
+                    
+                    # Apply appropriate filtering based on available data sources
+                    passing_genes_in_tissue = _apply_tissue_specific_filtering(
                         candidate_genes,
-                        anatomical_id,
+                        anatomical_id, 
                         tissue_name,
+                        data_sources,
+                        expression_genes,
                         alphagenome_data,
                         tissue_mapping,
                         tissue_thresholds,
                     )
+                    
+                    # Always keep tissue (even if empty) to ensure all tissues get output files
+                    filtered_high_exp_per_tissue[tissue_info] = passing_genes_in_tissue
                     if passing_genes_in_tissue:
-                        filtered_high_exp_per_tissue[tissue_info] = passing_genes_in_tissue
-                        kept_counts.append((tissue_name, anatomical_id, len(passing_genes_in_tissue)))
+                        kept_counts.append((tissue_name, anatomical_id, len(passing_genes_in_tissue), '+'.join(data_sources)))
+                
                 if kept_counts:
                     kept_counts.sort(key=lambda x: x[2], reverse=True)
-                    top = ", ".join([f"{name} ({tid}): {cnt}" for name, tid, cnt in kept_counts[:5]])
-                    print_info(f"Applied Alphagenome tissue filter; top tissues kept: {top}")
+                    print_info(f"\n=== Tissue-specific filtering summary ===")
+                    print_info(f"Total tissues processed: {len(high_exp_per_tissue)}")
+                    print_info(f"Tissues with genes: {len(kept_counts)}")
+                    print_info(f"Top tissues by gene count:")
+                    for tissue_name, tid, count, sources in kept_counts[:10]:  # Show top 10
+                        print_info(f"  • {tissue_name}: {count} genes [{sources}]")
+                    if len(kept_counts) > 10:
+                        print_info(f"  ... and {len(kept_counts) - 10} more tissues with genes")
+                    
+                    empty_tissues = len(filtered_high_exp_per_tissue) - len(kept_counts)
+                    if empty_tissues > 0:
+                        print_info(f"\nTissues with no genes after filtering: {empty_tissues}")
+                        print_info(f"  (Empty output files will be created for these tissues)")
                 else:
-                    print_warning("Alphagenome tissue filter removed all tissue-specific sets")
+                    print_warning("\nNo tissues have genes after tissue-specific filtering")
             else:
-                # Fallback: no alphagenome data; keep original sets
-                filtered_high_exp_per_tissue = high_exp_per_tissue
+                print_info("No tissue-specific data from expression filtering")
+                
         except Exception as e:
-            # Fail open: keep original sets if alphagenome filtering errors out
-            print_warning(f"Tissue-specific Alphagenome filtering skipped due to error: {e}")
+            # Fail open: keep original sets if filtering errors out
+            print_warning(f"Tissue-specific filtering skipped due to error: {e}")
             filtered_high_exp_per_tissue = high_exp_per_tissue
 
         # Save universal high-expression genes and tissue-specific outputs (after Alphagenome tissue-specific filter)
@@ -1919,6 +2561,7 @@ def filter_by_expression(
             step4_gtf,
             output_dir,
             mapping_file,
+            species,
         )
 
         # Update transcripts dict to only contain the universally passing genes for the next step
@@ -1958,7 +2601,12 @@ def apply_alphagenome_filter(
     filter_log_df,
     alphagenome_thresholds,
 ):
-    """Step 6: Apply Alphagenome filtering criteria."""
+    """Step 6: Apply Alphagenome filtering criteria.
+    
+    NOTE: Universal gene Alphagenome filtering is now applied in Step 5 (expression filtering)
+    to ensure universal genes must pass BOTH Bgee AND Alphagenome criteria.
+    This step now only handles any remaining Alphagenome filtering for non-universal genes.
+    """
     from tusco_selector.utils import (
         build_transcripts_dict_from_gtf,
         subset_gtf_by_gene_ids,
@@ -1986,8 +2634,8 @@ def apply_alphagenome_filter(
         if alphagenome_data and tissue_mapping:
             # Classify genes by exon counts using step-5 GTF
             try:
-                from tusco_selector.utils import _classify_genes_by_exons
-                single_exon_genes, multi_exon_genes = _classify_genes_by_exons(step5_gtf)
+                from tusco_selector.utils import classify_genes_by_exons
+                single_exon_genes, multi_exon_genes = classify_genes_by_exons(step5_gtf)
             except Exception:
                 single_exon_genes, multi_exon_genes = set(), set()
 
@@ -2057,7 +2705,7 @@ def apply_alphagenome_filter(
                 }
                 for reason in alpha_removed_genes.values():
                     r = str(reason).lower()
-                    if r.startswith("median tpm"):
+                    if "median" in r and "rpkm" in r:
                         reason_counts["median"] += 1
                     elif r.startswith("prevalence"):
                         reason_counts["prevalence"] += 1
@@ -2070,18 +2718,25 @@ def apply_alphagenome_filter(
                     else:
                         reason_counts["other"] += 1
 
-                print_info(
-                    (
-                        "Alphagenome removals: "
-                        f"{reason_counts['median']} below median RPKM thresholds (single >= {thr['single_exon_median_rpkm_threshold']}, multi >= {thr['multi_exon_median_rpkm_threshold']}), "
-                        f"{reason_counts['prevalence']} below prevalence thresholds (single >= {thr['single_exon_prevalence_threshold']} @ RPKM > {thr['single_exon_expression_threshold']}; "
-                        f"multi >= {thr['multi_exon_prevalence_threshold']} @ RPKM > {thr['multi_exon_expression_threshold']}), "
-                        f"{reason_counts['splice_purity']} below --splice-purity-threshold (>= {thr['splice_purity_threshold']} with splice-ratio < {thr['splice_ratio_threshold']}), "
-                        f"{reason_counts['not_in_alphagenome']} not in Alphagenome data, "
-                        f"{reason_counts['no_tissue_data']} without mapped tissue expression, "
-                        f"{reason_counts['other']} other"
-                    )
-                )
+                # Log detailed breakdown
+                logger.info("=" * 60)
+                logger.info("Alphagenome Filter Summary (Step 6):")
+                logger.info(f"  Genes entering filter: {len(initial_genes):,}")
+                logger.info(f"  Genes passing filter: {len(alpha_passing_genes):,}")
+                logger.info(f"  Genes removed: {len(alpha_removed_genes):,}")
+                logger.info("  Removal breakdown:")
+                logger.info(f"    - Below median RPKM threshold: {reason_counts['median']:,}")
+                logger.info(f"      (single-exon >= {thr['single_exon_median_rpkm_threshold']}, multi-exon >= {thr['multi_exon_median_rpkm_threshold']})")
+                logger.info(f"    - Below prevalence threshold: {reason_counts['prevalence']:,}")
+                logger.info(f"      (single-exon >= {thr['single_exon_prevalence_threshold']} @ RPKM > {thr['single_exon_expression_threshold']})")
+                logger.info(f"      (multi-exon >= {thr['multi_exon_prevalence_threshold']} @ RPKM > {thr['multi_exon_expression_threshold']})")
+                logger.info(f"    - Below splice purity threshold: {reason_counts['splice_purity']:,}")
+                logger.info(f"      (>= {thr['splice_purity_threshold']} tissues with splice-ratio < {thr['splice_ratio_threshold']})")
+                logger.info(f"    - Not in Alphagenome database: {reason_counts['not_in_alphagenome']:,}")
+                logger.info(f"    - No expression data for mapped tissues: {reason_counts['no_tissue_data']:,}")
+                if reason_counts['other'] > 0:
+                    logger.info(f"    - Other reasons: {reason_counts['other']:,}")
+                logger.info("=" * 60)
             except Exception as e:
                 logger.debug(f"Failed to summarize Alphagenome removal reasons: {e}")
 
@@ -2194,10 +2849,11 @@ def summarize_results(output_dir):
     output_files = [
         ("Step-2: single-isoform", "step2_single_isoform.gtf.gz"),
         ("Step-3: splice/TSS filtered", "step3_splice_tss_filtered.gtf.gz"),
-        ("Step-4: IntroVerse filtered", "step4_introverse_filtered.gtf.gz"),
-        ("Step-5: expression filtered", "step5_expression_filtered.gtf.gz"),
-        ("Step-6: Alphagenome filtered", "step6_alphagenome_filtered.gtf.gz"),
-        ("Step-7: final filtered", "step7_final_filtered.gtf.gz"),
+        ("Step-4: manual filtered", "step4_introverse_filtered.gtf.gz"),
+        ("Step-5: expression filtered (includes AlphaGenome)", "step5_expression_filtered.gtf.gz"),
+        ("Step-5: universal high expression", "step5_universal_high_expression.gtf.gz"),
+        ("Step-6: IntroVerse filtered (final)", "step6_introverse_filtered.gtf.gz"),
+        ("Final output", "step7_final_filtered.gtf.gz"),
     ]
 
     mapping_files = [
@@ -2205,8 +2861,9 @@ def summarize_results(output_dir):
         ("Step-3 mapping", "step3_splice_tss_filtered_mapping.tsv"),
         ("Step-4 mapping", "step4_introverse_filtered_mapping.tsv"),
         ("Step-5 mapping", "step5_expression_filtered_mapping.tsv"),
-        ("Step-6 mapping", "step6_alphagenome_filtered_mapping.tsv"),
-        ("Step-7 mapping", "step7_final_filtered_mapping.tsv"),
+        ("Step-5 universal mapping", "step5_universal_high_expression_mapping.tsv"),
+        ("Step-6 mapping", "step6_introverse_filtered_mapping.tsv"),
+        ("Final mapping", "step7_final_filtered_mapping.tsv"),
     ]
 
     for label, filename in output_files:
@@ -2328,7 +2985,24 @@ def main(cli_args: list[str] | None = None):
         "-v",
         "--verbose",
         action="store_true",
-        help="Show detailed progress information",
+        help="Show detailed progress information (deprecated, use --log-level)",
+    )
+    parser.add_argument(
+        "--log-level",
+        choices=["trace", "debug", "verbose", "info", "warning", "error"],
+        default="info",
+        help="Console logging verbosity (default: info)",
+    )
+    parser.add_argument(
+        "--file-log-level",
+        choices=["trace", "debug", "verbose", "info", "warning", "error"],
+        default="verbose",
+        help="File logging verbosity (default: verbose)",
+    )
+    parser.add_argument(
+        "--progress",
+        action="store_true",
+        help="Show progress bars for long operations",
     )
 
     # Optional: ENCODE augmentation selection
@@ -2388,28 +3062,7 @@ def main(cli_args: list[str] | None = None):
         default="auto",
         help=(
             "Choose expression data source for filtering: 'gtex' or 'bgee'. "
-            "Default 'auto' uses GTEx for human and Bgee for others. "
-            "This sets both universal and tissue-specific sources unless overridden."
-        ),
-    )
-    
-    # Separate control for universal vs tissue-specific expression sources
-    expr_group.add_argument(
-        "--universal-expression-source",
-        choices=["auto", "bgee", "gtex"],
-        default="auto",
-        help=(
-            "Choose expression data source for universal genes: 'bgee' or 'gtex'. "
-            "Default 'auto' uses Bgee for both human and mouse universal genes."
-        ),
-    )
-    expr_group.add_argument(
-        "--tissue-expression-source",
-        choices=["auto", "bgee", "gtex"],
-        default="auto",
-        help=(
-            "Choose expression data source for tissue-specific genes: 'bgee' or 'gtex'. "
-            "Default 'auto' uses GTEx for human tissue-specific and Bgee for mouse."
+            "Default 'auto' uses Bgee (universal) + GTEx (tissue-specific) for human and Bgee for others."
         ),
     )
 
@@ -2431,12 +3084,6 @@ def main(cli_args: list[str] | None = None):
         type=float,
         default=0.95,
         help="GTEx minimum fraction of samples that must be expressed (default: 0.95)",
-    )
-    expr_group.add_argument(
-        "--gtex-universal-tissue-fraction",
-        type=float,
-        default=1.0,
-        help="GTEx minimum fraction of tissues for universal gene classification (default: 1.0)",
     )
 
     # ENCODE processing thresholds (for optional augmentation)
@@ -2577,7 +3224,6 @@ def main(cli_args: list[str] | None = None):
                 "prevalence_expression_cutoff": args.gtex_prevalence_expression_cutoff,
                 "median_expression_cutoff": args.gtex_median_expression_cutoff,
                 "prevalence_threshold": args.gtex_prevalence_threshold,
-                "universal_tissue_fraction": args.gtex_universal_tissue_fraction,
             },
             "bgee": {
                 "min_genes_per_tissue": args.min_genes_per_tissue,
@@ -2612,7 +3258,7 @@ def main(cli_args: list[str] | None = None):
     os.makedirs(args.output_dir, exist_ok=True)
 
     # Setup logging
-    setup_logging(args, args.output_dir)
+    setup_file_and_console_logging(args, args.output_dir)
 
     # Welcome banner
     display_welcome_banner(args.species)
@@ -2637,6 +3283,8 @@ def main(cli_args: list[str] | None = None):
     export_species_named_gtf(args.output_dir, args.species)
     # Generate final TUSCO TSV deliverables (human+mouse naming)
     generate_tusco_deliverables(args.output_dir, human="hsa", mouse="mmu", species=args.species)
+    # Generate comprehensive statistics file including universal and tissue-specific counts
+    _create_comprehensive_statistics_tsv(args.output_dir, args.species)
     logger.info(
         f"TUSCO selection completed successfully – {len(transcripts)} final transcripts"
     )

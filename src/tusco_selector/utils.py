@@ -7,8 +7,21 @@ from typing import Any, Dict, List, Set, Tuple
 from tusco_selector.optional_deps import HAS_TQDM, tqdm
 
 # ----------------------------------------------------------------------------
-# Module-level logger
+# Module-level logger with VERBOSE support
 # ----------------------------------------------------------------------------
+# Define VERBOSE level for file operations
+VERBOSE = 15
+if not hasattr(logging, 'VERBOSE'):
+    logging.addLevelName(VERBOSE, "VERBOSE")
+
+# Add verbose method to logger if it doesn't exist
+def _log_verbose(self, message, *args, **kwargs):
+    if self.isEnabledFor(VERBOSE):
+        self._log(VERBOSE, message, args, **kwargs)
+
+if not hasattr(logging.Logger, 'verbose'):
+    logging.Logger.verbose = _log_verbose
+
 logger = logging.getLogger(__name__)
 
 # Public symbols intentionally exported for use across the package
@@ -26,11 +39,41 @@ __all__ = [
     "count_exons_in_gtf",
     # TUSCO deliverables
     "generate_tusco_tables",
+    # Gene classification
+    "classify_genes_by_exons",
+    # Chromosome normalization
+    "normalize_chr",
+    "normalise_chr",  # British spelling alias
 ]
 
 # ----------------------------------------------------------------------------
 # Generic helpers
 # ----------------------------------------------------------------------------
+
+
+def normalize_chr(label: str) -> str:
+    """Normalize chromosome label to include 'chr' prefix.
+    
+    Args:
+        label: Chromosome label (e.g., '1', 'chr1', 'X', 'chrX')
+        
+    Returns:
+        Normalized label with 'chr' prefix (e.g., 'chr1', 'chrX')
+        
+    Examples:
+        >>> normalize_chr('1')
+        'chr1'
+        >>> normalize_chr('chr1')
+        'chr1'
+        >>> normalize_chr('X')
+        'chrX'
+    """
+    s = str(label).strip()
+    return s if s.startswith("chr") else f"chr{s}"
+
+
+# British spelling alias
+normalise_chr = normalize_chr
 
 
 def _open_maybe_gzip(path: Path | str):
@@ -88,6 +131,7 @@ TranscriptStrand = Dict[str, str]
 def parse_gtf(
     gtf_path: Path | str,
     chr_mapping: Dict[str, str] | None = None,
+    show_progress: bool = False,
 ) -> Tuple[GeneTranscripts, TranscriptExons, TranscriptStrand]:
     """Parse *gtf_path* and extract exon coordinates for every transcript.
 
@@ -98,6 +142,9 @@ def parse_gtf(
     chr_mapping
         Optional mapping from RefSeq → UCSC chromosome labels (only required for
         human GRCh38).  If *None* an empty mapping is assumed.
+    show_progress
+        If True and tqdm is available, show a progress bar. Requires a double
+        pass through the file to count lines first.
 
     Returns
     -------
@@ -116,22 +163,22 @@ def parse_gtf(
     tx_strand: TranscriptStrand = {}
 
     try:
-        # ── Two-pass approach: First count data lines -> progress bar length ──
-        with _open_maybe_gzip(gtf_path) as handle:
-            total_lines = sum(1 for line in handle if line and not line.startswith("#"))
-
         gene_tx = {}
         tx_exons = {}
         tx_strand = {}
 
         with _open_maybe_gzip(gtf_path) as handle:
-            iterator = tqdm(
-                handle,
-                total=total_lines,
-                desc=f"Parsing {Path(gtf_path).name}",
-                unit="lines",
-                disable=not HAS_TQDM,
-            )
+            # Create iterator with optional progress bar (no line counting pass)
+            if show_progress and HAS_TQDM:
+                iterator = tqdm(
+                    handle,
+                    desc=f"Parsing {Path(gtf_path).name}",
+                    unit=" lines",
+                    mininterval=1.0,  # Update every second at most
+                )
+            else:
+                iterator = handle
+                
             for line in iterator:
                 if not line or line.startswith("#"):
                     continue
@@ -345,7 +392,7 @@ def subset_gtf_by_gene_ids(
                 oh.write(line)
                 written += 1
 
-    logger.info("Wrote %d records to subset GTF %s", written, dest_gtf)
+    logger.log(VERBOSE, "Wrote %d records to subset GTF %s", written, dest_gtf)
     return written
 
 
@@ -553,12 +600,18 @@ def count_exons_in_gtf(gtf_path: Path | str) -> Tuple[int, int, int]:
 # ----------------------------------------------------------------------------
 
 
-def _classify_genes_by_exons(
+def classify_genes_by_exons(
     gtf_path: Path | str,
 ) -> Tuple[Set[str], Set[str]]:
     """Return sets of single- and multi-exon gene IDs from a GTF.
 
     Gene IDs are returned without version suffixes.
+    
+    Args:
+        gtf_path: Path to GTF file
+        
+    Returns:
+        Tuple of (single_exon_genes, multi_exon_genes)
     """
 
     gene_tx, tx_exons, _ = parse_gtf(gtf_path, chr_mapping=None)
@@ -613,7 +666,7 @@ def generate_tusco_tables(
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # Classify genes
-    single_genes, multi_genes = _classify_genes_by_exons(final_gtf_path)
+    single_genes, multi_genes = classify_genes_by_exons(final_gtf_path)
     all_genes = single_genes | multi_genes
 
     # Read mapping rows (skip comment lines)

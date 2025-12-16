@@ -1,0 +1,133 @@
+REVIEWER COMMENTS
+
+Reviewer #1 (Remarks to the Author):
+
+In this manuscript, Liu and colleagues present a framework to test long-read transcriptome assembly pipelines and underlying datasets, based on a set of “simple” genes that are well-expressed and with a single isoform. These sets are carefully chosen for human and mouse, and the accompanying website is very easy to navigate. The evaluation framework, TUSCO, is integrated into SQANTI3, a popular QC too, which will make its adoption easy. The work is logical, well supported and presented very clearly.
+
+Comments:
+1. The distinction between TUSCO-novel (annotation from those genes is removed) vs TUSCO-decoy (a misleading annotation is added in its place) should be made explicit, with results presented for both (along with the results when the full annotation is provided). It’s debatable whether it’s “fair” to provide inaccurate annotation. Minimap2 uses splice junction annotation for mapping so the alignments may already be biased before entering isoform discovery. 
+2. Please make explicit what types of isoform transcriptome reconstruction can be assessed with TUSCO: genome-guided de novo (no annotation provided), genome-guided discovery (annotation present, look for new transcripts), genome reference-free (no genome or transcriptome prior information)?
+3. All the long-read sequencing protocols have strong length biases (Pacbio against short or long transcripts, ONT cDNA against even moderately long transcripts, ONT RNA against longest,...); with log scales it’s hard to figure out the relevant transcript lengths in relation to these biases. Consider binning into <600 bp, 600-1kb, 1kb-2kb, … 4kb+ or similar.
+4. Would very deep datasets (100M reads?) cause issues, because rare transcription noise would still pass the threshold as a new isoform?
+5. Consider providing an example report of TUSCO
+6. On the TUSCO website, it’s easy to download the tissue-specific gene sets but I couldn’t see how to download the universal set. It can be found on the SQANTI3 Github but it would be convenient to put in on the TUSCO website too.
+
+Reviewer #1 (Remarks on code availability):
+
+Documentation is excellent.
+
+
+Reviewer #2 (Remarks to the Author):
+
+The authors report on TUSCO, a newly created benchmark for evaluating the accuracy of transcript reconstruction with long RNA sequencing reads (LR). TUSCO consists of transcripts encoded in the human or mouse genome and therefore captures both technical and biological aspects that are not captured by artificial spike-in datasets (Sequins, SIRVs) or simulation models, such as RNA degradation and extraction artifacts. TUSCO consists of broadly expressed single-isoform genes, both across tissues and specific to a tissue, that do not have evidence of alternative splicing variation in extensive RNA sequencing and splice variation databases. The set was carefully crafted for expression and splice variation against multiple data sources, including IntraVerse and recount3 splice junctions, Bgee and GTEx gene expression profiles, and AlphaGenome predictions of expression and potential unknown variant splice ratio. The benchmark is further evaluated against SIRVs on datasets generated using multiple LR sequencing technologies and shown to derive similar metrics, while better reflecting the characteristics of the RNA environment, including RNA degradation and sequencing read depth. Furthermore, TUSCO could be modified to assess the performance of LR transcript assembly pipelines in discovering novel transcripts by adjusting all exon coordinates when used as a reference annotation. Lastly, TUSCO (but not SIRVs) could be used to determine the number of replicates needed for accurate transcript detection and reconstruction. 
+
+The manuscript is well-written and substantiated, with in-depth evaluations of TUSCO that demonstrate its advantages. The construction of the ‘novel variant’ test set is ingenious. 
+
+The primary drawback of TUSCO is that it cannot be used to assess transcript reconstruction in the presence of multiple isoforms per gene, which is one of the main promises and goals of long read RNA sequencing and LR transcriptomic analyses. The authors already recognize this as a limitation and address it in their Discussion section. 
+
+Nevertheless, overall, TUSCO is the first endogenous benchmark dataset that is organically integrated with the experiment, and the only one to reflect the complexities in LR RNA datasets resulting from RNA degradation and RNA capture. Therefore, it represents an original and valuable complement and addition to the benchmark sets for LR RNA sequencing. 
+
+Minor comments:
+1. Section 2.4 and Figure 3b: When comparing the performance metrics for TUSCO and SIRVs, the authors mention that no significant differences were found for the TP and FN categories, whereas the figures suggest otherwise, i.e., SIRVs overtaking TUSCO for TPs. This could be because the statistical test was formulated for ‘TUSCO > SIRVs’, for which the null hypothesis could not be rejected. The authors should incorporate testing for ‘SIRVs > TUSCO’.
+2. In evaluating the programs’ (Bambu, StringTie2, FLAIR, Iso-Seq+SQANTI3 ML) performance for ‘novel’ transcripts, it is not clear what reference annotations were provided to the programs to create the radar plots. More specifically, did the annotations include all genes and variants in GENCODE, or only those related to the TUSCO gene set? Also, how were transcripts predicted by the programs at loci outside of the TUSCO set accounted for? 
+3. Section 4.3, Transcriptome reconstruction with FLAIR. Was the ‘collapse’ step run with or without a reference annotation?
+
+Reviewer #2 (Remarks on code availability):
+
+While I did not assess the current SQANTI3 code, I was able to locate the general (cross-tissue) datasets and access the web site with the tissue-specific transcripts based on the instructions and links provided.
+
+
+Reviewer #3 (Remarks to the Author):
+
+Summary
+
+To improve the benchmarking of long read sequencing (LRS) methods, the authors present TUSCO (Transcriptome Universal Single-isoform Control). TUSCO includes a computational pipeline applied to varied RNA-seq data which selects endogenous, widely-expressed, single-isoform genes to serve as internal controls. This pipeline selects a total of 46 (human) and 32 (mouse) control genes across all analyzed tissues together with larger single-tissue gene sets. The authors extend the SQANTI3 method for isoform detection and quality-filtering to include the TUSCO isoforms and calculate evaluation statistics for their detection. dRNA, cDNA ONT, and cDNA PacBio are evaluated using both TUSCO genes and SIRVs; evaluations show a high degree of concordance for high-quality RNA-seq data. The concordance drops for lower-quality data, suggesting that incompletely-captured or partially-degraded RNA present in the endogenous TUSCO genes but not in spike-ins leads to different results, pointing to a gap in benchmarking approaches which use only spike-ins. In order to evaluate LRS methods’ ability to detect unannotated isoforms, the TUSCO-novel pipeline is presented. This pipeline selects some TUSCO isoforms and replaces each one in the annotation by modifying it with unseen isoforms generated using made-up splice sites within the same gene. LRS methods are then evaluated based on whether they correctly detect the real expressed annotated and unannotated isoforms. As expected, annotation-dependent methods perform relatively poorly with TUSCO-novel. TUSCO is used to evaluate isoform-calling approaches in the presence of varying counts of biological replicates. This illustrates the number of replicates at which a particular LRS experiment setup tends to saturate the precision of the detected TUSCO transcripts, informing the replicates-vs-read-depth tradeoff in RNA-seq experiment design.
+
+
+Review
+
+The TUSCO manuscript presents important ideas which are worthy of publication. The strategy of defining internal controls via expressed single-isoform genes is compelling, and the authors make good arguments for the utility of this approach. However, the current manuscript suffers from major gaps which should be addressed prior to publication:
+
+1.
+At a high-level, what is this work about? The authors state it is about “benchmarking long reads transcriptomics”, though what exactly is involved in such benchmarking is never defined. While this is implicitly addressed later by the stats the authors derive, the goals of bench marking should be clearly stated/defined.
+
+
+2. 
+In the abstract the authors postulate benchmarking has been done so far by two approaches: Spiked-in transcripts and synthetic data generation. The entire manuscript is focused on comparing to spiked-in transcripts to show TUSCO advantage. However, these are definitely not the only approaches. Specifically, recent work (MAJIQ-L, Han et al, Genome Research 2024) used short-reads sequenced from the same samples as a baseline to compare different long reads algorithms and long reads technology (ONT vs PacBio). While on the surface these are different evaluations (full isoforms reconstruction is not possible with short reads) in practice much of what the authors aim to assess (and what users care about) is totally achievable by analyzing short read sequences. Specifically, while transcript start/end are not available directly from short reads, Han et al pipeline allows users to assess where long reads report junctions, splice sites, and intron retention that do not exist by short reads (or annotation). Clearly, there could be advantages and disadvantages to assessing long reads with TUSCO vs. using short reads. For example, short reads require the matching experiment to be done with short reads and is not suitable for assessing start/end of transcripts. It also uses short-reads as the baseline which, by definition, cannot be considered an absolute truth but more of an approximation with its own biases. Nonetheless, using short read carry important potential benefits: It can be done for any condition easily and will not be sensitive to the definition of synthetically introduced TUSCO transcripts or to actual splice variants occurring in TUSCO genes in a condition/disease. It also gives a much broader “natural” set of genes with all their built in complexity without resorting to special case genes which may be biased in some unknown way (more on that later). It also gives a wider spread of TPM, gene length etc. to assess performance, important factors glossed over in the current manuscript. Consequently, it may offer much more accurate assessment of false negatives (see below). 
+
+While the above qualitative assessment may be sensible it is also speculative and not quantitative. Given the importance of this to improving long reads transcriptomics benchmarking (the stated goal of this manuscript), the authors must investigate this thoroughly. Indeed Han et al used much of the same data from the long reads consortium and all their analysis/results are available. Thus, it should be relatively straightforward to compare TUSCO on the same data. The fact that Han et al used this orthogonal approach/method (MAJIQ based analysis) with the same data can help shed more light on TUSCO.
+
+3. 
+The claim that TUSCO can detect false negatives even in unusual biological conditions like disease studies is suspect. While the TUSCO control genes were selected based on an analysis of many cell types and other factors, transcript expression is known to vary widely in diverse conditions, especially disease. This point should be reframed or better argued in the manuscript.
+
+
+4. 
+Are the statistics used to assess performance supposed to represent “absolute truth” of some kind? Relative ranking of methods/algorithms by specific metrics? This is unclear and definitions/statements need to be made and supported accordingly. Clearly there are major effects of coverage, transcript length (see also point below) and the variance observed in the reported statistics is so high it leaves the reader wondering what does this all mean. For example, PTP average in mouse (p. 8 top) is ~54% with 43% std (!). 
+
+5.
+Radar polygons and radar area are used throughout the manuscript for visualization and tool comparison. While these may be visually pleasing we see this as a case of form over function. Radar area is not an appropriate statistic to summarize and compare method performance (what does it actually mean?). Worse, the calculated area value depends strongly on the clockwise order of statistics; for example, for the six metrics shown in Fig 3a, hypothetical scores ordered 1, 1, 1, 0, 0, 0 (nonzero area) have a larger radar area than 1, 0, 1, 0, 1, 0 (zero area). One wonders whether conclusions would change with a different ordering. Even in human perceptions there may be additional biases (e.g. things on the top vs on the sides). Radar polygon plots are not an intuitive way to compare tool performance because it is virtually impossible to visually compare each individual statistic across tools. The manuscript should use standard visualization methods (e.g. bar charts) allowing for comparison between statistics. It’s simply hard to assess the authors’ claims and converge to conclusions with these plots.
+
+6.
+Section 2.1 makes the claim that TUSCO transcripts are comparable in length to RefSeq transcripts (Fig 1c), but this is not actually supported by Fig 1c, which illustrates an apparent enrichment of longer transcripts in TUSCO (even more-so given the log scale in Fig 1c). We can envision a different manuscript showing exactly the same plots as in Fig1c/d and making the *apposite* claim i.e. that they are significantly different, attaching a p-value to that claim… What are the implications of using unusually long transcripts as the internal controls? Moreover, this fact is a bit surprising and should be explained, as one would not necessarily expect single-isoform genes to generate relatively long transcripts. This points to a needed discussion about what biases are introduced by using such strongly-curated transcripts as the internal controls. Coming back to points raised above
+
+In addition to the major gaps above, we note the following areas of improvement for the manuscript:
+
+1. 
+Throughout the manuscript, TUSCO is confusingly referred to as a set of genes, a framework, and a collection of analyses. To this reviewer, TUSCO is certainly more than a set of genes since it includes the upstream computational pipelines and analysis pipelines, which are significant contributions. We recommend using terms more specifically to refer to the full collection of pipelines and results vs. specific parts like the cross-tissue filtered gene sets.
+
+
+2. 
+The TUSCO-novel claim of “biologically plausible isoforms” (section 2.5) is interesting, but the validity of “biologically plausible” is unclear. Were the made-up splice sites chosen to e.g. preserve splice motifs / enhancers, etc? What about exon length and GC content bias?
+
+3.
+It’s not clear how certain parameter values were selected. Moreover, the sensitivity of results to those choices is not clear. This could be better argued/explained. For example:
+
+3.a.
+How were the window sizes for TSS, TTS, and CAGE decided, and what is the sensitivity of the results to those parameters? 
+
+3.b
+TUSCO genes are medium to highly expressed across tissues (Section 2.1); is there value in lowering the minimum expression threshold to capture lower-yet-consistently-expressed genes, and how are LRS method evaluation results affected?
+
+3.c
+Splice evidence can require as little as 1 supporting read for a junction in TUSCO gene selection (Section 4.1); is there value in more stringency? Should this part of the pipeline handle known confounders such as read stacks / artifacts and require junction read support from multiple positions? How would this change the results?
+
+3.d
+How were the different thresholds for mouse vs human RNAseq data decided?
+
+4.
+In the TUSCO vs SIRV comparison of Section 2.3, it is not intuitive how good the concordance is from the reported cosine similarity. Is there an available negative control e.g. biased protocol or short-read-only protocol, or even “reasonable” simulated result that would illustrate a baseline cosine similarity for this high-dimensional comparison?
+
+5.
+The TP coverages reported in Section 2.5 are highly variable (via the +), is there more to say about when it is higher vs lower?
+
+6.
+It is not clear why per-read coverage is defined and used as in Section 2.5.
+
+
+Reviewer #3 (Remarks on code availability):
+
+Haven't reviewed the code at this stage.
+
+
+Reviewer #4 (Remarks to the Author):
+
+In the manuscript by Tianyuan Liu et al. authors introduce the Transcriptome Universal Single-isoform COntrol (TUSCO), which is a curated reference set of genes lacking alternative isoforms. The aim is to provide an internal ground truth for benchmarking purposes. TUSCO evaluates precision by identifying transcripts deviating from reference annotations and assesses sensitivity by verifying detection completeness in human and mouse samples.
+The study is very extensive and detailed what makes that the following the narration is very tricky, although the article is well structure and very well written. Simply the complexity of topic is high and it is difficult to provide an easy solution here.
+
+I am confident that TUSCO will become a widely used approach for benchmarking. It has its own limitations which were also specified by the authors. The main is that it is "restricted to single-isoform loci and thus cannot evaluate transcript reconstruction accuracy within
+highly complex multi-isoform genes". To overcome this limitations authors introduce a set of artificial isoforms derived from TUSCO core genes. It is a nice trick which allows to assess some properties of the pipelines but still is not perfect. Authors are aware of it and are planning further work in this direction.
+
+My main complain is that authors seem in some cases oversell and/or overinterpret the obtained results. In particular:
+- in section 2.4 it is stated: "A pronounced negative correlation (Pearson r = −0.8, p = 1.7 × 10−3;
+n = 12 pipelines) was observed, indicating that as sequencing coverage and read length increase, the number of false negatives decreases." 
+An inspection of Fig. S3 reveals that in fact we do have a two clearly separated groups of points. One from ONT and second by PB which are strongly separated both by False Negative rate as well as composite metric. The true source of observed phenomenon here is hidden in sequencing technology differences and is not fully proven here. Thus further statements coming from this part are overinterpretation.
+
+- in section 2.5 the capacity of reconstruction tools to detect unannotated isoforms is assessed with used of introduced TUSCO-novel reference set. The authors note that tools which heavily rely on annotation fail to recover new isoforms as defined in TUSCO-novel. That is true, but what was not highlighted or noted is the fact that preferred by authors Iso-Seq+SQANTI3 is not way batter. It has marginal drop of performance between "reference annotation" and TUSCO-novel due to the fact that is dealing with "reference annotation" noticeably worse than other approaches. Thus ability of TUSCO-novel to evaluate novel isoforms discovery is not that remarkable I would say. 
+
+- in section 2.6 it is stated: "... an optimal design includes at least three biological replicates (Fig. 5b; Supplementary Table S3). By contrast, analyses of SIRV spike-in controls yielded highly consistent concordance metrics across 1–5 replicates, providing little guidance on replicate number optimization (Fig. S6)."
+An inspection of Fig.5 together with Fig. S6 revels that there are no drastic differences across 2-5 replicates for both approaches. Thus statement that for TUSCO a good choice is 3+ while for SIRV it is hard to say is overinterpretation. Also here I do not understand what Suppl. Table S3 is adding here.
+
+
+Reviewer #5 (Remarks to the Author):
+
+I co-reviewed this manuscript with one of the reviewers who provided the listed reports. This is part of the Nature Communications initiative to facilitate training in peer review and to provide appropriate recognition for Early Career Researchers who co-review manuscripts.

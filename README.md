@@ -13,6 +13,8 @@ Project structure (reorganized for clarity and reproducibility):
 - `R/`: Shared R helpers (e.g., `R/paths.R`)
 - `envs/`: Conda environments (e.g., `envs/tusco_selector.yml`)
 - `config/`: Central configuration (e.g., `config/project.yml`)
+- `tools/`: Third-party tools vendored locally (optional)
+- `licenses/`: Local license files (optional)
 - `workflows/`: Pipelines and SLURM jobs (optional)
 
 Notes

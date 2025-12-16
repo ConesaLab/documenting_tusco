@@ -11,20 +11,51 @@ cd "$ROOT_DIR"
 
 # Ensure required data is present; download and extract if missing
 DATA_DIR="$ROOT_DIR/data"
-DATA_URL="https://tusco-paper-data.s3.eu-north-1.amazonaws.com/data.zip"
 DATA_ARCHIVE="$ROOT_DIR/tmp/tusco_data.zip"
+BUCKET="tusco-paper-data"
+KEY="data.zip"
 
 if [[ ! -d "$DATA_DIR" ]]; then
-  echo "[setup] Data directory not found; downloading from $DATA_URL"
+  echo "[setup] Data directory not found; downloading data..."
   mkdir -p "$ROOT_DIR/tmp"
 
-  if command -v curl >/dev/null 2>&1; then
-    curl --fail --location --show-error --output "$DATA_ARCHIVE" "$DATA_URL"
-  elif command -v wget >/dev/null 2>&1; then
-    wget -nv -O "$DATA_ARCHIVE" "$DATA_URL"
-  else
-    echo "Neither curl nor wget is available to download data." >&2
-    exit 1
+  # Try parallel download first if R and aws.s3 are available
+  if command -v Rscript >/dev/null 2>&1; then
+    echo "[setup] Attempting parallel download with R..."
+    # Use env vars for creds if available, otherwise empty (for public buckets if supported, or error)
+    # Assuming user has creds or we can try public access if we modify the R script.
+    # For now, let's pass env vars.
+    
+    # We need to ensure the R script uses the correct region.
+    export AWS_DEFAULT_REGION="eu-north-1"
+    
+    if Rscript scripts/s3_parallel_download.R "${AWS_ACCESS_KEY_ID:-}" "${AWS_SECRET_ACCESS_KEY:-}" "$BUCKET" "$KEY"; then
+       mv "$(Rscript -e 'cat(tempdir())')/..." "$DATA_ARCHIVE" # Wait, the script returns the temp file path.
+       # The script prints "Downloaded: /path/to/file".
+       # I need to capture that.
+       DOWNLOADED_FILE=$(Rscript scripts/s3_parallel_download.R "${AWS_ACCESS_KEY_ID:-}" "${AWS_SECRET_ACCESS_KEY:-}" "$BUCKET" "$KEY" | grep "Downloaded:" | cut -d' ' -f2)
+       if [[ -f "$DOWNLOADED_FILE" ]]; then
+         mv "$DOWNLOADED_FILE" "$DATA_ARCHIVE"
+       else
+         echo "Parallel download failed to produce file."
+         # Fallback to curl
+       fi
+    else
+       echo "Parallel download failed. Falling back to curl..."
+       # Fallback
+    fi
+  fi
+  
+  if [[ ! -f "$DATA_ARCHIVE" ]]; then
+      DATA_URL="https://tusco-paper-data.s3.eu-north-1.amazonaws.com/data.zip"
+      if command -v curl >/dev/null 2>&1; then
+        curl --fail --location --show-error --output "$DATA_ARCHIVE" "$DATA_URL"
+      elif command -v wget >/dev/null 2>&1; then
+        wget -nv -O "$DATA_ARCHIVE" "$DATA_URL"
+      else
+        echo "Neither curl nor wget is available to download data." >&2
+        exit 1
+      fi
   fi
 
   if ! command -v unzip >/dev/null 2>&1; then

@@ -20,8 +20,12 @@ load_required_packages <- function(packages) {
 resolve_path <- function(candidates, is_dir = FALSE) {
   for (p in candidates) {
     if (is.na(p) || is.null(p)) next
-    if (!is_dir && file.exists(p)) return(p)
-    if (is_dir && dir.exists(p)) return(p)
+    if (!is_dir && file.exists(p)) {
+      return(p)
+    }
+    if (is_dir && dir.exists(p)) {
+      return(p)
+    }
   }
   return(candidates[[1]])
 }
@@ -34,7 +38,9 @@ resolve_data_path <- function(..., bases = c("data/raw", "data/processed", "../d
   sub_path <- file.path(...)
   for (base in bases) {
     candidate <- file.path(base, sub_path)
-    if (file.exists(candidate)) return(normalizePath(candidate))
+    if (file.exists(candidate)) {
+      return(normalizePath(candidate))
+    }
   }
   stop("Data file not found: ", sub_path, "\nSearched in: ", paste(bases, collapse = ", "))
 }
@@ -45,10 +51,10 @@ resolve_data_path <- function(..., bases = c("data/raw", "data/processed", "../d
 create_output_dirs <- function(base_dir = ".") {
   plot_dir <- file.path(base_dir, "plots")
   table_dir <- file.path(base_dir, "tables")
-  
+
   dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
   dir.create(table_dir, recursive = TRUE, showWarnings = FALSE)
-  
+
   list(plot_dir = plot_dir, table_dir = table_dir)
 }
 
@@ -61,19 +67,20 @@ create_output_dirs <- function(base_dir = ".") {
 #' @param height Plot height in inches
 #' @param data Optional data frame to save as TSV
 #' @param data_suffix Optional suffix for data file name
-save_figure <- function(plot_obj, fig_id, plot_dir = "plots", table_dir = "tables", 
-                       width = 3.35, height = 4.0, data = NULL, data_suffix = NULL) {
-  
+save_figure <- function(plot_obj, fig_id, plot_dir = "plots", table_dir = "tables",
+                        width = 3.35, height = 4.0, data = NULL, data_suffix = NULL) {
   # Ensure output directories exist
   dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
   dir.create(table_dir, recursive = TRUE, showWarnings = FALSE)
-  
+
   # Save plot
   plot_file <- file.path(plot_dir, paste0(fig_id, ".pdf"))
-  ggsave(plot_file, plot_obj, width = width, height = height, 
-         units = "in", device = "pdf", dpi = 300)
+  ggsave(plot_file, plot_obj,
+    width = width, height = height,
+    units = "in", device = "pdf", dpi = 300
+  )
   message("Saved plot: ", plot_file)
-  
+
   # Save data if provided
   if (!is.null(data)) {
     data_name <- if (is.null(data_suffix)) fig_id else paste0(fig_id, "-", data_suffix)
@@ -81,7 +88,7 @@ save_figure <- function(plot_obj, fig_id, plot_dir = "plots", table_dir = "table
     readr::write_tsv(data, data_file)
     message("Saved data: ", data_file)
   }
-  
+
   invisible(plot_file)
 }
 
@@ -89,25 +96,29 @@ save_figure <- function(plot_obj, fig_id, plot_dir = "plots", table_dir = "table
 #' @param defaults Named list of default values
 #' @return List of parsed arguments
 parse_figure_args <- function(defaults = list(
-  out_dir = "..",
-  width = 3.35,  # Nature single column width in inches
-  height = 4.0
-)) {
+                                out_dir = "..",
+                                width = 3.35, # Nature single column width in inches
+                                height = 4.0
+                              )) {
   args <- commandArgs(trailingOnly = TRUE)
-  
+
   result <- defaults
   if (length(args) > 0) result$out_dir <- args[1]
   if (length(args) > 1) result$width <- as.numeric(args[2])
   if (length(args) > 2) result$height <- as.numeric(args[3])
-  
+
   return(result)
 }
 
 #' Determine whether a path is absolute (works cross-platform)
 is_absolute_path <- function(path) {
-  if (!is.character(path) || length(path) == 0) return(FALSE)
+  if (!is.character(path) || length(path) == 0) {
+    return(FALSE)
+  }
   path <- path[1]
-  if (!nzchar(path)) return(FALSE)
+  if (!nzchar(path)) {
+    return(FALSE)
+  }
   startsWith(path, "/") || grepl("^[A-Za-z]:[\\\\/]", path)
 }
 
@@ -177,7 +188,9 @@ figure_context <- function(
 
   output_base <- if (!is.null(params$out_dir) && nzchar(params$out_dir)) {
     if (is_absolute_path(params$out_dir)) params$out_dir else file.path(script_dir, params$out_dir)
-  } else figure_dir
+  } else {
+    figure_dir
+  }
   output_base <- safe_normalize(output_base)
 
   plot_dir <- file.path(output_base, "plots")
@@ -228,7 +241,9 @@ figure_context <- function(
           directory = dir.exists(resolved),
           auto = file.exists(resolved) || dir.exists(resolved)
         )
-        if (exists_ok) return(resolved)
+        if (exists_ok) {
+          return(resolved)
+        }
       }
 
       # Try relative to each search root
@@ -239,7 +254,9 @@ figure_context <- function(
           directory = dir.exists(candidate_path),
           auto = file.exists(candidate_path) || dir.exists(candidate_path)
         )
-        if (exists_ok) return(candidate_path)
+        if (exists_ok) {
+          return(candidate_path)
+        }
       }
     }
 
@@ -318,7 +335,7 @@ read_tsv_safe <- function(file_path, ...) {
   if (!file.exists(file_path)) {
     stop("File not found: ", file_path)
   }
-  
+
   tryCatch(
     readr::read_tsv(file_path, show_col_types = FALSE, ...),
     error = function(e) {
@@ -333,7 +350,7 @@ get_figure_dir <- function() {
   # Try to get script path from command line args
   argv <- commandArgs(trailingOnly = FALSE)
   script_path <- sub("^--file=", "", argv[grep("^--file=", argv)])
-  
+
   if (length(script_path) == 1 && nzchar(script_path)) {
     # Script path available - figure dir is parent of code dir
     fig_dir <- normalizePath(file.path(dirname(script_path), ".."), mustWork = FALSE)
@@ -345,14 +362,14 @@ get_figure_dir <- function() {
       fig_dir <- getwd()
     }
   }
-  
+
   return(fig_dir)
 }
 
 # Export commonly used color palettes
 TUSCO_COLORS <- list(
   human_tusco = "#a8d5a0",
-  mouse_tusco = "#1b9e77", 
+  mouse_tusco = "#1b9e77",
   human_gencode = "#fdbf6f",
   mouse_gencode = "#e66101",
   human_mane = "#e41a1c",
@@ -362,8 +379,129 @@ TUSCO_COLORS <- list(
 
 # Export standard dimensions
 NATURE_DIMS <- list(
-  single_column = 3.35,    # inches
-  double_column = 7.09,    # inches
-  full_page_width = 7.87,  # inches
-  default_height = 4.0     # inches
+  single_column = 3.35, # inches
+  double_column = 7.09, # inches
+  full_page_width = 7.87, # inches
+  default_height = 4.0 # inches
 )
+
+#' Parallel S3 Download
+#'
+#' Downloads a file from S3 using parallel multipart download for large files.
+#'
+#' @param bucket S3 bucket name
+#' @param key S3 object key
+#' @param outfile Local output file path
+#' @param ak AWS Access Key ID
+#' @param sk AWS Secret Access Key
+#' @param chunk_size_mb Chunk size in MB (default: 20)
+#' @param min_multipart_mb Minimum file size in MB to trigger multipart download (default: 30)
+#' @return Path to the downloaded file
+#' @export
+download_s3_parallel <- function(bucket, key, outfile, ak, sk,
+                                 chunk_size_mb = 20, min_multipart_mb = 30) {
+  # Check dependencies
+  if (!requireNamespace("aws.s3", quietly = TRUE)) {
+    stop("Package 'aws.s3' is required for S3 downloads. Please install it.")
+  }
+  if (!requireNamespace("parallel", quietly = TRUE)) {
+    stop("Package 'parallel' is required for parallel downloads.")
+  }
+
+  # Constants
+  CHUNK_SIZE <- chunk_size_mb * 1024 * 1024
+  MIN_MULTIPART <- min_multipart_mb * 1024 * 1024
+
+  # Helper to set credentials
+  set_creds <- function() {
+    Sys.setenv(
+      "AWS_ACCESS_KEY_ID" = ak,
+      "AWS_SECRET_ACCESS_KEY" = sk,
+      "AWS_DEFAULT_REGION" = "us-east-1"
+    )
+  }
+
+  set_creds()
+
+  message(sprintf("Checking object: s3://%s/%s", bucket, key))
+
+  # Get object metadata
+  head <- tryCatch(
+    {
+      aws.s3::head_object(object = key, bucket = bucket)
+    },
+    error = function(e) {
+      stop("Failed to access S3 object: ", e$message)
+    }
+  )
+
+  filesize <- as.numeric(attr(head, "content-length"))
+  message(sprintf("File size: %.2f MB", filesize / 1024 / 1024))
+
+  # Prepare output file
+  dir.create(dirname(outfile), recursive = TRUE, showWarnings = FALSE)
+
+  if (filesize < MIN_MULTIPART) {
+    message("Starting standard download...")
+    aws.s3::save_object(object = key, bucket = bucket, file = outfile)
+  } else {
+    message("Starting parallel multipart download...")
+
+    # Create empty file with correct size
+    con <- file(outfile, "wb")
+    seek(con, filesize - 1)
+    writeBin(as.raw(0), con)
+    close(con)
+
+    # Calculate chunks
+    starts <- seq(0, filesize - 1, by = CHUNK_SIZE)
+    chunks <- lapply(seq_along(starts), function(i) {
+      start <- starts[i]
+      remaining <- filesize - start
+      size <- min(CHUNK_SIZE, remaining)
+      list(i = i, offset = start, size = size)
+    })
+
+    message(sprintf("Split into %d chunks", length(chunks)))
+
+    # Define worker function
+    download_chunk <- function(chunk) {
+      # Re-set env vars in worker
+      Sys.setenv(
+        "AWS_ACCESS_KEY_ID" = ak,
+        "AWS_SECRET_ACCESS_KEY" = sk,
+        "AWS_DEFAULT_REGION" = "us-east-1"
+      )
+
+      range_header <- paste0("bytes=", chunk$offset, "-", chunk$offset + chunk$size - 1)
+
+      raw_data <- aws.s3::get_object(
+        object = key,
+        bucket = bucket,
+        headers = list(Range = range_header)
+      )
+
+      if (length(raw_data) > 0) {
+        con <- file(outfile, "r+b")
+        seek(con, where = chunk$offset)
+        writeBin(raw_data, con)
+        close(con)
+      }
+      return(TRUE)
+    }
+
+    # Run in parallel
+    n_cores <- parallel::detectCores()
+    # Use mclapply for forking (works on Mac/Linux)
+    results <- parallel::mclapply(chunks, download_chunk, mc.cores = n_cores)
+
+    # Verify results
+    failures <- sapply(results, inherits, "try-error")
+    if (any(failures)) {
+      stop("Some chunks failed to download")
+    }
+  }
+
+  message("Download complete: ", outfile)
+  return(outfile)
+}

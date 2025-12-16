@@ -1,0 +1,12 @@
+name: tusco_selector-env
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - requests
+  - pytest
+  - pip
+  - pip:
+    - tqdm
+    - colorama

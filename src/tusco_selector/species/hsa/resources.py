@@ -102,7 +102,7 @@ EXTERNAL_RESOURCES = {
             },
             "brain_cerebellar_hemisphere": {
                 "url": "https://storage.googleapis.com/adult-gtex/bulk-gex/v10/rna-seq/tpms-by-tissue/gene_tpm_v10_brain_cerebellar_hemisphere.gct.gz",
-                "output": "UBERON:0002037.gct.gz",
+                "output": "UBERON:0002245.gct.gz",
                 "description": "GTEx v10 Brain - Cerebellar Hemisphere",
             },
             "brain_cerebellum": {

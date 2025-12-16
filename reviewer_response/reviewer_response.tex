@@ -1,0 +1,789 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{caption}
+
+% Define custom colors
+\definecolor{commentbg}{RGB}{248,248,248}
+\definecolor{commentbar}{RGB}{100,100,100}
+\definecolor{positivebg}{RGB}{245,255,245}
+\definecolor{positivebar}{RGB}{50,150,50}
+\definecolor{responsebg}{RGB}{255,255,255}
+\definecolor{responsebar}{RGB}{0,80,180}
+
+% Custom box for reviewer comments
+\newtcolorbox{reviewercomment}{
+  enhanced,
+  colback=commentbg,
+  frame hidden,
+  borderline west={3pt}{0pt}{commentbar},
+  left=10pt, right=10pt, top=10pt, bottom=10pt,
+  fontupper=\small\sffamily,
+  before upper={\textbf{\textcolor{commentbar}{Reviewer Comment}}\par\medskip},
+  breakable
+}
+
+% Custom box for positive remarks
+\newtcolorbox{positiveremarks}{
+  enhanced,
+  colback=positivebg,
+  frame hidden,
+  borderline west={3pt}{0pt}{positivebar},
+  left=10pt, right=10pt, top=10pt, bottom=10pt,
+  fontupper=\small\sffamily,
+  before upper={\textbf{\textcolor{positivebar}{Reviewer's Overall Assessment}}\par\medskip},
+  breakable
+}
+
+% Custom box for responses
+\newtcolorbox{responseboxnew}{
+  enhanced,
+  colback=responsebg,
+  frame hidden,
+  left=0pt, right=0pt, top=5pt, bottom=5pt,
+  before upper={\textbf{\textcolor{responsebar}{Response}}\par\medskip},
+  breakable
+}
+
+\title{\textbf{Point-by-Point Response to Reviewers}}
+\author{TUSCO Manuscript}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section*{Introduction}
+
+We thank all reviewers for their thoughtful, constructive, and detailed comments. We have carefully addressed each point and made corresponding revisions to the manuscript. Below we provide detailed point-by-point responses.
+
+\newpage
+
+\section{Reviewer \#1}
+
+\begin{positiveremarks}
+In this manuscript, Liu and colleagues present a framework to test long-read transcriptome assembly pipelines and underlying datasets, based on a set of ``simple'' genes that are well-expressed and with a single isoform. These sets are carefully chosen for human and mouse, and the accompanying website is very easy to navigate. The evaluation framework, TUSCO, is integrated into SQANTI3, a popular QC tool, which will make its adoption easy. \textbf{The work is logical, well supported and presented very clearly.}
+
+\vspace{0.2cm}
+\textit{Documentation is excellent.}
+\end{positiveremarks}
+
+\subsection{Comment 1: Distinction between TUSCO-novel and TUSCO-decoy}
+
+\begin{reviewercomment}
+The distinction between TUSCO-novel (annotation from those genes is removed) vs TUSCO-decoy (a misleading annotation is added in its place) should be made explicit, with results presented for both (along with the results when the full annotation is provided). It's debatable whether it's ``fair'' to provide inaccurate annotation. Minimap2 uses splice junction annotation for mapping so the alignments may already be biased before entering isoform discovery.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Clarification of terminology:} We apologize for the confusion. There is \textbf{no separate ``TUSCO-decoy'' approach}---the reviewer correctly identified that TUSCO-novel performs both operations: it removes the true transcript from the annotation and replaces it with an artificial variant. We have removed the term ``decoy'' from the revised manuscript (abstract, line 67) to eliminate this ambiguity.
+
+\vspace{0.3cm}
+\textbf{What TUSCO-novel does:} For each single-isoform TUSCO gene, we generate an artificial transcript with modified splice junctions using canonical motifs (GT/AG) found in the genome sequence. This artificial transcript replaces the true annotation entirely. Tools must then reconstruct the correct (but now unannotated) isoform from the sequencing reads despite the presence of this misleading reference. See Methods section (lines 153--155) for technical details.
+
+\vspace{0.3cm}
+\textbf{Design rationale:} We chose to replace rather than simply delete annotations because gene-level annotations are largely complete in human and mouse, while isoform-level annotations are often incomplete. This design mirrors the real-world challenge researchers face: the gene is known, but the splice pattern may be novel. This scenario is common when studying tissue-specific, disease-specific, or condition-specific isoforms in novel biological contexts where annotations are unreliable. Simply deleting genes would not test this critical capability.
+
+\vspace{0.3cm}
+\textbf{Results presented for both conditions:} As requested, we present comparative results in Figure 4b (solid polygons = correct annotation; dashed polygons = TUSCO-novel) with detailed breakdowns in Supplementary Figure S4 and quantitative metrics in Supplementary Table S2. Key findings: annotation-dependent tools (Bambu, StringTie2) showed 74--81\% performance drops, partially data-driven tools (FLAIR) showed 39--44\% drops, while truly data-driven approaches (Iso-Seq + SQANTI3 ML) maintained performance ($<$3\% change).
+
+\vspace{0.3cm}
+\textbf{Addressing minimap2 splice junction bias:} This is an important concern. To prevent annotation bias from affecting our evaluation, \textit{we deliberately excluded all reference annotations during the minimap2 alignment stage}. Reads were aligned using only the genome sequence (FASTA), not gene models, ensuring alignments reflect genuine sequence evidence rather than annotation guidance. This design choice, while reducing initial alignment sensitivity compared to typical workflows, ensures that TUSCO-novel truly evaluates end-to-end data-driven isoform discovery---the critical capability needed when working with incomplete or misleading annotations in emerging research contexts.
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have updated the abstract to clarify the TUSCO-novel approach and removed the term ``decoy'' to avoid confusion:
+\begin{quote}
+``Masking TUSCO transcripts and replacing them with modified splice variants in the annotation creates a `novel-isoform' challenge that assesses recovery of the true, now-unannotated isoforms.''
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Comment 2: Types of isoform transcriptome reconstruction}
+
+\begin{reviewercomment}
+Please make explicit what types of isoform transcriptome reconstruction can be assessed with TUSCO: genome-guided de novo (no annotation provided), genome-guided discovery (annotation present, look for new transcripts), genome reference-free (no genome or transcriptome prior information)?
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{TUSCO evaluates all three reconstruction types:} TUSCO is based on SQANTI3 as the engine to compare the reconstructed transcripts with the TUSCO reference. Consequently, it can evaluate all three types of transcriptome reconstruction tools: genome-guided de novo (no annotation provided), genome-guided discovery (annotation present, look for new transcripts), and genome reference-free (no genome or transcriptome prior information).
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have added a sentence in Section 2.2 (``TUSCO-SQANTI3: A Unified Framework for Transcript Benchmarking'') to explicitly state this capability:
+\begin{quote}
+``Because TUSCO relies on SQANTI3 to compare reconstructed transcripts against the reference, it can evaluate all three types of transcriptome reconstruction tools: genome-guided de novo (no annotation provided), genome-guided discovery (annotation present, look for new transcripts), and genome reference-free (no genome or transcriptome prior information).''
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Comment 3: Length biases in long-read sequencing protocols}
+
+\begin{reviewercomment}
+All the long-read sequencing protocols have strong length biases (PacBio against short or long transcripts, ONT cDNA against even moderately long transcripts, ONT RNA against longest,...); with log scales it's hard to figure out the relevant transcript lengths in relation to these biases. Consider binning into $<$600 bp, 600-1kb, 1kb-2kb, \ldots 4kb+ or similar.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Revised Figure 1c with binned lengths:} We agree that log scales can obscure specific length biases relevant to long-read protocols. We have revised Figure 1c to display transcript length distributions in discrete bins ($<$600 bp, 600--1kb, 1kb--2kb, 2kb--4kb, $>$4kb) as suggested. This visualization more clearly demonstrates how TUSCO transcripts span the relevant length categories compared to GENCODE annotations and spike-in controls.
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have updated Figure 1c and its caption to present the transcript length distributions in the suggested bins instead of the log10 scale.
+\end{responseboxnew}
+
+\subsection{Comment 4: Very deep datasets}
+
+\begin{reviewercomment}
+Would very deep datasets (100M reads?) cause issues, because rare transcription noise would still pass the threshold as a new isoform?
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Impact depends on reconstruction tools:} We agree that increased sequencing depth (e.g., 100M reads) captures more rare events, but whether this "noise" is reported as novel isoforms depends heavily on the filtering strategies of the reconstruction tools:
+\begin{itemize}
+    \item \textbf{IsoQuant (Relative Thresholds):} IsoQuant filters novel transcripts that do not exceed 2\% of the maximum graph coverage. As sequencing depth increases, the absolute number of reads required to meet this 2\% threshold rises proportionally. Since stochastic transcription noise typically remains at low absolute frequencies, it fails to cross this dynamic threshold even in deep datasets.
+    \item \textbf{Bambu (Probabilistic Modeling):} Bambu groups reads into "Read Classes" based on shared splice patterns and employs probabilistic modeling to identify high-confidence isoforms. Rare, stochastic noise that does not form consistent, high-confidence read classes is effectively filtered out during this consolidation process.
+    \item \textbf{Iso-Seq + SQANTI3 (ML Filtering):} The SQANTI3 Machine Learning filter uses a Random Forest classifier trained on structural and quality attributes (e.g., TSS/TTS support, canonical junctions) to distinguish true isoforms from artifacts. This classifier is specifically designed to reject transcriptional noise (probability $<$ 0.7) regardless of sequencing depth.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{TUSCO correctly identifies noise as False Positives:} If a tool fails to filter out this noise and reports it, TUSCO will correctly identify it as a False Positive (FP), as TUSCO genes are strictly single-isoform. Thus, TUSCO remains a valid benchmark for assessing a tool's ability to control for noise in deep datasets.
+\end{responseboxnew}
+
+\subsection{Comment 5: Example TUSCO report}
+
+\begin{reviewercomment}
+Consider providing an example report of TUSCO.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Example report provided:} We have provided an example HTML report generated by TUSCO. This report illustrates the comprehensive set of diagnostic plots and quality control metrics that the framework produces, allowing users to assess the performance of their long-read transcriptomics data and reconstruction pipelines.
+\end{responseboxnew}
+
+\subsection{Comment 6: Universal set download on website}
+
+\begin{reviewercomment}
+On the TUSCO website, it's easy to download the tissue-specific gene sets but I couldn't see how to download the universal set. It can be found on the SQANTI3 Github but it would be convenient to put it on the TUSCO website too.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Universal set added to website:} We thank the reviewer for this suggestion. We have updated the TUSCO website (tusco.uv.es) to include a direct download link for the universal TUSCO gene set, making it easily accessible alongside the tissue-specific sets.
+\end{responseboxnew}
+
+\newpage
+
+\section{Reviewer \#2}
+
+\begin{positiveremarks}
+The authors report on TUSCO, a newly created benchmark for evaluating the accuracy of transcript reconstruction with long RNA sequencing reads (LR). TUSCO consists of transcripts encoded in the human or mouse genome and therefore captures both technical and biological aspects that are not captured by artificial spike-in datasets (Sequins, SIRVs) or simulation models, such as RNA degradation and extraction artifacts.
+
+\vspace{0.2cm}
+\textbf{The manuscript is well-written and substantiated, with in-depth evaluations of TUSCO that demonstrate its advantages.} The construction of the 'novel variant' test set is ingenious.
+
+\vspace{0.2cm}
+The primary drawback of TUSCO is that it cannot be used to assess transcript reconstruction in the presence of multiple isoforms per gene, which is one of the main promises and goals of long read RNA sequencing and LR transcriptomic analyses. The authors already recognize this as a limitation and address it in their Discussion section.
+
+\vspace{0.2cm}
+Nevertheless, overall, \textbf{TUSCO is the first endogenous benchmark dataset that is organically integrated with the experiment, and the only one to reflect the complexities in LR RNA datasets resulting from RNA degradation and RNA capture. Therefore, it represents an original and valuable complement and addition to the benchmark sets for LR RNA sequencing.}
+
+\vspace{0.2cm}
+\textit{Code availability: While I did not assess the current SQANTI3 code, I was able to locate the general (cross-tissue) datasets and access the web site with the tissue-specific transcripts based on the instructions and links provided.}
+\end{positiveremarks}
+
+\subsection{Minor Comment 1: Statistical testing for SIRVs vs TUSCO}
+
+\begin{reviewercomment}
+Section 2.4 and Figure 3b: When comparing the performance metrics for TUSCO and SIRVs, the authors mention that no significant differences were found for the TP and FN categories, whereas the figures suggest otherwise, i.e., SIRVs overtaking TUSCO for TPs. This could be because the statistical test was formulated for 'TUSCO $>$ SIRVs', for which the null hypothesis could not be rejected. The authors should incorporate testing for 'SIRVs $>$ TUSCO'.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Clarification of original intent:} We thank the reviewer for this observation. Our original statistical testing focused on whether TUSCO yielded significantly higher False Positive (FP) rates than SIRVs, as this would indicate that TUSCO was incorrectly identifying non-existent isoforms. We found no significant difference in FP rates, suggesting TUSCO is as robust as SIRVs in avoiding false detections.
+
+\vspace{0.3cm}
+\textbf{New statistical test results:} Regarding True Positives (TP), we performed the one-sided paired $t$-test for the alternative hypothesis ``SIRVs $>$ TUSCO'' as suggested. The results confirmed that SIRVs have a significantly higher TP rate than TUSCO ($p = 1.12 \times 10^{-3}$).
+
+\vspace{0.3cm}
+\textbf{Explanation of the difference:} This result is expected and informative. TUSCO shows significantly higher rates of Partial True Positives (PTP) and False Negatives (FN) compared to SIRVs. This difference arises because TUSCO genes are endogenous and thus subject to biological realities like RNA degradation (leading to PTP) and sequencing depth limitations (leading to FN), whereas synthetic SIRV spike-ins are added at high concentrations and are not subject to extraction-induced degradation. We have demonstrated these effects in our RNA degradation analysis (Fig. 3c) and sequencing depth correlation study (Fig. S3). Therefore, the lower TP rate in TUSCO accurately reflects the true sample quality and sequencing depth, providing a more realistic benchmark than the artificially inflated performance seen with SIRVs.
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have updated Section 2.4 to explicitly report this significant difference and explain that it reflects the sensitivity of TUSCO to sample quality factors that SIRVs do not capture, citing our specific analyses as evidence:
+\begin{quote}
+``However, SIRVs showed a significantly higher TP rate compared to TUSCO (one-sided paired $t$-test, $p = 1.12 \times 10^{-3}$). This lower TP in TUSCO is driven by significantly higher rates of Partial True Positives (PTP) and False Negatives (FN) (Fig.~3b), reflecting that TUSCO, unlike synthetic spike-ins, is sensitive to RNA degradation and sequencing depth limitations, as demonstrated by our RNA degradation analysis (Fig.~3c) and sequencing depth correlation (Fig.~S3).''
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Minor Comment 2: Reference annotations for novel transcript evaluation}
+
+\begin{reviewercomment}
+In evaluating the programs' (Bambu, StringTie2, FLAIR, Iso-Seq+SQANTI3 ML) performance for 'novel' transcripts, it is not clear what reference annotations were provided to the programs to create the radar plots. More specifically, did the annotations include all genes and variants in GENCODE, or only those related to the TUSCO gene set? Also, how were transcripts predicted by the programs at loci outside of the TUSCO set accounted for?
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Response to Reviewer Comment:}
+
+We appreciate the reviewer's request for clarification regarding the reference annotations used in the 'novel' transcript evaluation.
+
+\textbf{1. Reference Annotations Provided:}
+For the 'novel' transcript benchmarking (Figure 4), the reconstruction programs (Bambu, StringTie2, FLAIR, IsoQuant) were provided with a \textbf{comprehensive reference annotation} that included \textbf{all genes and variants in GENCODE}, with a specific modification restricted to the TUSCO loci. For the TUSCO genes, the true biological transcript models were removed and replaced with simulated "novel" isoform models (containing artificial splice sites). This modified full-genome annotation (e.g., \texttt{tusco\_human\_full.gtf}) served as the input guide for the genome-guided tools. For the Iso-Seq pipeline, which performs reference-free reconstruction using TAMA, this modified annotation was used during the SQANTI3 QC and Machine Learning filtering steps.
+
+\textbf{2. Accounting for Transcripts Outside TUSCO Loci:}
+Transcripts predicted by the programs at loci outside of the TUSCO gene set were \textbf{excluded from the performance metrics calculation}. As detailed in the "Methods" section under "TUSCO and SIRV metrics calculation", our evaluation was strictly restricted to reconstructed transcripts that mapped to TUSCO genes (identified by matching gene symbols or IDs in the SQANTI3 classification). Consequently, predictions at other genomic loci did not influence the sensitivity, precision, or other metrics reported in the radar plots. This ensures that the reported metrics specifically reflect the tools' ability to recover the "hidden" true isoforms at the targeted TUSCO loci.
+\end{responseboxnew}
+
+\subsection{Minor Comment 3: FLAIR collapse step}
+
+\begin{reviewercomment}
+Section 4.3, Transcriptome reconstruction with FLAIR. Was the 'collapse' step run with or without a reference annotation?
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{FLAIR collapse with reference annotation:} The FLAIR ``collapse'' step was run \textbf{with a reference annotation} provided. As described in Section 4.3 (Transcriptome Reconstruction with FLAIR), alignment files were refined with the FLAIR \texttt{correct} subcommand to adjust splice junctions and transcript boundaries based on an external reference GTF annotation. This approach ensures that transcript boundaries are guided by known annotations while still allowing for novel isoform discovery based on read evidence.
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have clarified this in the Methods section to make the annotation usage explicit.
+\end{responseboxnew}
+
+\newpage
+
+\section{Reviewer \#3}
+
+\begin{positiveremarks}
+To improve the benchmarking of long read sequencing (LRS) methods, the authors present TUSCO (Transcriptome Universal Single-isoform Control). TUSCO includes a computational pipeline applied to varied RNA-seq data which selects endogenous, widely-expressed, single-isoform genes to serve as internal controls.
+
+\vspace{0.2cm}
+\textbf{The TUSCO manuscript presents important ideas which are worthy of publication.} The strategy of defining internal controls via expressed single-isoform genes is compelling, and the authors make good arguments for the utility of this approach. However, the current manuscript suffers from major gaps which should be addressed prior to publication.
+\end{positiveremarks}
+
+\subsection{Major Gap 1: Define benchmarking goals}
+
+\begin{reviewercomment}
+At a high-level, what is this work about? The authors state it is about ``benchmarking long reads transcriptomics'', though what exactly is involved in such benchmarking is never defined. While this is implicitly addressed later by the stats the authors derive, the goals of benchmarking should be clearly stated/defined.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Clarification of benchmarking goals:} We thank the reviewer for this suggestion. The goal of TUSCO benchmarking is to evaluate the accuracy and completeness of long-read transcript reconstruction by measuring:
+
+\begin{enumerate}
+    \item \textbf{Sensitivity (detection completeness):} Whether transcripts known to be expressed are successfully detected by the reconstruction pipeline.
+    \item \textbf{Precision (structural accuracy):} Whether detected transcripts match the expected reference structure without spurious splice sites or artificial variants.
+    \item \textbf{Robustness to sample quality:} How well pipelines perform under real-world conditions including RNA degradation, sequencing depth variations, and library preparation artifacts.
+    \item \textbf{Novel isoform discovery capacity:} The ability to detect true transcripts even when reference annotations are incomplete or misleading.
+\end{enumerate}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have added an explicit statement of benchmarking goals in Section 2.2 (TUSCO-SQANTI3: A Unified Framework for Transcript Benchmarking):
+\begin{quote}
+``TUSCO benchmarking aims to evaluate four key aspects of long-read transcript reconstruction: (1) sensitivity---whether expressed transcripts are detected; (2) precision---whether detected transcripts match expected structures; (3) robustness---performance under real-world sample quality variations; and (4) novel discovery capacity---ability to identify true transcripts with incomplete annotations.''
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Major Gap 2: Comparison with short-read baseline approach}
+
+\begin{reviewercomment}
+In the abstract the authors postulate benchmarking has been done so far by two approaches: Spiked-in transcripts and synthetic data generation. The entire manuscript is focused on comparing to spiked-in transcripts to show TUSCO advantage. However, these are definitely not the only approaches. Specifically, recent work (MAJIQ-L, Han et al, Genome Research 2024) used short-reads sequenced from the same samples as a baseline to compare different long reads algorithms and long reads technology (ONT vs PacBio). While on the surface these are different evaluations (full isoforms reconstruction is not possible with short reads) in practice much of what the authors aim to assess (and what users care about) is totally achievable by analyzing short read sequences. Specifically, while transcript start/end are not available directly from short reads, Han et al pipeline allows users to assess where long reads report junctions, splice sites, and intron retention that do not exist by short reads (or annotation). Clearly, there could be advantages and disadvantages to assessing long reads with TUSCO vs. using short reads. For example, short reads require the matching experiment to be done with short reads and is not suitable for assessing start/end of transcripts. It also uses short-reads as the baseline which, by definition, cannot be considered an absolute truth but more of an approximation with its own biases. Nonetheless, using short read carry important potential benefits: It can be done for any condition easily and will not be sensitive to the definition of synthetically introduced TUSCO transcripts or to actual splice variants occurring in TUSCO genes in a condition/disease. It also gives a much broader ``natural'' set of genes with all their built in complexity without resorting to special case genes which may be biased in some unknown way (more on that later). It also gives a wider spread of TPM, gene length etc. to assess performance, important factors glossed over in the current manuscript. Consequently, it may offer much more accurate assessment of false negatives (see below).
+
+While the above qualitative assessment may be sensible it is also speculative and not quantitative. Given the importance of this to improving long reads transcriptomics benchmarking (the stated goal of this manuscript), the authors must investigate this thoroughly. Indeed Han et al used much of the same data from the long reads consortium and all their analysis/results are available. Thus, it should be relatively straightforward to compare TUSCO on the same data. The fact that Han et al used this orthogonal approach/method (MAJIQ based analysis) with the same data can help shed more light on TUSCO.
+
+\end{reviewercomment}
+
+\begin{responseboxnew}
+
+We thank the reviewer for this suggestion. We have performed a systematic comparison of the benchmarking metrics that can be computed with TUSCO versus MAJIQ-L, and present the results below.
+
+\subsection*{Metric Definitions}
+
+To facilitate a fair comparison, we first define how benchmarking metrics are computed with each approach. For MAJIQ-L, junctions are classified as \textbf{known} (present in the annotation) or \textbf{novel} (not in the annotation):
+
+\vspace{0.3cm}
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+\textbf{Metric} & \textbf{Known Junctions} & \textbf{Novel Junctions} \\
+\midrule
+Ground truth & All junctions identified by MAJIQ & All novel junctions identified by MAJIQ \\
+\midrule
+TP & TP-known: LR known + MAJIQ & TP-novel: LR novel + MAJIQ novel \\
+FP & FP-known: LR known, no MAJIQ & FP-novel: LR novel, no MAJIQ \\
+TN & \textit{Not possible (unknown expression)} & \textit{Not possible by MAJIQ} \\
+FN & FN-known: No LR, Yes MAJIQ & FN-novel: No LR, Yes MAJIQ novel \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.3cm}
+
+Note that \textbf{TN cannot be computed} with MAJIQ-L because we do not know if a gene is expressed. However, with TUSCO, we can identify ``false transcripts'' (incorrect transcript models), which represents a form of TN assessment not available with MAJIQ-L.
+
+\textbf{False Discovery Rate (FDR)} is computed as: FDR = 100 $\times$ (N $-$ TP) / N, where N is the number of observed transcripts (TUSCO) or LR junctions (MAJIQ-L). For TUSCO, N = TP + PTP + FP (observed transcripts); for MAJIQ-L, N = total\_LR\_junctions and TP includes both known and novel.
+
+\subsection*{MAJIQ-L Benchmarking Results}
+
+We applied the MAJIQ-L framework to the same LRGASP WTC11 datasets. Table~\ref{tab:majiq} shows the junction-level metrics aggregated across all expressed genes:
+
+\begin{center}
+\small
+\captionof{table}{MAJIQ-L junction-level benchmarking results.}
+\label{tab:majiq}
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Pipeline} & \textbf{TP-known} & \textbf{FP-known} & \textbf{FN-known} & \textbf{TP-novel} & \textbf{FP-novel} & \textbf{FN-novel} \\
+\midrule
+cDNA-ONT & 80,021 & 4,397 & 124,611 & 839 & 2,385 & 12,847 \\
+cDNA-ONT (LS) & 81,343 & 4,447 & 123,289 & 2,221 & 2,904 & 11,465 \\
+cDNA-PacBio & 138,081 & 3,617 & 66,551 & 939 & 1,312 & 12,747 \\
+cDNA-PacBio (LS) & 139,903 & 3,637 & 64,729 & 2,655 & 1,645 & 11,031 \\
+dRNA-ONT & 57,801 & 971 & 146,831 & 52 & 208 & 13,634 \\
+dRNA-ONT (LS) & 58,718 & 980 & 145,914 & 181 & 237 & 13,505 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+From these values, we compute Sensitivity as (TP-known + TP-novel) / (TP-known + TP-novel + FN-known + FN-novel), FN Rate as (FN-known + FN-novel) / (TP-known + TP-novel + FN-known + FN-novel), and FDR as 100 $\times$ (N $-$ TP) / N where N is the total number of LR junctions detected.
+
+\subsection*{Comparison of Benchmarking Insights}
+
+Figure~\ref{fig:comparison} compares Sensitivity, FN rate, and FDR between TUSCO and MAJIQ-L across all pipelines. Only cDNA-PacBio consistently ranks best in both methods. The rankings for cDNA-ONT and dRNA-ONT differ substantially between TUSCO and MAJIQ-L, revealing that each method captures different aspects of data quality.
+
+TUSCO is sensitive to sample quality, particularly RNA integrity. The cDNA-ONT pipeline shows 38.3\% PTP transcripts, indicating incomplete RNA molecules with poor TSS/TTS accuracy. This results in low sensitivity (59.5\%) and high FDR (51.1\%). In contrast, dRNA-ONT achieves high sensitivity (75.6\%) despite having only 760K reads (compared to 16.6M for cDNA-ONT), suggesting that the RNA molecules in this preparation are more intact.
+
+MAJIQ-L, on the other hand, reflects sequencing depth because it evaluates all splice junctions rather than focusing on consistently expressed genes like TUSCO. The dRNA-ONT pipeline has only 760K reads (22-fold fewer than cDNA-ONT's 16.6M reads) and consequently misses many lowly-expressed junctions, leading to a high FN rate (73.5\%) in MAJIQ-L. Importantly, the low FDR in dRNA-ONT (2.0\% by MAJIQ-L, 8.1\% by TUSCO) confirms that sample quality is good---the high FN rate is due to depth limitations, not poor sample quality. The cDNA-ONT pipeline has 16.6M reads, detecting more junctions and achieving higher MAJIQ-L sensitivity (37.0\%) compared to dRNA-ONT (26.5\%).
+
+These complementary patterns demonstrate that TUSCO and MAJIQ-L assess fundamentally different quality dimensions.
+
+The two methods differ fundamentally in their approach. MAJIQ-L evaluates junction-level metrics and can assess novel junctions not present in the annotation, while TUSCO evaluates transcript-level metrics including full transcript structure and is limited to consistently expressed TUSCO genes. A key advantage of TUSCO is its ability to evaluate TSS and TTS accuracy through the PTP (partially true positive) category, which MAJIQ-L cannot assess. Furthermore, TUSCO provides a true ground truth based on the reference annotation, whereas MAJIQ-L uses short-read data as an approximation of the truth.
+
+\subsection*{Conclusion}
+
+TUSCO and MAJIQ-L are complementary benchmarking approaches that capture different aspects of long-read transcriptomics performance. TUSCO provides a true annotation-based ground truth rather than relying on short-read approximations, can evaluate both PTP and FN at the transcript level, requires no additional sequencing costs (no matched short-read data needed), and uniquely captures TSS and TTS accuracy through the PTP category. We acknowledge that TUSCO is not defined for novel species and has not been tested in disease settings.
+
+\end{responseboxnew}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{/Users/tianyuan/Desktop/github_dev/documenting_tusco/figs/majiq-l/final/plots/fig-tusco-vs-majiql.pdf}
+    \caption{\textbf{Comparison of TUSCO and MAJIQ-L benchmarking results.} Left panel: Sensitivity (TP / (TP + FN)). Middle panel: False Negative rate (FN / (TP + FN)). Right panel: False Discovery Rate (100 $\times$ (N $-$ TP) / N). Green circles represent TUSCO metrics; red triangles represent MAJIQ-L metrics. Lines connect the two methods for each pipeline. Only cDNA-PacBio consistently ranks best in both methods; dRNA-ONT and cDNA-ONT show divergent rankings that reflect different quality dimensions (RNA integrity vs. sequencing depth).}
+    \label{fig:comparison}
+\end{figure}
+
+\subsection{Major Gap 3: False negatives in disease studies}
+
+\begin{reviewercomment}
+The claim that TUSCO can detect false negatives even in unusual biological conditions like disease studies is suspect. While the TUSCO control genes were selected based on an analysis of many cell types and other factors, transcript expression is known to vary widely in diverse conditions, especially disease. This point should be reframed or better argued in the manuscript.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Reframing the claim:} We appreciate this important concern. We agree that transcript expression can vary substantially in disease contexts, and we have reframed our claims accordingly.
+
+\vspace{0.3cm}
+\textbf{What TUSCO can assess in disease samples:}
+\begin{itemize}
+    \item \textbf{Technical false negatives:} TUSCO genes are selected for widespread expression across diverse conditions. If a TUSCO gene is undetected in a sample where other TUSCO genes are detected at expected levels, this likely reflects technical limitations (sequencing depth, RNA capture efficiency) rather than biological absence.
+    \item \textbf{Sample quality indicators:} The PTP/TP ratio provides a measure of RNA integrity and degradation that applies regardless of disease state.
+    \item \textbf{Pipeline performance baseline:} Even in disease samples, TUSCO provides a baseline for comparing different reconstruction pipelines applied to the same data.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Limitations in disease contexts:}
+\begin{itemize}
+    \item Some TUSCO genes may be downregulated in specific diseases, potentially inflating apparent FN rates.
+    \item Disease-specific alternative splicing events, while filtered against in our selection, could theoretically exist for some TUSCO genes in extreme pathological states.
+    \item Users should interpret TUSCO metrics in disease samples as relative performance indicators rather than absolute truth.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have revised the Discussion to temper claims about disease applications and added a note recommending that users interpret TUSCO results in unusual biological conditions (such as disease) with appropriate caution, using TUSCO primarily for relative pipeline comparison rather than absolute performance assessment.
+\end{responseboxnew}
+
+\subsection{Major Gap 4: Statistics interpretation}
+
+\begin{reviewercomment}
+Are the statistics used to assess performance supposed to represent ``absolute truth'' of some kind? Relative ranking of methods/algorithms by specific metrics? This is unclear and definitions/statements need to be made and supported accordingly. Clearly there are major effects of coverage, transcript length (see also point below) and the variance observed in the reported statistics is so high it leaves the reader wondering what does this all mean. For example, PTP average in mouse (p. 8 top) is ~54\% with 43\% std (!).
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Purpose of TUSCO statistics:} TUSCO metrics serve two complementary purposes:
+
+\begin{enumerate}
+    \item \textbf{Relative ranking of methods/pipelines:} For a given dataset, TUSCO enables comparison of different reconstruction tools (e.g., Bambu vs. FLAIR vs. Iso-Seq) by providing consistent metrics across all tools. This ranking is the primary intended use.
+    \item \textbf{Sample quality assessment:} Within a single pipeline, TUSCO metrics (particularly PTP rates and TP/PTP ratios) indicate sample-specific factors like RNA integrity, which can vary substantially.
+\end{enumerate}
+
+\vspace{0.3cm}
+\textbf{Interpretation of variance:} The high variance observed (e.g., PTP average $\sim$54\% with 43\% std in mouse) reflects \textit{real biological and technical heterogeneity} across samples, which is precisely what TUSCO is designed to capture. This variance arises from:
+
+\begin{itemize}
+    \item Differences in RNA integrity (RIN) across samples (demonstrated in Fig. 3c)
+    \item Sequencing depth variations (demonstrated in Fig. S3)
+    \item Library preparation method differences (ONT vs. PacBio, dRNA vs. cDNA)
+    \item Biological variation in expression levels
+\end{itemize}
+
+The high variance is informative, not problematic---it demonstrates TUSCO's sensitivity to real experimental factors. By contrast, SIRVs show artificially low variance (Fig. S6) precisely because they bypass sample preparation variability.
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have added clarifying text in Section 2.3 explaining that TUSCO metrics should be interpreted as: (1) relative performance rankings within a dataset, and (2) indicators of sample-specific quality, with expected variance reflecting real technical heterogeneity.
+\end{responseboxnew}
+
+\subsection{Major Gap 5: Radar plots criticism}
+
+\begin{reviewercomment}
+Radar polygons and radar area are used throughout the manuscript for visualization and tool comparison. While these may be visually pleasing we see this as a case of form over function. Radar area is not an appropriate statistic to summarize and compare method performance (what does it actually mean?). Worse, the calculated area value depends strongly on the clockwise order of statistics; for example, for the six metrics shown in Fig 3a, hypothetical scores ordered 1, 1, 1, 0, 0, 0 (nonzero area) have a larger radar area than 1, 0, 1, 0, 1, 0 (zero area).
+
+\vspace{0.2cm}
+One wonders whether conclusions would change with a different ordering. Even in human perceptions there may be additional biases (e.g. things on the top vs on the sides). Radar polygon plots are not an intuitive way to compare tool performance because it is virtually impossible to visually compare each individual statistic across tools. The manuscript should use standard visualization methods (e.g. bar charts) allowing for comparison between statistics. It's simply hard to assess the authors' claims and converge to conclusions with these plots.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Acknowledgment of limitations:} We agree with the reviewer's critique of radar plots and radar area as summary statistics. The reviewer correctly notes that radar polygon area depends on the clockwise ordering of metrics, which could affect conclusions.
+
+\vspace{0.3cm}
+\textbf{Our rationale for radar plots:} We chose radar plots to provide a holistic visual summary of multi-dimensional performance. To address ordering concerns:
+\begin{itemize}
+    \item We used a \textit{consistent ordering} across all figures (Sn, nrPre, Redundancy$^{-1}$, 1-FDR, PDR, rPre), ensuring that comparisons between tools and conditions are internally consistent.
+    \item The same metric ordering was applied to both TUSCO and SIRV evaluations, enabling fair comparison.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have (i) ensured a fixed, consistent metric ordering across all radar plots, and (ii) added a cautionary note in the Figure 3 caption that radar plots provide a compact overview and that polygon areas should be interpreted cautiously given the fixed ordering. Where we report radar polygon area (native vs.\ TUSCO-novel), we present it as a descriptive summary (Supplementary Table S2) alongside metric-by-metric interpretation in the text.
+\end{responseboxnew}
+
+\subsection{Major Gap 6: TUSCO transcript length enrichment}
+
+\begin{reviewercomment}
+Section 2.1 makes the claim that TUSCO transcripts are comparable in length to RefSeq transcripts (Fig 1c), but this is not actually supported by Fig 1c, which illustrates an apparent enrichment of longer transcripts in TUSCO (even more-so given the log scale in Fig 1c). We can envision a different manuscript showing exactly the same plots as in Fig1c/d and making the *apposite* claim i.e. that they are significantly different, attaching a p-value to that claim... 
+
+\vspace{0.2cm}
+What are the implications of using unusually long transcripts as the internal controls? Moreover, this fact is a bit surprising and should be explained, as one would not necessarily expect single-isoform genes to generate relatively long transcripts. This points to a needed discussion about what biases are introduced by using such strongly-curated transcripts as the internal controls. Coming back to points raised above
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Acknowledgment of length distribution:} The reviewer correctly observes that TUSCO transcripts tend toward the longer end of the distribution. We have quantified this more precisely in the revised manuscript.
+
+\vspace{0.3cm}
+\textbf{Why TUSCO genes tend to be longer:} Single-isoform genes that are widely expressed and lack alternative splicing evidence tend to encode fundamental cellular functions (e.g., ribosomal proteins, metabolic enzymes, structural components). These genes are often under strong selective pressure against alternative splicing, which correlates with their functional importance. Functionally important genes tend to have longer transcripts due to:
+\begin{itemize}
+    \item More complex regulatory regions
+    \item Larger protein products for essential functions
+    \item Evolutionary conservation of full-length structure
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Implications for benchmarking:}
+\begin{itemize}
+    \item \textbf{Potential advantage:} Longer transcripts are more challenging for full-length reconstruction, making TUSCO a stringent benchmark that tests the upper bounds of pipeline performance.
+    \item \textbf{Potential limitation:} Performance on short transcripts ($<$600 bp) may be underrepresented in TUSCO evaluation.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have:
+\begin{enumerate}
+    \item Revised Figure 1c to use binned length distributions (as suggested by Reviewer 1) for clearer interpretation.
+    \item Added explicit acknowledgment in the Discussion that TUSCO's length distribution skews toward longer transcripts, which should be considered when interpreting benchmarking results.
+    \item Added Supplementary Figure S1 showing detailed length comparisons with statistical tests.
+\end{enumerate}
+\end{responseboxnew}
+
+\subsection{Additional Improvement 1: TUSCO terminology consistency}
+
+\begin{reviewercomment}
+Throughout the manuscript, TUSCO is confusingly referred to as a set of genes, a framework, and a collection of analyses. To this reviewer, TUSCO is certainly more than a set of genes since it includes the upstream computational pipelines and analysis pipelines, which are significant contributions. We recommend using terms more specifically to refer to the full collection of pipelines and results vs. specific parts like the cross-tissue filtered gene sets.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Clarification of terminology:} We thank the reviewer for this suggestion. We have standardized terminology throughout the manuscript:
+
+\begin{itemize}
+    \item \textbf{``TUSCO gene set''} or \textbf{``TUSCO genes''}: The curated collection of single-isoform genes used as ground truth.
+    \item \textbf{``TUSCO framework''} or \textbf{``TUSCO benchmarking framework''}: The complete system including gene selection pipeline, SQANTI3 integration, and metrics calculation.
+    \item \textbf{``TUSCO evaluation''} or \textbf{``TUSCO analysis''}: The process of applying the framework to assess a transcriptome reconstruction.
+    \item \textbf{``TUSCO metrics''}: The specific performance measurements (TP, PTP, FP, FN rates, sensitivity, precision, etc.).
+    \item \textbf{``TUSCO-novel''}: The specific evaluation mode using modified annotations.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have revised the manuscript to consistently use these terms, with ``TUSCO'' as the umbrella name for the complete framework and specific qualifiers (gene set, framework, metrics, evaluation) to refer to components.
+\end{responseboxnew}
+
+\subsection{Additional Improvement 2: ``Biologically plausible'' definition}
+
+\begin{reviewercomment}
+The TUSCO-novel claim of ``biologically plausible isoforms'' (section 2.5) is interesting, but the validity of ``biologically plausible'' is unclear. Were the made-up splice sites chosen to e.g. preserve splice motifs / enhancers, etc? What about exon length and GC content bias?
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Definition of ``biologically plausible'':} The artificial isoforms in TUSCO-novel are designed to be plausible in terms of basic splicing requirements:
+
+\begin{itemize}
+    \item \textbf{Canonical splice motifs preserved:} Artificial donor sites use GT (or GC) dinucleotides; artificial acceptor sites use AG dinucleotides. These canonical motifs are searched within the genomic sequence at modified positions.
+    \item \textbf{Minimum intron length:} Modified splice sites maintain biologically reasonable intron lengths ($>$20 bp).
+    \item \textbf{Exon structure:} The number of exons is preserved, maintaining transcript complexity.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{What is NOT guaranteed:}
+\begin{itemize}
+    \item Splice enhancer/silencer sequences are not explicitly preserved.
+    \item GC content and exon length biases are not controlled for.
+    \item Branch point sequences are not verified.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Rationale:} The goal is not to create transcripts that would actually be spliced in vivo, but to create annotations that are superficially consistent with splicing rules and could plausibly appear in a reference annotation. This tests whether reconstruction tools blindly follow annotation or use read evidence to identify the true splice pattern.
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have revised the term to ``structurally plausible'' rather than ``biologically plausible'' and clarified in the Methods that artificial splice sites preserve canonical motifs but do not guarantee functional splicing.
+\end{responseboxnew}
+
+\subsection{Additional Improvement 3: Parameter selection justification}
+
+\begin{reviewercomment}
+It's not clear how certain parameter values were selected. Moreover, the sensitivity of results to those choices is not clear. This could be better argued/explained. For example:
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{3.a.} How were the window sizes for TSS, TTS, and CAGE decided, and what is the sensitivity of the results to those parameters?
+\item \textbf{3.b.} TUSCO genes are medium to highly expressed across tissues (Section 2.1); is there value in lowering the minimum expression threshold to capture lower-yet-consistently-expressed genes, and how are LRS method evaluation results affected?
+\item \textbf{3.c.} Splice evidence can require as little as 1 supporting read for a junction in TUSCO gene selection (Section 4.1); is there value in more stringency? Should this part of the pipeline handle known confounders such as read stacks / artifacts and require junction read support from multiple positions? How would this change the results?
+\item \textbf{3.d.} How were the different thresholds for mouse vs human RNAseq data decided?
+\end{itemize}
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{3.a. TSS/CAGE window size validation:}
+
+We selected the $\pm$300 bp window to optimize the balance between capturing true TSSs and excluding alternative promoters. We validated this threshold using two metrics on single-isoform genes (Figure~\ref{fig:tss_ecdf}):
+
+First, this window yields high sensitivity with minimal background noise (Panel A). In human data, 300 bp captures the annotated TSS for 96.6\% of genes (Sensitivity), while only 2.1\% of genes have a neighboring gene's TSS within this range (Collision rate). Mouse data shows similar trends (93.8\% sensitivity vs 4.3\% collision).
+
+Second, examining the number of refTSS peaks per gene (Panel B) confirms that 300 bp is an appropriate filter stringency. The 75th percentile of peak counts at this window is 2, indicating that the filter removes the top $\sim$25\% of genes with the most complex promoter architecture. Since the inter-gene collision rate is very low ($<$5\%), these exclusions are driven by genuine alternative TSSs within the target gene rather than technical artifacts or neighboring genes. Thus, the 300 bp window effectively isolates single-TSS genes without being overly restrictive.
+
+\vspace{0.3cm}
+\textbf{3.b. Expression thresholds:}
+
+The Bgee prevalence cutoffs ($\geq$95\% for human, $\geq$90\% for mouse) balance sensitivity with specificity:
+\begin{itemize}
+    \item Lowering thresholds would include genes with tissue-restricted expression, increasing the risk of false negatives in non-expressing tissues.
+    \item Higher thresholds would severely restrict the gene set size.
+    \item We performed a five-level sweep of the per-tissue minimum expression cutoff in the Alphagenome-based expression component ($0.01, 0.05, 0.1, 0.2, 0.5$; holding prevalence at 95\% and median at 1.0). Lowering from 0.1 to 0.01 modestly expanded the universal candidate pool (+3 genes in human; +4 in mouse) and had only small effects on WTC11/ES evaluation metrics (max absolute change across pipelines: $\Delta$Sn $\leq$0.033 in human and $\leq$0.025 in mouse; full results: \texttt{reviewer\_response/review\_plots/param\_sensitivity/sweep\_expression\_thresholds.tsv}).
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{3.c. Splice junction read support:}
+
+The minimum of 1 supporting read with coverage $>$ $\alpha\mu$ (where $\alpha = 0.01$ for human and $0.05$ for mouse) was chosen to provide a universal lower bound while still making the effective cutoff scale with gene-specific junction coverage:
+\begin{itemize}
+    \item The relative threshold ($\alpha\mu$) scales with gene expression, avoiding both overly stringent filtering of low-expressed genes and acceptance of noise in high-expressed genes.
+    \item Read stacks/artifacts are partially addressed by requiring intragenic, strand-consistent junctions.
+    \item We quantified sensitivity to the absolute minimum support by sweeping the hard minimum from 1 to 20 reads on the recount3 junction catalog used in selection. For both species, the number of genes removed by the splice filter was \emph{unchanged} across this range (human: 435/745 multi-exon candidates removed at $\alpha=0.01$; mouse: 112/447 at $\alpha=0.05$; full results: \texttt{reviewer\_response/review\_plots/param\_sensitivity/sweep\_splice\_support\_hsa.tsv} and \texttt{reviewer\_response/review\_plots/param\_sensitivity/sweep\_splice\_support\_mmu.tsv}). This is expected because the effective cutoff is typically far above 1 read (median annotated-junction coverage $\mu$ is $\sim$1.5$\times 10^5$ in human and $\sim$3.3$\times 10^5$ in mouse in these catalogs), so the hard minimum only applies to a small fraction of low-coverage genes.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{3.d. Human vs. mouse threshold differences:}
+
+Differences reflect annotation quality and data availability:
+\begin{itemize}
+    \item Human has more comprehensive splice junction databases (IntroVerse, larger recount3 coverage), allowing stricter filtering ($\alpha = 0.01$).
+    \item Mouse annotations are less complete; the more permissive $\alpha = 0.05$ compensates for potentially missing junctions in databases while still filtering obvious alternative splicing.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have added a Supplementary Table (S4) documenting all parameter choices with justifications and sensitivity analysis results.
+\end{responseboxnew}
+
+\subsection{Additional Improvement 4: Cosine similarity interpretation}
+
+\begin{reviewercomment}
+In the TUSCO vs SIRV comparison of Section 2.3, it is not intuitive how good the concordance is from the reported cosine similarity. Is there an available negative control e.g. biased protocol or short-read-only protocol, or even ``reasonable'' simulated result that would illustrate a baseline cosine similarity for this high-dimensional comparison?
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Interpretation of cosine similarity:} Cosine similarity measures the angular similarity between two 6-dimensional metric vectors (Sn, nrPre, Redundancy$^{-1}$, 1-FDR, PDR, rPre). A value of 1.0 indicates identical relative performance profiles; values near 0 indicate orthogonal profiles.
+
+\vspace{0.3cm}
+\textbf{Baseline interpretation:}
+\begin{itemize}
+    \item \textbf{High concordance ($>$0.99):} TUSCO and SIRVs report virtually identical relative performance, indicating both benchmarks assess the same underlying pipeline quality.
+    \item \textbf{Moderate concordance (0.94--0.99):} Some divergence, potentially due to TUSCO's sensitivity to factors SIRVs don't capture (e.g., RNA degradation).
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Negative control context:} While we did not include a formal negative control (e.g., deliberately biased protocol), we note:
+\begin{itemize}
+    \item The lowest observed cosine similarity (0.9493 for WTC11 cDNA ONT) still indicates strong concordance.
+    \item A randomly shuffled metric vector would yield cosine similarity $\sim$0.5--0.7 by chance.
+    \item A truly discordant benchmark (e.g., evaluating different genes entirely) would show cosine similarity approaching 0.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have added interpretation guidance for cosine similarity values in the Results section, noting that values $>$0.95 indicate strong concordance while values $<$0.90 would suggest meaningful benchmark divergence.
+\end{responseboxnew}
+
+\subsection{Additional Improvement 5: TP coverage variability}
+
+\begin{reviewercomment}
+The TP coverages reported in Section 2.5 are highly variable (via the +), is there more to say about when it is higher vs lower?
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Sources of TP coverage variability:} The variability in TP per-read coverage ($84.3\% \pm 26.5\%$ in human) reflects several factors:
+
+\begin{itemize}
+    \item \textbf{Transcript length:} Longer transcripts have lower per-read coverage on average due to RNA fragmentation during library preparation.
+    \item \textbf{Library type:} cDNA libraries typically show higher coverage than dRNA due to amplification; CapTrap libraries show intermediate values.
+    \item \textbf{RNA integrity:} Samples with lower RIN show more variability in per-read coverage due to degradation.
+    \item \textbf{Sequencing platform:} PacBio HiFi reads tend to span more of the transcript than ONT reads for the same transcript length.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{When coverage is higher:}
+\begin{itemize}
+    \item Shorter transcripts ($<$2kb)
+    \item High-RIN samples
+    \item PacBio cDNA libraries
+    \item High-expression genes (more reads, better consensus)
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have added analysis in Supplementary Figure S5 showing coverage stratified by transcript length and library type, demonstrating the expected relationships.
+\end{responseboxnew}
+
+\subsection{Additional Improvement 6: Per-read coverage definition}
+
+\begin{reviewercomment}
+It is not clear why per-read coverage is defined and used as in Section 2.5.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Rationale for per-read coverage metric:} Per-read coverage $f = L_{\mathrm{read}}/L_{\mathrm{exonic}}$ quantifies how much of the reference transcript is spanned by individual long reads. This metric serves several purposes:
+
+\begin{enumerate}
+    \item \textbf{Distinguishing TP from PTP causes:} TP transcripts have high per-read coverage (median 98.3\%), indicating full-length sequencing. PTP transcripts have lower coverage (median 31.7\%), indicating incomplete reads or degradation.
+
+    \item \textbf{Sample quality indicator:} The distribution of per-read coverage reflects RNA integrity---samples with extensive degradation show shifted distributions toward lower coverage.
+
+    \item \textbf{Pipeline evaluation:} Some pipelines may call partial transcripts as full matches; per-read coverage helps identify such cases.
+\end{enumerate}
+
+\vspace{0.3cm}
+\textbf{Why ratio rather than absolute length:} Using the ratio rather than absolute read length normalizes for transcript length differences, enabling comparison across TUSCO genes of different sizes.
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have added explicit justification for this metric definition in Section 2.5 and clarified its interpretation in the figure caption.
+\end{responseboxnew}
+
+\subsection*{Reviewer \#3 (Remarks on code availability)}
+
+\begin{reviewercomment}
+\textit{Haven't reviewed the code at this stage.}
+\end{reviewercomment}
+
+\newpage
+
+\section{Reviewer \#4}
+
+\begin{positiveremarks}
+In the manuscript by Tianyuan Liu et al. authors introduce the Transcriptome Universal Single-isoform COntrol (TUSCO), which is a curated reference set of genes lacking alternative isoforms. The aim is to provide an internal ground truth for benchmarking purposes. TUSCO evaluates precision by identifying transcripts deviating from reference annotations and assesses sensitivity by verifying detection completeness in human and mouse samples.
+
+\vspace{0.2cm}
+The study is very extensive and detailed what makes that the following the narration is very tricky, although the article is well structure and very well written. Simply the complexity of topic is high and it is difficult to provide an easy solution here.
+
+\vspace{0.2cm}
+\textbf{I am confident that TUSCO will become a widely used approach for benchmarking.} It has its own limitations which were also specified by the authors. The main is that it is ``restricted to single-isoform loci and thus cannot evaluate transcript reconstruction accuracy within highly complex multi-isoform genes''. To overcome this limitations authors introduce a set of artificial isoforms derived from TUSCO core genes. It is a nice trick which allows to assess some properties of the pipelines but still is not perfect. Authors are aware of it and are planning further work in this direction.
+\end{positiveremarks}
+
+\subsection{Comment 1: Section 2.4 - Correlation interpretation}
+
+\begin{reviewercomment}
+It is stated: ``A pronounced negative correlation (Pearson r = $-$0.8, p = 1.7 $\times$ 10$-$3; n = 12 pipelines) was observed, indicating that as sequencing coverage and read length increase, the number of false negatives decreases.''
+
+\vspace{0.2cm}
+An inspection of Fig. S3 reveals that in fact we do have a two clearly separated groups of points. One from ONT and second by PB which are strongly separated both by False Negative rate as well as composite metric. The true source of observed phenomenon here is hidden in sequencing technology differences and is not fully proven here. Thus further statements coming from this part are overinterpretation.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Acknowledgment of technology confounding:} The reviewer raises an important point. Upon re-examination of Fig. S3, we agree that the observed correlation is confounded by platform differences---ONT and PacBio samples cluster separately on both axes.
+
+\vspace{0.3cm}
+\textbf{Revised interpretation:} We have tempered our claims as follows:
+
+\begin{itemize}
+    \item The correlation between the composite metric ($\log(\text{reads}) \times \text{median length}$) and false negatives is \textit{observed} but cannot be definitively attributed to sequencing depth alone.
+    \item Platform-specific differences (read accuracy, library preparation, RNA capture) likely contribute to the clustering pattern.
+    \item Within-platform analysis shows weaker but still negative trends, consistent with depth effects but with insufficient sample size for statistical significance.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have revised Section 2.4 to acknowledge this confounding:
+
+\begin{quote}
+``A pronounced negative correlation (Pearson $r = -0.8$, $p = 1.7 \times 10^{-3}$) was observed between the composite sequencing metric and false negatives. However, this correlation is partially confounded by platform differences, as ONT and PacBio samples cluster separately. While the trend is consistent with improved detection at higher effective depth, platform-specific factors (read accuracy, library chemistry) likely also contribute.''
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Comment 2: Section 2.5 - TUSCO-novel evaluation}
+
+\begin{reviewercomment}
+The capacity of reconstruction tools to detect unannotated isoforms is assessed with used of introduced TUSCO-novel reference set. The authors note that tools which heavily rely on annotation fail to recover new isoforms as defined in TUSCO-novel. That is true, but what was not highlighted or noted is the fact that preferred by authors Iso-Seq+SQANTI3 is not way better. It has marginal drop of performance between ``reference annotation'' and TUSCO-novel due to the fact that is dealing with ``reference annotation'' noticeably worse than other approaches. Thus ability of TUSCO-novel to evaluate novel isoforms discovery is not that remarkable I would say.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Acknowledgment of the observation:} The reviewer makes an astute observation. Iso-Seq + SQANTI3 ML indeed shows lower absolute performance with the reference annotation (median area 1.47 vs. Bambu 2.60), and its minimal drop under TUSCO-novel ($-1.9\%$) reflects this lower baseline rather than superior novel discovery.
+
+\vspace{0.3cm}
+\textbf{Clarifying the interpretation:}
+\begin{itemize}
+    \item \textbf{What TUSCO-novel reveals:} The key insight is not absolute performance but \textit{annotation dependence}. Bambu and StringTie2 are highly dependent on correct annotation; when the annotation is wrong, they fail catastrophically. Iso-Seq + SQANTI3 ML performs consistently regardless of annotation status.
+
+    \item \textbf{Why Iso-Seq baseline is lower:} The Iso-Seq pipeline lacks TSS/TTS refinement against the reference, resulting in more PTP calls even when the junction chain is correct. This reduces TP rates but makes the pipeline inherently reference-agnostic.
+
+    \item \textbf{Practical implication:} In scenarios where reference annotations may be incomplete or misleading (novel tissues, disease states, non-model organisms), a pipeline with lower but \textit{stable} performance may be preferable to one with high reference-guided performance that collapses without correct annotation.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have revised Section 2.5 to explicitly acknowledge this trade-off:
+
+\begin{quote}
+``Iso-Seq + SQANTI3 ML showed minimal performance change under TUSCO-novel ($-1.9\%$ to $+2.7\%$), though with lower absolute performance than annotation-guided tools. This stability arises from the pipeline's reference-agnostic design, which maintains consistent (if moderate) performance regardless of annotation quality---a potentially valuable property when working with incomplete or unreliable references.''
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Comment 3: Section 2.6 - Replicate number recommendations}
+
+\begin{reviewercomment}
+It is stated: ``... an optimal design includes at least three biological replicates (Fig. 5b; Supplementary Table S3). By contrast, analyses of SIRV spike-in controls yielded highly consistent concordance metrics across 1–5 replicates, providing little guidance on replicate number optimization (Fig. S6).''
+
+\vspace{0.2cm}
+An inspection of Fig.5 together with Fig. S6 reveals that there are no drastic differences across 2-5 replicates for both approaches. Thus statement that for TUSCO a good choice is 3+ while for SIRV it is hard to say is overinterpretation. Also here I do not understand what Suppl. Table S3 is adding here.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+\textbf{Acknowledgment of the observation:} We agree that the differences between 2--5 replicates are modest for both TUSCO and SIRVs, and our original phrasing may have overstated the guidance provided.
+
+\vspace{0.3cm}
+\textbf{Clarification of findings:}
+\begin{itemize}
+    \item \textbf{Major gain is 1$\rightarrow$2 replicates:} The most substantial improvement occurs between 1 and 2 replicates (FDR drops from 32.9\% to 12.2\% in brain, 34.8\% to 19.0\% in kidney). Beyond 2 replicates, gains are incremental.
+
+    \item \textbf{TUSCO vs SIRV sensitivity:} The key difference is that TUSCO metrics \textit{do} change with replicate number (albeit modestly after 2 replicates), while SIRVs are essentially invariant. This demonstrates that TUSCO captures real experimental variation that SIRVs miss, even if the absolute differences are small.
+
+    \item \textbf{Supplementary Table S3 purpose:} This table provides the raw read count data for each sample (PacBio Iso-Seq FLNC counts for K31--K35 and B31--B35), allowing readers to contextualize the sequencing depth ($\sim$4--5 million reads per sample) and verify the experimental setup.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Changes in Manuscript:} We have revised Section 2.6 to present findings more objectively:
+
+\begin{quote}
+``The largest precision gain occurred between one and two replicates (FDR reduction of $\sim$20 percentage points). Additional replicates (3--5) provided incremental improvements. While SIRVs showed consistent metrics across all replicate numbers, TUSCO metrics continued to respond to replicate count, albeit modestly. These results suggest that for this experimental setup, at least two biological replicates substantially improve precision, with diminishing returns thereafter. Users should consult Supplementary Table S3 to assess trade-offs for their specific accuracy requirements.''
+\end{quote}
+\end{responseboxnew}
+
+\newpage
+
+\section{Reviewer \#5}
+
+\begin{positiveremarks}
+I co-reviewed this manuscript with one of the reviewers who provided the listed reports. This is part of the Nature Communications initiative to facilitate training in peer review and to provide appropriate recognition for Early Career Researchers who co-review manuscripts.
+\end{positiveremarks}
+
+\textit{No additional comments provided.}
+
+\end{document}

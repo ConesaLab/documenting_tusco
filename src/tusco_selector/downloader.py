@@ -10,8 +10,12 @@ from typing import Dict, Iterator, List, Tuple
 
 import requests
 
+from tusco_selector.logging_utils import get_logger
+
 # Optional dependencies
-from tusco_selector.optional_deps import HAS_COLORS, HAS_TQDM, Fore, Style, tqdm
+from tusco_selector.optional_deps import HAS_TQDM, tqdm
+
+logger = get_logger(__name__)
 
 
 def fetch(url: str, output: str, cache_dir: str) -> str:
@@ -26,10 +30,7 @@ def fetch(url: str, output: str, cache_dir: str) -> str:
 
     # Skip download if already present
     if os.path.exists(dest):
-        if HAS_COLORS:
-            print(f"{Fore.YELLOW}Skipping download, exists:{Style.RESET_ALL} {dest}")
-        else:
-            print(f"Skipping download, exists: {dest}")
+        logger.info(f"Skipping download, exists: {dest}")
         return dest
 
     # Stream download to file with progress bar
@@ -42,10 +43,7 @@ def fetch(url: str, output: str, cache_dir: str) -> str:
     total_size = int(headers.get("content-length", 0))
     block_size = 1024 * 1024  # 1MB chunks
 
-    if HAS_COLORS:
-        print(f"{Fore.CYAN}Downloading:{Style.RESET_ALL} {output}")
-    else:
-        print(f"Downloading: {output}")
+    logger.info(f"Downloading: {output}")
 
     if HAS_TQDM:
         # Use tqdm even when file size is unknown
@@ -77,13 +75,9 @@ def fetch(url: str, output: str, cache_dir: str) -> str:
             for chunk in response.iter_content(chunk_size=block_size):
                 if chunk:
                     f.write(chunk)
-                    print(".", end="", flush=True)
-            print()  # New line after download completes
+                    # Progress dots removed - using tqdm or logger instead
 
-    if HAS_COLORS:
-        print(f"{Fore.GREEN}Downloaded:{Style.RESET_ALL} {dest}")
-    else:
-        print(f"Downloaded: {dest}")
+    logger.info(f"Downloaded: {dest}")
     return dest
 
 
@@ -112,10 +106,7 @@ def fetch_all(resources: dict, base_dir: str) -> List[str]:
     resources_to_download = list(_walk(resources, []))
     total_count = len(resources_to_download)
 
-    if HAS_COLORS:
-        print(f"{Fore.BLUE}Found {total_count} resources to process{Style.RESET_ALL}")
-    else:
-        print(f"Found {total_count} resources to process")
+    logger.info(f"Found {total_count} resources to process")
 
     for idx, (path_parts, leaf_key, meta) in enumerate(resources_to_download, 1):
         rel_dir = os.path.join(*path_parts) if path_parts else ""
@@ -127,16 +118,9 @@ def fetch_all(resources: dict, base_dir: str) -> List[str]:
         pretty_name = "/".join(path_parts + [leaf_key])
 
         # Show progress info with colors if available
-        if HAS_COLORS:
-            print(f"\n{Fore.CYAN}[{idx}/{total_count}]{Style.RESET_ALL} {pretty_name}")
-            if "description" in meta:
-                print(
-                    f"{Fore.WHITE}Description:{Style.RESET_ALL} {meta['description']}"
-                )
-        else:
-            print(f"\n[{idx}/{total_count}] {pretty_name}")
-            if "description" in meta:
-                print(f"Description: {meta['description']}")
+        logger.info(f"\n[{idx}/{total_count}] {pretty_name}")
+        if "description" in meta:
+            logger.info(f"Description: {meta['description']}")
 
         downloaded.append(fetch(url, output_name, dest_dir))
 

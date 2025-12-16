@@ -1,0 +1,296 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python Debugger: TUSCO CLI (hsa)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/tusco_selector/cli.py",
+            "args": [
+                "hsa", 
+                "--output-dir", "hsa_output_gtfs",
+                // Step 3: Splice junction and TSS filtering thresholds
+                "--tss-scope", "single",
+                "--tss-region-check", "300",
+                "--novel-threshold", "0.01",
+                "--min-novel-length", "80",
+                // Step 5: Expression filtering thresholds - Hybrid (Human): Bgee for universal + GTEx for tissue-specific
+                "--expression-source", "auto",
+                // Bgee parameters for universal genes
+                "--min-genes-per-tissue", "25000",
+                "--bgee-quality", "gold quality", "silver quality", "bronze quality",
+                "--bgee-prevalence-threshold", "0.95",
+                // GTEx parameters for tissue-specific genes - RELAXED FOR MORE GENES
+                "--gtex-prevalence-expression-cutoff", "0.1",
+                "--gtex-median-expression-cutoff", "1.0",
+                "--gtex-prevalence-threshold", "0.95",
+                // Step 5: Expression filtering thresholds - Alphagenome Universal (class-specific, RPKM)
+                "--single-exon-median-rpkm-threshold", "1.0",
+                "--multi-exon-median-rpkm-threshold", "1.0",
+                "--single-exon-expression-threshold", "0.05",
+                "--multi-exon-expression-threshold", "0.05",
+                "--single-exon-prevalence-threshold", "0.95",
+                "--multi-exon-prevalence-threshold", "0.95",
+                "--splice-ratio-threshold", "0.001",
+                "--splice-purity-threshold", "0.95",
+                // Step 5: Expression filtering thresholds - Alphagenome Tissue-specific (stricter)
+                "--tissue-expression-threshold", "2",
+                "--tissue-splice-ratio-threshold", "0.001"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true, // Optional: Set to false if you need to step into library code
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+            }
+        },
+        {
+            "name": "Python Debugger: TUSCO CLI (mmu)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/tusco_selector/cli.py",
+            "args": [
+                "mmu", 
+                "--output-dir", "mmu_output_gtfs",
+                // Step 3: Splice junction and TSS filtering thresholds
+                "--tss-scope", "single",
+                "--novel-threshold", "0.05",
+                "--min-novel-length", "80",
+                // Step 5: Expression filtering thresholds - Bgee
+                "--expression-source", "bgee",
+                "--min-genes-per-tissue", "25000",
+                "--bgee-quality", "gold quality", "silver quality",
+                "--bgee-prevalence-threshold", "0.90",
+                // Step 6: Expression filtering thresholds - Alphagenome Universal (class-specific, RPKM)
+                "--single-exon-median-rpkm-threshold", "0.5",
+                "--multi-exon-median-rpkm-threshold", "0.25",
+                "--single-exon-expression-threshold", "0.01",
+                "--multi-exon-expression-threshold", "0.005",
+                "--single-exon-prevalence-threshold", "0.90",
+                "--multi-exon-prevalence-threshold", "0.90",
+                "--splice-ratio-threshold", "0.01",
+                "--splice-purity-threshold", "0.90",
+                // Step 7: Expression filtering thresholds - Alphagenome Tissue-specific (stricter)
+                "--tissue-expression-threshold", "1.5",
+                "--tissue-splice-ratio-threshold", "0.001",
+                // Optional: ENCODE augmentation for tissue-specific sets
+                "--encode-tissues", "kidney",
+                "--encode-prevalence-expression-cutoff", "0.1",
+                "--encode-median-expression-cutoff", "1",
+                "--encode-prevalence-threshold", "0.95"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+            }
+        },
+        {
+            "name": "Debug TUSCO Novel Simulator",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tusco_novel_simulator/tusco_novel_sim.py",
+            "args": [
+                "--gtf", "/Users/tianyuan/Desktop/GitHub/BUGSI/Reference_Data/human/gencode.v48.annotation.gtf",
+                "--target_genes", "/Users/tianyuan/Desktop/GitHub/TUSCO/tusco_selector/src/hsa_output_gtfs/step2_single_isoform_mapping.tsv",
+                "--genome", "/Users/tianyuan/Desktop/GitHub/BUGSI/Reference_Data/genome/GRCh38.p14.genome.fa",
+                "--output_fake", "/Users/tianyuan/Desktop/GitHub/TUSCO/tusco_dataset/tusco_human_fake.gtf",
+                "--output_full", "/Users/tianyuan/Desktop/GitHub/TUSCO/tusco_dataset/tusco_human_full.gtf",
+                "--log", "/Users/tianyuan/Desktop/GitHub/TUSCO/tusco_dataset/tusco_human_sim.log",
+                "--symbol_column", "1"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Debug TUSCO Novel Simulator (Mouse)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tusco_novel_simulator/tusco_novel_sim.py",
+            "args": [
+                "--gtf", "/Users/tianyuan/Desktop/GitHub/BUGSI/Reference_Data/mouse/gencode.vM37.annotation.gtf",
+                "--target_genes", "/Users/tianyuan/Desktop/GitHub/TUSCO/tusco_selector/src/mmu_output_gtfs/gene_filter_log.tsv",
+                "--genome", "/Users/tianyuan/Desktop/GitHub/BUGSI/Reference_Data/genome/GRCm39.genome.fa",
+                "--output_fake", "/Users/tianyuan/Desktop/GitHub/TUSCO/tusco_dataset/tusco_mouse_fake.gtf",
+                "--output_full", "/Users/tianyuan/Desktop/GitHub/TUSCO/tusco_dataset/tusco_mouse_full.gtf",
+                "--log", "/Users/tianyuan/Desktop/GitHub/TUSCO/tusco_dataset/tusco_mouse_sim.log",
+                "--symbol_column", "1"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Debug tusco_homology_analysis",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tusco_evlution_analysis/tusco_homology_analysis.py",
+            "args": [
+                "--human-multi",
+                "${workspaceFolder}/tusco_evlution_analysis/human_multi_protein_coding_genes.txt",
+                "--human-single",
+                "${workspaceFolder}/tusco_evlution_analysis/human_single_protein_coding_genes.txt",
+                "--mouse-multi",
+                "${workspaceFolder}/tusco_evlution_analysis/mouse_multi_protein_coding_genes.txt",
+                "--mouse-single",
+                "${workspaceFolder}/tusco_evlution_analysis/mouse_single_protein_coding_genes.txt",
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        // =============================================================================
+        // SENSITIVITY ANALYSIS CONFIGURATIONS
+        // =============================================================================
+        {
+            "name": "Sensitivity: HSA Splice Strict (0.1%)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/tusco_selector/cli.py",
+            "args": [
+                "hsa",
+                "--output-dir", "reviewer_response/sensitivity_runs/hsa_splice_strict",
+                "--novel-threshold", "0.001",
+                "--splice-ratio-threshold", "0.0001",
+                "--tss-scope", "single",
+                "--tss-region-check", "300",
+                "--expression-source", "auto",
+                "--min-genes-per-tissue", "25000",
+                "--bgee-quality", "gold quality", "silver quality",
+                "--bgee-prevalence-threshold", "0.95",
+                "--gtex-prevalence-expression-cutoff", "0.1",
+                "--gtex-median-expression-cutoff", "1.0",
+                "--gtex-prevalence-threshold", "0.95",
+                "--single-exon-median-rpkm-threshold", "1.0",
+                "--multi-exon-median-rpkm-threshold", "1.0",
+                "--single-exon-expression-threshold", "0.05",
+                "--multi-exon-expression-threshold", "0.05",
+                "--single-exon-prevalence-threshold", "0.95",
+                "--multi-exon-prevalence-threshold", "0.95",
+                "--splice-purity-threshold", "0.95",
+                "--tissue-expression-threshold", "2",
+                "--tissue-splice-ratio-threshold", "0.001"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+            }
+        },
+        {
+            "name": "Sensitivity: HSA Splice Lenient (25%)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/tusco_selector/cli.py",
+            "args": [
+                "hsa",
+                "--output-dir", "reviewer_response/sensitivity_runs/hsa_splice_lenient3",
+                "--novel-threshold", "0.25",
+                "--splice-ratio-threshold", "0.10",
+                "--tss-scope", "single",
+                "--tss-region-check", "300",
+                "--expression-source", "auto",
+                "--min-genes-per-tissue", "25000",
+                "--bgee-quality", "gold quality", "silver quality",
+                "--bgee-prevalence-threshold", "0.95",
+                "--gtex-prevalence-expression-cutoff", "0.1",
+                "--gtex-median-expression-cutoff", "1.0",
+                "--gtex-prevalence-threshold", "0.95",
+                "--single-exon-median-rpkm-threshold", "1.0",
+                "--multi-exon-median-rpkm-threshold", "1.0",
+                "--single-exon-expression-threshold", "0.05",
+                "--multi-exon-expression-threshold", "0.05",
+                "--single-exon-prevalence-threshold", "0.95",
+                "--multi-exon-prevalence-threshold", "0.95",
+                "--splice-purity-threshold", "0.95",
+                "--tissue-expression-threshold", "2",
+                "--tissue-splice-ratio-threshold", "0.001"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+            }
+        },
+        {
+            "name": "Sensitivity: HSA Expression Lenient (0.1 RPKM)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/tusco_selector/cli.py",
+            "args": [
+                "hsa",
+                "--output-dir", "reviewer_response/sensitivity_runs/hsa_expr_lenient2",
+                "--novel-threshold", "0.01",
+                "--splice-ratio-threshold", "0.001",
+                "--tss-scope", "single",
+                "--tss-region-check", "300",
+                "--expression-source", "auto",
+                "--min-genes-per-tissue", "25000",
+                "--bgee-quality", "gold quality", "silver quality",
+                "--bgee-prevalence-threshold", "0.95",
+                "--gtex-prevalence-expression-cutoff", "0.01",
+                "--gtex-median-expression-cutoff", "0.1",
+                "--gtex-prevalence-threshold", "0.95",
+                "--single-exon-median-rpkm-threshold", "0.1",
+                "--multi-exon-median-rpkm-threshold", "0.1",
+                "--single-exon-expression-threshold", "0.01",
+                "--multi-exon-expression-threshold", "0.01",
+                "--single-exon-prevalence-threshold", "0.95",
+                "--multi-exon-prevalence-threshold", "0.95",
+                "--splice-purity-threshold", "0.95",
+                "--tissue-expression-threshold", "2",
+                "--tissue-splice-ratio-threshold", "0.001"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+            }
+        },
+        {
+            "name": "Run Sensitivity Pipeline (Dry Run)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/sensitivity/run_sensitivity_pipeline.py",
+            "args": ["--dry-run"],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+            }
+        },
+        {
+            "name": "Evaluate Sensitivity Runs",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/sensitivity/evaluate_sensitivity_runs.py",
+            "args": [],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+            }
+        }
+    ]
+}

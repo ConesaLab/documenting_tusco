@@ -9,6 +9,19 @@ from typing import Dict, List, Set, Tuple
 
 import pandas as pd
 
+# Define TRACE level for per-gene details
+TRACE = 5
+if not hasattr(logging, 'TRACE'):
+    logging.addLevelName(TRACE, "TRACE")
+    
+# Add trace method to logger if it doesn't exist
+def _log_trace(self, message, *args, **kwargs):
+    if self.isEnabledFor(TRACE):
+        self._log(TRACE, message, args, **kwargs)
+
+if not hasattr(logging.Logger, 'trace'):
+    logging.Logger.trace = _log_trace
+
 # Setup module logger
 logger = logging.getLogger(__name__)
 
@@ -261,7 +274,7 @@ def check_splice_junctions(
         # to avoid filtering based on negligible novel coverage. Let's say 1 read minimum.
         effective_coverage_cut = max(coverage_cut, 1.0) if avg_cov > 0 else 1.0
 
-        logger.debug(
+        logger.log(TRACE,
             "Gene %s: %d annotated junctions, avg_cov=%.3f, novel_threshold=%.2f, effective_coverage_cut=%.3f",
             gene_id,
             len(annotated),
@@ -286,7 +299,7 @@ def check_splice_junctions(
             # Log details of the first high-coverage novel junction found (for simplicity)
             first_novel_key = next(iter(novel_juncs.keys()))
             novel_cov = novel_juncs[first_novel_key]
-            logger.debug(
+            logger.log(TRACE,
                 "Gene %s removed due to high-coverage novel junction "
                 "(e.g., %s cov=%d, cut=%.3f)",
                 gene_id,
@@ -301,7 +314,7 @@ def check_splice_junctions(
                     annotated, junction_index, (gene_start, gene_end), min_novel_length
                 )
             )
-            logger.debug(
+            logger.log(TRACE,
                 "Gene %s kept after splice-junction check (max_novel_cov=%d, cut=%.3f)",
                 gene_id,
                 max_novel_cov,
@@ -379,7 +392,7 @@ def check_tss(
         exon_end_0 = exon_end
         tss_pos_0 = tss_pos - 1
 
-        logger.debug(
+        logger.log(TRACE,
             "Gene %s: TSS exon [%d, %d) on %s strand; TSS pos (1-based) = %d",
             gene_id,
             exon_start_0,
@@ -393,14 +406,14 @@ def check_tss(
         #  - Legacy mode: use TSS exon overlap with refTSS and require exact containment when single overlap.
         if tss_region_bp and tss_region_bp > 0:
             window_start_0 = max(0, tss_pos_0 - tss_region_bp)
-            window_end_0 = tss_pos_0 + tss_region_bp + 1  # half-open end
+            window_end_0 = tss_pos_0 + tss_region_bp  # symmetric ±tss_region_bp window
             overlaps = tss_df[
                 (tss_df["chrom"] == chrom)
                 & (tss_df["strand"] == strand)
                 & (tss_df["start"] < window_end_0)
                 & (tss_df["end"] > window_start_0)
             ]
-            logger.debug(
+            logger.log(TRACE,
                 "Gene %s: CAGE peaks within ±%dbp window [%d, %d) = %d",
                 gene_id,
                 tss_region_bp,
@@ -424,11 +437,11 @@ def check_tss(
                 & (tss_df["start"] < exon_end_0)
                 & (tss_df["end"] > exon_start_0)
             ]
-            logger.debug(
+            logger.log(TRACE,
                 "Gene %s: overlapping TSS entries (exon-level) = %d", gene_id, len(overlaps)
             )
             if len(overlaps) > 1:
-                logger.debug(
+                logger.log(TRACE,
                     "Gene %s removed due to multiple TSS overlaps (%d overlaps)",
                     gene_id,
                     len(overlaps),
@@ -440,7 +453,7 @@ def check_tss(
                 if ref_tss["start"] <= tss_pos_0 < ref_tss["end"]:
                     keep[gene_id] = info
                 else:
-                    logger.debug(
+                    logger.log(TRACE,
                         "Gene %s removed: TSS position %d (0-based: %d) not within refTSS [%d, %d)",
                         gene_id,
                         tss_pos,
@@ -476,9 +489,8 @@ def check_splice_junctions_tss(
 
     Order of operations:
     1. Apply :func:`check_tss` to selected transcripts depending on ``tss_scope``:
-       - "single": only single-exon
-       - "multi": only multi-exon
-       - "both": all transcripts
+       - "single": only single-exon genes (multi-exon genes pass through)
+       - "both": all transcripts (both single-exon and multi-exon)
     2. From the TSS-passing set, apply :func:`check_splice_junctions` to multi-exon genes.
     3. Merge results and return kept/removed sets with reasons.
 
@@ -507,31 +519,40 @@ def check_splice_junctions_tss(
 
     # Run TSS checks based on scope
     scope = (tss_scope or "both").lower()
-    if scope not in {"single", "multi", "both"}:
+    if scope not in {"single", "both"}:
         scope = "both"
 
-    if scope in {"single", "both"}:
-        # First check single-exon genes without using the window mode
-        kept_s, removed_s = check_tss(single_group, tss_df, tss_region_bp=0)
-        logger.info("[Exon-overlap mode] TSS filtering retained %d of %d single-exon genes", len(kept_s), len(single_group))
-        kept_after_tss.update(kept_s)
-        removed_tss.update(removed_s)
-        
-        # Then check multi-exon genes using the window mode
-        kept_s, removed_s = check_tss(single_group, tss_df, tss_region_bp=tss_region_bp)
-        logger.info("[Window mode] TSS filtering retained %d of %d single-exon genes", len(kept_s), len(single_group))
-        kept_after_tss.update(kept_s)
-        removed_tss.update(removed_s)
-    else:
-        kept_after_tss.update(single_group)
+    if scope == "single":
+        # Single-exon genes require both checks: exon-overlap AND CAGE window
+        # Step 1: Exon-overlap check (exactly one refTSS interval must overlap TSS exon and contain TSS coordinate)
+        kept_s1, removed_s1 = check_tss(single_group, tss_df, tss_region_bp=0)
+        logger.info("[Exon-overlap mode] TSS filtering retained %d of %d single-exon genes", len(kept_s1), len(single_group))
 
-    if scope in {"multi", "both"}:
+        # Step 2: CAGE window check on survivors from step 1 (remove if >1 peak within ±tss_region_bp)
+        kept_s, removed_s2 = check_tss(kept_s1, tss_df, tss_region_bp=tss_region_bp)
+        logger.info("[Window mode] TSS filtering retained %d of %d single-exon genes after dual-check", len(kept_s), len(single_group))
+
+        # Combine removal reasons from both steps
+        removed_s = {**removed_s1, **removed_s2}
+        kept_after_tss.update(kept_s)
+        kept_after_tss.update(multi_group)  # Keep all multi-exon genes
+        removed_tss.update(removed_s)
+    else:  # scope == "both"
+        # Single-exon genes require both checks: exon-overlap AND CAGE window
+        kept_s1, removed_s1 = check_tss(single_group, tss_df, tss_region_bp=0)
+        logger.info("[Exon-overlap mode] TSS filtering retained %d of %d single-exon genes", len(kept_s1), len(single_group))
+        kept_s, removed_s2 = check_tss(kept_s1, tss_df, tss_region_bp=tss_region_bp)
+        logger.info("[Window mode] TSS filtering retained %d of %d single-exon genes after dual-check", len(kept_s), len(single_group))
+        removed_s = {**removed_s1, **removed_s2}
+
+        # Multi-exon genes: window-based check
         kept_m, removed_m = check_tss(multi_group, tss_df, tss_region_bp=tss_region_bp)
         logger.info("[Window mode] TSS filtering retained %d of %d multi-exon genes", len(kept_m), len(multi_group))
+
+        kept_after_tss.update(kept_s)
         kept_after_tss.update(kept_m)
+        removed_tss.update(removed_s)
         removed_tss.update(removed_m)
-    else:
-        kept_after_tss.update(multi_group)
 
     # Now split the TSS-passing set into single- and multi-exon
     single_kept_after_tss: Dict[str, dict] = {}

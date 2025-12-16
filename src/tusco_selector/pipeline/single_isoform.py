@@ -7,6 +7,7 @@ from __future__ import annotations
 import logging
 import os
 import re
+import time
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Set, Tuple
@@ -73,20 +74,23 @@ def _compare_single_isoform_exon_structures(
     for idx, gtf in enumerate(
         tqdm(gtf_files, desc="Processing GTF files", disable=not HAS_TQDM)
     ):
-        gene_tx, tx_exons, tx_strand = parse_gtf(gtf, chr_mapping)
+        start_time = time.time()
+        logger.info("Parsing GTF file: %s", gtf.name)
+        gene_tx, tx_exons, tx_strand = parse_gtf(gtf, chr_mapping, show_progress=True)
+        parse_time = time.time() - start_time
+        logger.info("Parsed %s in %.2f seconds (%d genes, %d transcripts)", 
+                   gtf.name, parse_time, len(gene_tx), len(tx_exons))
 
         # Extract structures for single-isoform genes in this GTF
         gene_structures = {}
         # Create reverse mapping: structure -> set of genes with that structure
         structure_to_genes = defaultdict(set)
 
-        # Use progress bar for processing genes
+        # Process genes without nested progress bar for better performance
         gene_items = list(gene_tx.items())
-        for gene_id, tx_ids in tqdm(
-            gene_items,
-            desc=f"Analyzing genes in {gtf.name}",
-            disable=not HAS_TQDM or len(gene_items) < 1000,
-        ):
+        analysis_start = time.time()
+        logger.info("Analyzing %d genes in %s", len(gene_items), gtf.name)
+        for gene_id, tx_ids in gene_items:
             if len(tx_ids) != 1:
                 continue
 
@@ -101,8 +105,10 @@ def _compare_single_isoform_exon_structures(
             gene_structures[gene_id] = structure
             structure_to_genes[structure].add(gene_id)
 
+        analysis_time = time.time() - analysis_start
         logger.info(
-            "Found %d single-transcript genes in %s", len(gene_structures), gtf.name
+            "Found %d single-transcript genes in %s (analyzed in %.2f seconds)", 
+            len(gene_structures), gtf.name, analysis_time
         )
         all_gtf_structures.append(gene_structures)
         structure_to_genes_map.append(structure_to_genes)
@@ -131,9 +137,8 @@ def _compare_single_isoform_exon_structures(
     else:
         # Find structures that exist in all GTFs
         gene_items = list(gene_structures_ref.items())
-        for gene_id, ref_structure in tqdm(
-            gene_items, desc="Comparing gene structures", disable=not HAS_TQDM
-        ):
+        logger.info("Comparing %d gene structures across all GTFs", len(gene_items))
+        for gene_id, ref_structure in gene_items:
             # Check if this structure exists in all other GTFs
             if all(
                 ref_structure in structure_to_genes
@@ -161,26 +166,29 @@ def _compare_single_isoform_exon_structures(
 # ---------------------------------------------------------------------------
 
 
-def filter_mrna_transcripts(
+def filter_genes_present_in_mapping(
     transcripts: Dict[str, TranscriptInfo], mapping_file: str
 ) -> Dict[str, TranscriptInfo]:
-    """Filter out genes that are not mRNA transcripts by checking if they exist in the mapping file.
+    """Filter transcripts to keep only genes present in the mapping file.
+    
+    Note: This function checks if gene IDs exist in the first column of the mapping file.
+    It does NOT specifically verify mRNA evidence (refseq_mrna column).
 
     Args:
         transcripts: Dictionary mapping gene IDs to transcript information
-        mapping_file: Path to the mapping file containing mRNA transcript IDs
+        mapping_file: Path to the mapping file containing gene IDs
 
     Returns:
-        Dictionary containing only mRNA transcripts that exist in the mapping file
+        Dictionary containing only genes that exist in the mapping file
     """
     if not os.path.exists(mapping_file):
         logger.warning(
-            "Mapping file not found at %s - skipping mRNA transcript filtering",
+            "Mapping file not found at %s - skipping gene filtering",
             mapping_file,
         )
         return transcripts
 
-    # Filter out genes that are not in the mapping file (not mRNA transcripts)
+    # Filter out genes that are not in the mapping file
     transcript_ids = set(transcripts.keys())
     mrna_transcript_ids = set()
 
@@ -222,6 +230,7 @@ def select_matched_single_isoforms(
     performs the single-isoform cross-reference procedure and returns basic
     metadata for the matched genes.
     """
+    start_time = time.time()
     logger.info("Starting single isoform selection process")
 
     gtf_files: List[Path] = [
@@ -270,9 +279,8 @@ def select_matched_single_isoforms(
     logger.info("Building transcript information for matched genes")
     transcripts: Dict[str, TranscriptInfo] = {}
 
-    for gene_id in tqdm(
-        matched_genes, desc="Building transcript info", disable=not HAS_TQDM
-    ):
+    logger.info("Building transcript information for %d matched genes", len(matched_genes))
+    for gene_id in matched_genes:
         tx_id = next(iter(gene_tx_ref[gene_id]))
         transcripts[gene_id] = {
             "transcript_id": tx_id,
@@ -297,7 +305,10 @@ def select_matched_single_isoforms(
     logger.info(
         "Replaced %d gene IDs with their version-stripped equivalents", replaced_count
     )
+    
+    total_time = time.time() - start_time
     logger.info(
-        "Single isoform selection complete: selected %d genes", len(cleaned_transcripts)
+        "Single isoform selection complete: selected %d genes in %.2f seconds", 
+        len(cleaned_transcripts), total_time
     )
     return cleaned_transcripts

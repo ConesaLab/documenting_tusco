@@ -120,18 +120,122 @@ def load_bgee_anatomical_mapping(mapping_file_path: str | Path) -> pd.DataFrame:
     return df_map
 
 
+def load_gtex_tissue_mapping(gtex_mapping_file_path: str | Path) -> pd.DataFrame:
+    """
+    Load GTEx to UBERON tissue mapping from TSV file.
+
+    Parameters
+    ----------
+    gtex_mapping_file_path
+        Path to the uberon-map-gtex-subgroup.tsv file.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with columns: gtex_subgroup, uberon_code, uberon_description_gtex_subgroup
+    """
+    gtex_mapping_file_path = Path(gtex_mapping_file_path)
+    logger.info("Loading GTEx tissue mapping from: %s", gtex_mapping_file_path)
+    
+    try:
+        df_gtex_map = pd.read_csv(
+            gtex_mapping_file_path,
+            sep="\t",
+            dtype=str,
+        )
+        logger.debug("Loaded %d GTEx tissue mappings.", len(df_gtex_map))
+        return df_gtex_map
+    except Exception as e:
+        logger.error("Error reading GTEx mapping file %s: %s", gtex_mapping_file_path, e)
+        return pd.DataFrame()
+
+
+def _load_and_filter_bgee_data(
+    file_path: str | Path,
+    anatomical_mapping_df: pd.DataFrame,
+    qual_ok: Tuple[str, ...] = ("gold quality", "silver quality"),
+) -> pd.DataFrame:
+    """Load Bgee data with basic quality and expression filters only."""
+    file_path = Path(file_path)
+    logger.info("Reading Bgee expression file: %s", file_path)
+
+    try:
+        with gzip.open(file_path, "rt") as handle:
+            df = pd.read_csv(
+                handle,
+                sep="\t",
+                usecols=[
+                    "Gene ID",
+                    "Anatomical entity ID",
+                    "Expression",
+                    "Call quality",
+                ],
+                dtype={
+                    "Gene ID": str,
+                    "Anatomical entity ID": str,
+                    "Expression": str,
+                    "Call quality": str,
+                },
+                engine="python",
+            )
+    except Exception as e:
+        logger.error("Error reading Bgee file %s: %s", file_path, e)
+        return pd.DataFrame()
+
+    logger.info("Initial Bgee records: %d", len(df))
+
+    # Simple filtering: good quality and filter expression == "present"
+    df_filtered = df[df["Call quality"].isin(qual_ok) & (df["Expression"] == "present")]
+    logger.info("Records after quality and expression filters: %d", len(df_filtered))
+
+    if df_filtered.empty:
+        logger.warning("No data left after Bgee quality filters.")
+        return pd.DataFrame()
+
+    # Merge with anatomical names (keep simple - drop if no mapping)
+    df_with_names = pd.merge(
+        df_filtered, anatomical_mapping_df, on="Anatomical entity ID", how="left"
+    )
+    logger.info("Records after anatomical name mapping (no drop): %d", len(df_with_names))
+
+    return df_with_names
+
+
 def read_bgee_expr_simple_tsv(
     file_path: str | Path,
     anatomical_mapping_df: pd.DataFrame,
     min_genes_per_tissue: int = 10000,
     qual_ok: Tuple[str, ...] = ("gold quality", "silver quality"),
+    species: str = None,
+    gtex_mapping_df: pd.DataFrame = None,
+    include_all_tissues_for_tissue_specific: bool = False,
 ) -> pd.DataFrame:
     """Read and pre-filter a Bgee ``*_expr_simple.tsv.gz`` file.
 
     Simple filtering logic:
     - Call quality in `qual_ok` (gold/silver quality)
     - Expression == "present"
-    - Keep tissues with at least `min_genes_per_tissue` distinct genes
+    - For universal genes: Keep tissues with at least `min_genes_per_tissue` distinct genes
+    - For tissue-specific genes: Species-specific logic:
+        - Human (hsa): Include all GTEx tissues (regardless of gene threshold)
+        - Mouse (mmu) and others: Include all tissues if include_all_tissues_for_tissue_specific=True
+
+    Parameters
+    ----------
+    file_path
+        Path to the Bgee expression file.
+    anatomical_mapping_df
+        DataFrame with anatomical entity ID to name mappings.
+    min_genes_per_tissue
+        Minimum genes per tissue for universal gene selection.
+    qual_ok
+        Acceptable quality levels.
+    species
+        Species code (e.g., 'hsa', 'mmu').
+    gtex_mapping_df
+        GTEx tissue mapping for human tissues.
+    include_all_tissues_for_tissue_specific
+        Whether to include all tissues for tissue-specific gene selection.
     """
     file_path = Path(file_path)
     logger.info("Reading Bgee expression file: %s", file_path)
@@ -179,30 +283,89 @@ def read_bgee_expr_simple_tsv(
         logger.warning("No data left after anatomical name mapping.")
         return pd.DataFrame()
 
-    # Count genes per tissue and keep only tissues with enough genes
+    # Count genes per tissue
     tissue_sizes = (
         df_with_names.groupby("Anatomical entity name")["Gene ID"]
         .nunique()
         .reset_index(name="n_genes")
     )
 
-    good_tissue_names = tissue_sizes[tissue_sizes["n_genes"] >= min_genes_per_tissue][
-        "Anatomical entity name"
-    ].tolist()
+    # Apply species-specific tissue selection logic
+    if species == "hsa" and gtex_mapping_df is not None and not gtex_mapping_df.empty:
+        # For humans: Include all GTEx tissues regardless of gene count
+        # Map UBERON codes to tissue names via anatomical entity IDs
+        gtex_uberon_codes = set(gtex_mapping_df["uberon_code"].dropna().str.replace("_", ":"))
+        
+        logger.info(f"GTEx mapping: {len(gtex_mapping_df)} tissues mapped to {len(gtex_uberon_codes)} unique UBERON codes")
+        
+        # Find all tissues that correspond to GTEx tissues
+        gtex_tissue_names = set()
+        gtex_matched_tissues = []
+        all_bgee_tissues = df_with_names[["Anatomical entity ID", "Anatomical entity name"]].drop_duplicates()
+        
+        for _, row in all_bgee_tissues.iterrows():
+            if row["Anatomical entity ID"] in gtex_uberon_codes:
+                gtex_tissue_names.add(row["Anatomical entity name"])
+                gtex_matched_tissues.append((row["Anatomical entity ID"], row["Anatomical entity name"]))
+        
+        # For universal genes: use threshold
+        universal_tissue_names = tissue_sizes[tissue_sizes["n_genes"] >= min_genes_per_tissue][
+            "Anatomical entity name"
+        ].tolist()
+        
+        # For tissue-specific: include all GTEx tissues
+        all_tissue_names = gtex_tissue_names.union(set(universal_tissue_names))
+        
+        logger.info(
+            "Human (hsa) Bgee tissue filtering:\n"
+            "  - Tissues for universal genes: %d (with >= %d genes)\n"
+            "  - GTEx tissues found in Bgee: %d out of %d in mapping\n"
+            "  - Combined tissues for filtering: %d\n"
+            "  - Total Bgee tissues available: %d", 
+            len(universal_tissue_names), min_genes_per_tissue, 
+            len(gtex_tissue_names), len(gtex_uberon_codes),
+            len(all_tissue_names), len(all_bgee_tissues)
+        )
+        
+        if gtex_matched_tissues and logger.isEnabledFor(logging.DEBUG):
+            logger.debug("Examples of GTEx tissues matched in Bgee:")
+            for uberon_id, tissue_name in gtex_matched_tissues[:5]:
+                logger.debug(f"  - {tissue_name} ({uberon_id})")
+            if len(gtex_matched_tissues) > 5:
+                logger.debug(f"  ... and {len(gtex_matched_tissues) - 5} more")
+        
+    elif include_all_tissues_for_tissue_specific:
+        # For mouse and others with all-tissues flag: Include all tissues for tissue-specific
+        universal_tissue_names = tissue_sizes[tissue_sizes["n_genes"] >= min_genes_per_tissue][
+            "Anatomical entity name"
+        ].tolist()
+        all_tissue_names = set(tissue_sizes["Anatomical entity name"])
+        
+        logger.info(
+            "%s: %d universal tissues with >= %d genes, %d total tissues for tissue-specific", 
+            species or "Unknown", len(universal_tissue_names), min_genes_per_tissue, len(all_tissue_names)
+        )
+    else:
+        # Original behavior: use threshold for both universal and tissue-specific
+        universal_tissue_names = tissue_sizes[tissue_sizes["n_genes"] >= min_genes_per_tissue][
+            "Anatomical entity name"
+        ].tolist()
+        all_tissue_names = set(universal_tissue_names)
+        
+        logger.info(
+            "%s: %d tissues with >= %d genes (original behavior)", 
+            species or "Unknown", len(universal_tissue_names), min_genes_per_tissue
+        )
 
-    if not good_tissue_names:
-        logger.warning("No tissues found with at least %d genes.", min_genes_per_tissue)
+    if not all_tissue_names:
+        logger.warning("No tissues found after applying species-specific selection logic.")
         return pd.DataFrame()
 
-    logger.info(
-        "Retaining %d tissues with >= %d genes.", len(good_tissue_names), min_genes_per_tissue
-    )
-
-    # Final filtering: keep only records from good tissues
+    # Final filtering: keep only records from selected tissues
     df_final = df_with_names[
-        df_with_names["Anatomical entity name"].isin(good_tissue_names)
+        df_with_names["Anatomical entity name"].isin(all_tissue_names)
     ]
-    logger.info("Final records after tissue size filtering: %d", len(df_final))
+    logger.info("Final records after tissue selection: %d", len(df_final))
 
     return df_final
 
@@ -214,10 +377,15 @@ def get_universal_high_expression_genes_bgee_with_ids(
     min_genes_per_tissue: int = 10000,
     qual_ok: Tuple[str, ...] = ("gold quality", "silver quality"),
     prevalence_threshold: float = 1.0,
+    species: str = None,
+    gtex_mapping_file_path: str | Path = None,
 ) -> Tuple[Set[str], Dict[Tuple[str, str], Set[str]]]:
     """Identify universally expressed genes and tissue-specific genes from Bgee.
 
     This variant returns tissue information as tuples of (anatomical_entity_id, tissue_name).
+    Implements species-specific tissue selection logic:
+    - Human (hsa): Universal genes from tissues with >=min_genes_per_tissue, tissue-specific from all GTEx tissues
+    - Mouse (mmu) and others: Universal genes from tissues with >=min_genes_per_tissue, tissue-specific from all tissues
 
     Parameters
     ----------
@@ -226,12 +394,16 @@ def get_universal_high_expression_genes_bgee_with_ids(
     bgee_mapping_file_path
         Path to the Bgee anatomical mapping file (e.g., 'Mus_musculus_RNA-Seq_libraries.tsv').
     min_genes_per_tissue
-        Minimum number of distinct genes a tissue must have to be considered.
+        Minimum number of distinct genes a tissue must have for universal gene calculation.
     qual_ok
         Tuple of "Call quality" values to accept (e.g., "gold quality").
     prevalence_threshold
         Minimum fraction of tissues where a gene must be expressed to be considered universal.
         Default 1.0 means gene must be present in all tissues.
+    species
+        Species code ('hsa', 'mmu', etc.) to determine tissue selection logic.
+    gtex_mapping_file_path
+        Path to GTEx tissue mapping file (for human only).
 
     Returns
     -------
@@ -243,51 +415,116 @@ def get_universal_high_expression_genes_bgee_with_ids(
     if anatomical_mapping_df.empty:
         logger.error("Bgee anatomical mapping failed to load or is empty. Cannot proceed with Bgee name mapping.")
         return set(), {}
-
-    df_good = read_bgee_expr_simple_tsv(
-        file_path,
-        anatomical_mapping_df=anatomical_mapping_df,
-        min_genes_per_tissue=min_genes_per_tissue,
-        qual_ok=qual_ok,
+    
+    # Load GTEx mapping if provided (for human)
+    gtex_mapping_df = None
+    if gtex_mapping_file_path and species == "hsa":
+        gtex_mapping_df = load_gtex_tissue_mapping(gtex_mapping_file_path)
+    
+    # Get filtered data with basic quality filters (no tissue size filtering yet)
+    df_filtered = _load_and_filter_bgee_data(file_path, anatomical_mapping_df, qual_ok)
+    if df_filtered.empty:
+        logger.warning("Bgee basic filtering returned empty DataFrame. No genes will be identified.")
+        return set(), {}
+    
+    # Calculate tissue sizes for all tissues
+    tissue_sizes = (
+        df_filtered.groupby("Anatomical entity name")["Gene ID"]
+        .nunique()
+        .reset_index(name="n_genes")
     )
-
-    if df_good.empty:
-        logger.warning("Bgee pre-processing returned empty DataFrame. No genes will be identified.")
+    
+    # Select tissues for universal gene calculation (always use threshold)
+    universal_tissue_names = tissue_sizes[tissue_sizes["n_genes"] >= min_genes_per_tissue][
+        "Anatomical entity name"
+    ].tolist()
+    
+    # Select tissues for tissue-specific gene calculation based on species
+    if species == "hsa" and gtex_mapping_df is not None and not gtex_mapping_df.empty:
+        # For humans: Include all GTEx tissues
+        gtex_uberon_codes = set(gtex_mapping_df["uberon_code"].dropna().str.replace("_", ":"))
+        logger.info(f"GTEx mapping file contains {len(gtex_mapping_df)} tissue mappings with {len(gtex_uberon_codes)} unique UBERON codes")
+        
+        # Find which Bgee tissues match GTEx UBERON codes
+        tissue_specific_tissue_names = set()
+        bgee_tissues_in_gtex = []
+        all_bgee_tissues = df_filtered[["Anatomical entity ID", "Anatomical entity name"]].drop_duplicates()
+        
+        for _, row in all_bgee_tissues.iterrows():
+            if row["Anatomical entity ID"] in gtex_uberon_codes:
+                tissue_specific_tissue_names.add(row["Anatomical entity name"])
+                bgee_tissues_in_gtex.append((row["Anatomical entity ID"], row["Anatomical entity name"]))
+        
+        tissue_specific_tissue_names = list(tissue_specific_tissue_names)
+        
+        logger.info(
+            "Human (hsa) tissue selection:\n"
+            "  - Universal gene calculation: %d tissues with >= %d genes\n"
+            "  - GTEx tissues in mapping file: %d\n" 
+            "  - GTEx tissues found in Bgee data: %d (these will be included for tissue-specific genes)\n"
+            "  - Total Bgee tissues in dataset: %d",
+            len(universal_tissue_names), min_genes_per_tissue, 
+            len(gtex_uberon_codes), len(tissue_specific_tissue_names),
+            len(all_bgee_tissues)
+        )
+        
+        # Log some examples of matched GTEx tissues
+        if bgee_tissues_in_gtex:
+            logger.debug("Examples of GTEx tissues found in Bgee:")
+            for uberon_id, tissue_name in bgee_tissues_in_gtex[:5]:
+                logger.debug(f"  - {tissue_name} ({uberon_id})")
+            if len(bgee_tissues_in_gtex) > 5:
+                logger.debug(f"  ... and {len(bgee_tissues_in_gtex) - 5} more")
+    elif species in ["mmu"] or species != "hsa":
+        # For mouse and others: Include all tissues for tissue-specific
+        tissue_specific_tissue_names = list(tissue_sizes["Anatomical entity name"])
+        logger.info(
+            "%s: %d universal tissues (>=%d genes), %d total tissues for tissue-specific", 
+            species or "Unknown", len(universal_tissue_names), min_genes_per_tissue, len(tissue_specific_tissue_names)
+        )
+    else:
+        # Fallback to original behavior
+        tissue_specific_tissue_names = universal_tissue_names
+        logger.info(
+            "%s: %d tissues (>=%d genes) for both universal and tissue-specific", 
+            species or "Unknown", len(universal_tissue_names), min_genes_per_tissue
+        )
+    
+    if not universal_tissue_names:
+        logger.warning("No tissues found with at least %d genes for universal calculation.", min_genes_per_tissue)
         return set(), {}
 
     # Helper to drop version suffix from Ensembl IDs (if any, though Bgee usually doesn't have them for mouse)
     def _strip(gid: str) -> str:
         return gid.split(".")[0] if "." in gid else gid
 
-    # D. Genes that appear in **all** remaining tissues
-    # Count distinct tissues (by name) each gene appears in
-    gene_tissue_counts = (
-        df_good.groupby("Gene ID")["Anatomical entity name"]
+    # Calculate universal genes using only the selected universal tissues
+    df_universal = df_filtered[df_filtered["Anatomical entity name"].isin(universal_tissue_names)]
+    gene_tissue_counts_universal = (
+        df_universal.groupby("Gene ID")["Anatomical entity name"]
         .nunique()
         .reset_index(name="n_tissues_with_gene")
     )
 
-    n_good_tissues = df_good["Anatomical entity name"].nunique()
-    if n_good_tissues == 0:  # Should be caught by df_good.empty earlier, but defensive
-        logger.warning(
-            "No good tissues (by name) available for Bgee universal gene calculation."
-        )
+    n_universal_tissues = len(universal_tissue_names)
+    if n_universal_tissues == 0:
+        logger.warning("No universal tissues available for Bgee universal gene calculation.")
         return set(), {}
 
     # Calculate minimum number of tissues required based on prevalence threshold
-    min_tissues_required = max(1, int(n_good_tissues * prevalence_threshold))
+    min_tissues_required = max(1, int(n_universal_tissues * prevalence_threshold))
     
-    # Get genes that appear in at least the minimum number of tissues required
+    # Get genes that appear in at least the minimum number of universal tissues required
     universal_gene_ids: Set[str] = set(
-        gene_tissue_counts[gene_tissue_counts["n_tissues_with_gene"] >= min_tissues_required][
+        gene_tissue_counts_universal[gene_tissue_counts_universal["n_tissues_with_gene"] >= min_tissues_required][
             "Gene ID"
         ].apply(_strip)
     )
 
     logger.info(
-        "Bgee universal genes (in >= %d/%d tissues, prevalence >= %.2f): %d",
+        "Bgee universal genes (in >= %d/%d universal tissues, prevalence >= %.2f): %d",
         min_tissues_required,
-        n_good_tissues,
+        n_universal_tissues,
         prevalence_threshold,
         len(universal_gene_ids),
     )
@@ -295,8 +532,11 @@ def get_universal_high_expression_genes_bgee_with_ids(
     # E. Tissue-specific genes (using (anatomical_entity_id, tissue_name) tuples as keys)
     high_exp_per_tissue: Dict[Tuple[str, str], Set[str]] = {}
 
-    # Get unique anatomical entity ID and name combinations
-    unique_tissues = df_good[
+    # Filter data to only include selected tissue-specific tissues
+    df_tissue_specific = df_filtered[df_filtered["Anatomical entity name"].isin(tissue_specific_tissue_names)]
+    
+    # Get unique anatomical entity ID and name combinations for tissue-specific tissues
+    unique_tissues = df_tissue_specific[
         ["Anatomical entity ID", "Anatomical entity name"]
     ].drop_duplicates()
 
@@ -306,7 +546,7 @@ def get_universal_high_expression_genes_bgee_with_ids(
 
         # Get genes for this tissue
         tissue_genes = set(
-            df_good[df_good["Anatomical entity ID"] == anatomical_id]["Gene ID"].apply(
+            df_tissue_specific[df_tissue_specific["Anatomical entity ID"] == anatomical_id]["Gene ID"].apply(
                 _strip
             )
         )

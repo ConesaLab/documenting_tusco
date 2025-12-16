@@ -152,6 +152,10 @@ import_and_standardize <- function(gtf_file, dataset_type, expected_species = NU
     gtf <- rtracklayer::import(gtf_file)
     df <- as.data.frame(gtf)
 
+    # DEBUG: Show import details
+    cat("  Imported", nrow(df), "records from", gtf_file, "\n")
+    cat("  Columns:", paste(head(colnames(df), 10), collapse=", "), "\n")
+
     # Basic check for empty GTF data
     if(nrow(df) == 0) {
         warning("GTF file is empty or could not be parsed: ", gtf_file)
@@ -473,6 +477,17 @@ mouse_refseq_df  <- import_and_standardize(mouse_refseq_gtf,  "RefSeq",  "mouse"
 human_tusco_df  <- import_and_standardize(tusco_human_gtf, "GENCODE", "human")
 mouse_tusco_df  <- import_and_standardize(tusco_mouse_gtf, "GENCODE", "mouse")
 
+# DEBUG: Check what was imported
+cat("\n=== Import Status ===\n")
+cat("human_tusco_df:", ifelse(is.null(human_tusco_df), "NULL", paste0(nrow(human_tusco_df), " rows")), "\n")
+cat("mouse_tusco_df:", ifelse(is.null(mouse_tusco_df), "NULL", paste0(nrow(mouse_tusco_df), " rows")), "\n")
+cat("human_gencode_df:", ifelse(is.null(human_gencode_df), "NULL", paste0(nrow(human_gencode_df), " rows")), "\n")
+cat("mouse_gencode_df:", ifelse(is.null(mouse_gencode_df), "NULL", paste0(nrow(mouse_gencode_df), " rows")), "\n")
+cat("human_mane_df:", ifelse(is.null(human_mane_df), "NULL", paste0(nrow(human_mane_df), " rows")), "\n")
+cat("human_refseq_df:", ifelse(is.null(human_refseq_df), "NULL", paste0(nrow(human_refseq_df), " rows")), "\n")
+cat("mouse_refseq_df:", ifelse(is.null(mouse_refseq_df), "NULL", paste0(nrow(mouse_refseq_df), " rows")), "\n")
+cat("\n")
+
 # Assemble datasets list
 datasets_list[["Human (TUSCO)"]]  <- extract_features(human_tusco_df,   "Human (TUSCO)")
 datasets_list[["Mouse (TUSCO)"]]  <- extract_features(mouse_tusco_df,   "Mouse (TUSCO)")
@@ -481,6 +496,18 @@ datasets_list[["Mouse (GENCODE)"]] <- extract_features(mouse_gencode_df, "Mouse 
 datasets_list[["Human (MANE)"]]    <- extract_features(human_mane_df,    "Human (MANE)")
 datasets_list[["Human (RefSeq)"]]  <- extract_features(human_refseq_df,  "Human (RefSeq)")
 datasets_list[["Mouse (RefSeq)"]]  <- extract_features(mouse_refseq_df,  "Mouse (RefSeq)")
+
+# DEBUG: Check what was extracted (before NULL removal)
+cat("\n=== Extraction Results (before NULL removal) ===\n")
+for (ds_name in names(datasets_list)) {
+  if (is.null(datasets_list[[ds_name]])) {
+    cat(ds_name, ": NULL\n")
+  } else {
+    features <- names(datasets_list[[ds_name]])
+    cat(ds_name, ": features -", paste(features, collapse=", "), "\n")
+  }
+}
+cat("\n")
 
 # Add GC content to each dataset
 for (dataset_name in names(datasets_list)) {
@@ -514,6 +541,15 @@ datasets_list[["Sequins"]] <- extract_features(import_and_standardize(sequin_gtf
 # Remove NULL entries from the list (failed loads/extractions)
 datasets_list <- datasets_list[!sapply(datasets_list, is.null)]
 
+# DEBUG: Show what's in datasets_list
+cat("\n=== datasets_list Summary ===\n")
+cat("Available datasets:", paste(names(datasets_list), collapse=", "), "\n")
+for (ds_name in names(datasets_list)) {
+  features <- names(datasets_list[[ds_name]])
+  cat(ds_name, "- features:", paste(features, collapse=", "), "\n")
+}
+cat("\n")
+
 ###############################################################
 # Combine Features Separately for Human and Mouse (Main Figures - NO Spike-ins)
 ###############################################################
@@ -545,6 +581,13 @@ combine_features_subset <- function(datasets_list, feature_name, subset_datasets
   combined_data <- combined_data %>%
     mutate(dataset = factor(dataset, levels = intersect(all_factor_levels, unique(dataset))))
 
+  # DEBUG: Log successful combination
+  if (nrow(combined_data) > 0) {
+    message("Combined ", nrow(combined_data), " rows for feature '", feature_name,
+            "' across ", length(valid_features), " datasets: ",
+            paste(unique(combined_data$dataset), collapse=", "))
+  }
+
   return(combined_data)
 }
 
@@ -571,6 +614,12 @@ set_final_order <- function(df, order_levels) {
     present_levels <- intersect(order_levels, unique(df$dataset))
     if (length(present_levels) > 0) {
       df$dataset <- factor(df$dataset, levels = present_levels)
+    } else {
+      # If no matching levels, keep dataset as-is (don't convert to factor or use all unique values)
+      warning("No matching factor levels found for dataset column. Using existing values.")
+      # Keep as character or convert with existing unique values
+      unique_datasets <- unique(as.character(df$dataset))
+      df$dataset <- factor(df$dataset, levels = unique_datasets)
     }
   }
   return(df)
@@ -584,6 +633,17 @@ transcript_lengths_mouse <- set_final_order(transcript_lengths_mouse, final_lege
 intron_lengths_mouse     <- set_final_order(intron_lengths_mouse, final_legend_order)
 exon_counts_mouse        <- set_final_order(exon_counts_mouse, final_legend_order)
 gc_content_mouse         <- set_final_order(gc_content_mouse, final_legend_order)
+
+# DEBUG: Check data availability before plotting
+cat("\n=== Data Availability Check ===\n")
+cat("transcript_lengths_human:", ifelse(is.null(transcript_lengths_human), "NULL", paste0(nrow(transcript_lengths_human), " rows")), "\n")
+cat("transcript_lengths_mouse:", ifelse(is.null(transcript_lengths_mouse), "NULL", paste0(nrow(transcript_lengths_mouse), " rows")), "\n")
+cat("intron_lengths_human:", ifelse(is.null(intron_lengths_human), "NULL", paste0(nrow(intron_lengths_human), " rows")), "\n")
+cat("intron_lengths_mouse:", ifelse(is.null(intron_lengths_mouse), "NULL", paste0(nrow(intron_lengths_mouse), " rows")), "\n")
+cat("exon_counts_human:", ifelse(is.null(exon_counts_human), "NULL", paste0(nrow(exon_counts_human), " rows")), "\n")
+cat("exon_counts_mouse:", ifelse(is.null(exon_counts_mouse), "NULL", paste0(nrow(exon_counts_mouse), " rows")), "\n")
+cat("gc_content_human:", ifelse(is.null(gc_content_human), "NULL", paste0(nrow(gc_content_human), " rows")), "\n")
+cat("gc_content_mouse:", ifelse(is.null(gc_content_mouse), "NULL", paste0(nrow(gc_content_mouse), " rows")), "\n")
 
 ###############################################################
 # Helpers: per‑dataset medians for density plots
@@ -650,6 +710,7 @@ nature_theme <- theme_classic(base_family = "Helvetica", base_size = 7) +
 
 # 1. Transcript Length Density Plot
 plot_transcript_density <- function(data, title, species_colors) {
+  cat("plot_transcript_density called with:", ifelse(is.null(data), "NULL", paste0(nrow(data), " rows")), "\n")
   if (is.null(data) || nrow(data) == 0) return(ggplot() + ggtitle(paste(title, "(No Data)")) + nature_theme)
   
   # Filter out zero-length transcripts just in case
@@ -678,6 +739,7 @@ plot_transcript_density <- function(data, title, species_colors) {
 
 # 2. Exon Counts Bar Plot
 plot_exon_counts <- function(data, title, species_colors) {
+  cat("plot_exon_counts called with:", ifelse(is.null(data), "NULL", paste0(nrow(data), " rows")), "\n")
   if (is.null(data) || nrow(data) == 0) return(ggplot() + ggtitle(paste(title, "(No Data)")) + nature_theme)
 
   # Prepare data for plotting: group >10, calculate frequencies
@@ -711,6 +773,7 @@ plot_exon_counts <- function(data, title, species_colors) {
 
 # 3. Intron Length Density Plot
 plot_intron_density <- function(data, title, species_colors) {
+  cat("plot_intron_density called with:", ifelse(is.null(data), "NULL", paste0(nrow(data), " rows")), "\n")
   if (is.null(data) || nrow(data) == 0) return(ggplot() + ggtitle(paste(title, "(No Intron Data)")) + nature_theme)
   
   # Ensure positive intron lengths
@@ -739,6 +802,7 @@ plot_intron_density <- function(data, title, species_colors) {
 
 # 4. GC Content Density Plot
 plot_gc_content <- function(data, title, species_colors) {
+  cat("plot_gc_content called with:", ifelse(is.null(data), "NULL", paste0(nrow(data), " rows")), "\n")
   if (is.null(data) || nrow(data) == 0) return(ggplot() + ggtitle(paste(title, "(No GC Data)")) + nature_theme)
   
   # Ensure valid GC content values (0-1)
@@ -821,8 +885,44 @@ if (length(valid_transcript_lengths_specific) > 0) {
   # Filter the palette for the target datasets
   specific_palette <- palette_colors[names(palette_colors) %in% target_datasets_specific]
 
+# 5. Transcript Length Binned Plot (New for Fig 1c)
+plot_transcript_binned <- function(data, title, species_colors) {
+  if (is.null(data) || nrow(data) == 0) return(ggplot() + ggtitle(paste(title, "(No Data)")) + nature_theme)
+
+  # Define bins
+  # Breaks: 0, 600, 1000, 2000, 4000, Inf
+  # Labels: <600, 600-1kb, 1kb-2kb, 2kb-4kb, >4kb
+  data <- data %>%
+    filter(transcript_length > 0) %>%
+    mutate(length_bin = cut(transcript_length,
+                            breaks = c(0, 600, 1000, 2000, 4000, Inf),
+                            labels = c("<600", "600-1kb", "1kb-2kb", "2kb-4kb", ">4kb"),
+                            include.lowest = TRUE, right = FALSE))
+
+  # Calculate frequency
+  plot_data <- data %>%
+    group_by(dataset, length_bin) %>%
+    summarize(count = n(), .groups = "drop") %>%
+    group_by(dataset) %>%
+    mutate(freq = count / sum(count) * 100) %>%
+    ungroup()
+
+  # Plot
+  ggplot(plot_data, aes(x = length_bin, y = freq, fill = dataset)) +
+    geom_col(position = position_dodge(width = 0.8), width = 0.7, linewidth = 0.2, color = "black") +
+    scale_fill_manual(values = species_colors, name = "Dataset") +
+    scale_y_continuous(limits = c(0, NA), expand = expansion(mult = c(0, 0.05))) +
+    labs(
+      title = title,
+      x = "Transcript Length (bp)",
+      y = "Frequency (%)"
+    ) +
+    nature_theme +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
   # Create the plot (legend removed for fig-1c)
-  plot_specific_transcript_density <- plot_transcript_density(
+  plot_specific_transcript_density <- plot_transcript_binned(
     transcript_lengths_specific,
     "", # No title
     specific_palette
