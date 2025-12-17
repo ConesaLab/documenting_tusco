@@ -497,7 +497,11 @@ p_single <- ggplot(all_data, aes(x = big_category, y = percentage, fill = Type))
   ) +
   
   # 6. Adjust colors and theme
-  scale_fill_manual(values = c("TUSCO" = "#1b9e77", "SIRVs" = "#cab2d6")) +
+  scale_fill_manual(
+    values = c("TUSCO" = "#1b9e77", "SIRVs" = "#cab2d6"),
+    breaks = c("TUSCO", "SIRVs"),
+    labels = c("TUSCO" = "TUSCO evaluation", "SIRVs" = "SIRVs")
+  ) +
   coord_cartesian(ylim = c(0, 100), clip = "off") +  # Set y-axis max to 100
   labs(
     x     = NULL,

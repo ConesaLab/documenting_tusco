@@ -1090,9 +1090,9 @@ radar_kidney <- build_radar_plot_for_tissue(metrics_summary_df, "Kidney")
 legend_df <- data.frame(Type = factor(names(type_colors), levels = names(type_colors)),
                         x = c(1, 2, 3), y = c(1, 2, 3))
 legend_labels <- c(
-  "Universal" = "TUSCO (Mouse)",
-  "Brain"     = "TUSCO (Mouse Brain)",
-  "Kidney"    = "TUSCO (Mouse Kidney)"
+  "Universal" = "TUSCO gene set (Mouse)",
+  "Brain"     = "TUSCO gene set (Mouse Brain)",
+  "Kidney"    = "TUSCO gene set (Mouse Kidney)"
 )
 legend_plot <- ggplot(legend_df, aes(x = x, y = y, color = Type, linetype = Type, shape = Type)) +
   geom_line(linewidth = 1) +

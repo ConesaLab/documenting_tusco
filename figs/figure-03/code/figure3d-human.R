@@ -260,12 +260,12 @@ if (has_ComplexUpset && nrow(upset_data) > 0) {
     keep_empty_groups = TRUE,
     wrap = TRUE,
     set_sizes = FALSE,
-    base_annotations = list(
-      'Intersect\nFN TUSCO\nGenes' = ComplexUpset::intersection_size(counts = TRUE)
-    )
-  ) +
-    labs(title = NULL, subtitle = NULL, caption = NULL, y = "TUSCO\n(Human)") +
-    theme_classic(base_family = "Helvetica", base_size = 7) +
+	    base_annotations = list(
+	      'Intersect\nFN TUSCO gene set\nGenes' = ComplexUpset::intersection_size(counts = TRUE)
+	    )
+	  ) +
+	    labs(title = NULL, subtitle = NULL, caption = NULL, y = "TUSCO gene set\n(Human)") +
+	    theme_classic(base_family = "Helvetica", base_size = 7) +
     theme(
       text = element_text(size = 7),
       axis.text = element_text(size = 7),
@@ -348,7 +348,7 @@ p_dist <- ggplot(plot_df, aes(x = factor(num_samples_shared), y = num_genes)) +
   labs(
     title = NULL, # Removed title
     x = "#Sample", # Updated x-axis label
-    y = "FN TUSCO Genes" # Updated y-axis label, Changed from BUGSI
+    y = "FN TUSCO gene set\nGenes" # Updated y-axis label
   ) +
   # Add padding to the y-axis to ensure labels fit
   # ylim(0, max(plot_df$num_genes, na.rm = TRUE) * 1.15) + # Removed dynamic ylim

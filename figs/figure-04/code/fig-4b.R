@@ -337,7 +337,7 @@ process_and_plot_pipeline_pair <- function(pipeline_prefix, species, tusco_ref_f
   tusco_annotation_for_calc <- tusco_df %>% select(any_of(c("ensembl", "refseq", "gene_name"))) %>% distinct()
   rTUSCO <- nrow(tusco_annotation_for_calc)
   if (rTUSCO == 0) {
-    return(ggdraw() + draw_label("Empty TUSCO ref", fontface = "bold"))
+    return(ggdraw() + draw_label("Empty TUSCO gene set ref", fontface = "bold"))
   }
 
   ref_classification_data <- if (!is.null(ref_class_file) && file.exists(ref_class_file)) read_tsv_safe(ref_class_file) else NULL
@@ -442,15 +442,15 @@ process_and_plot_pipeline_pair <- function(pipeline_prefix, species, tusco_ref_f
 # Build legend used underneath the grid
 # ------------------------------------------------------------------
 legend_line_df <- data.frame(
-  Annotation = factor(c("Gencode reference annotation", "TUSCO-sim annotation"),
-                      levels = c("Gencode reference annotation", "TUSCO-sim annotation")),
+  Annotation = factor(c("Gencode reference annotation", "TUSCO-novel"),
+                      levels = c("Gencode reference annotation", "TUSCO-novel")),
   x = 0, xend = 1, y = c(1, 2), yend = c(1, 2)
 )
 p_legend_lines <- ggplot(legend_line_df) +
   geom_segment(aes(x = x, xend = xend, y = y, yend = yend, linetype = Annotation),
                linewidth = 1.2, color = "black") +
   scale_linetype_manual(values = c("Gencode reference annotation" = "solid",
-                                   "TUSCO-sim annotation" = "dashed")) +
+                                   "TUSCO-novel" = "dashed")) +
   theme_void() +
   theme(legend.position = "bottom",
         legend.title = element_blank(),

@@ -598,8 +598,14 @@ process_pipeline <- function(pipeline_prefix) {
       scale_x_continuous(breaks = seq_along(metrics_labels), labels = rep("", length(metrics_labels))) +
       coord_polar() +
       scale_y_continuous(limits = c(0, 100)) +
-      scale_color_manual(values = c("SIRV" = "#cab2d6", "TUSCO" = "#a8d5a0")) +
-      scale_fill_manual(values = c("SIRV" = "#cab2d6", "TUSCO" = "#a8d5a0")) +
+      scale_color_manual(
+        values = c("SIRV" = "#cab2d6", "TUSCO" = "#a8d5a0"),
+        labels = c("SIRV" = "SIRV", "TUSCO" = "TUSCO evaluation")
+      ) +
+      scale_fill_manual(
+        values = c("SIRV" = "#cab2d6", "TUSCO" = "#a8d5a0"),
+        labels = c("SIRV" = "SIRV", "TUSCO" = "TUSCO evaluation")
+      ) +
       theme_void()
     ggplotGrob(p)
   }
@@ -640,7 +646,11 @@ process_pipeline <- function(pipeline_prefix) {
   p_combined <- ggplot(combined_df, aes(x = final_label, y = Percentage, fill = Type)) +
     geom_bar(stat = "identity", position = position_dodge(width = 0.8), color = "black", size = 0.3, width = 0.7) +
     facet_grid(~big_category, scales = "free_x", space = "free") +
-    scale_fill_manual(values = combined_colors) +
+    scale_fill_manual(
+      values = combined_colors,
+      breaks = c("SIRVs", "TUSCO"),
+      labels = c("SIRVs" = "SIRVs", "TUSCO" = "TUSCO evaluation")
+    ) +
     xlab(NULL) +
     ylab("Percentage") +
     scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 25), expand = c(0, 0)) +
@@ -687,9 +697,12 @@ radar_legend_df <- data.frame(
 p_radar_legend_dummy <- ggplot(radar_legend_df, aes(x = x, y = y, color = Type, linetype = Type, shape = Type)) +
   geom_line(size = 1) +
   geom_point(size = 3) +
-  scale_color_manual(values = c("SIRVs" = "#cab2d6", "TUSCO" = "#a8d5a0")) +
-  scale_linetype_manual(values = c("SIRVs" = "solid", "TUSCO" = "solid")) +
-  scale_shape_manual(values = c("SIRVs" = 16, "TUSCO" = 16)) +
+  scale_color_manual(values = c("SIRVs" = "#cab2d6", "TUSCO" = "#a8d5a0"),
+                     labels = c("SIRVs" = "SIRVs", "TUSCO" = "TUSCO evaluation")) +
+  scale_linetype_manual(values = c("SIRVs" = "solid", "TUSCO" = "solid"),
+                        labels = c("SIRVs" = "SIRVs", "TUSCO" = "TUSCO evaluation")) +
+  scale_shape_manual(values = c("SIRVs" = 16, "TUSCO" = 16),
+                     labels = c("SIRVs" = "SIRVs", "TUSCO" = "TUSCO evaluation")) +
   theme_void() +
   theme(
     legend.position = "bottom",

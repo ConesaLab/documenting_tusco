@@ -1,0 +1,31 @@
+ontology	keyword	n_terms	best_padj	best_term
+BP	ribosome	3	0.28868282614040547	mitochondrial ribosome assembly
+BP	translation	4	0.28868282614040547	mitochondrial translation
+BP	mitochond	6	0.28868282614040547	mitochondrial respirasome assembly
+BP	metabolic	53	0.28868282614040547	snRNA metabolic process
+BP	enzyme	0	NA	NA
+BP	cytoskeleton	1	0.4294206578531932	cytoskeleton-dependent intracellular transport
+BP	structural	0	NA	NA
+BP	actin	0	NA	NA
+BP	microtubule	6	0.28868282614040547	synaptic vesicle transport along microtubule
+BP	extracellular matrix	0	NA	NA
+CC	ribosome	3	0.1934837445889585	organellar ribosome
+CC	translation	0	NA	NA
+CC	mitochond	4	0.18351656426816362	mitochondrial large ribosomal subunit
+CC	metabolic	0	NA	NA
+CC	enzyme	1	0.1934837445889585	telomerase holoenzyme complex
+CC	cytoskeleton	0	NA	NA
+CC	structural	0	NA	NA
+CC	actin	0	NA	NA
+CC	microtubule	0	NA	NA
+CC	extracellular matrix	0	NA	NA
+MF	ribosome	1	0.3848110779843337	structural constituent of ribosome
+MF	translation	0	NA	NA
+MF	mitochond	0	NA	NA
+MF	metabolic	0	NA	NA
+MF	enzyme	2	0.3848110779843337	enzyme-substrate adaptor activity
+MF	cytoskeleton	0	NA	NA
+MF	structural	2	0.3848110779843337	structural constituent of chromatin
+MF	actin	6	0.33268012685058346	catalytic activity, acting on a glycoprotein
+MF	microtubule	0	NA	NA
+MF	extracellular matrix	0	NA	NA

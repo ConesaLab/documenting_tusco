@@ -255,8 +255,10 @@ p_sensitivity <- ggplot() +
     aes(x = pipeline_label, y = sensitivity, color = method, shape = method),
     size = 4, alpha = 0.9
   ) +
-  scale_color_manual(values = METHOD_COLORS, name = "Method") +
-  scale_shape_manual(values = c("TUSCO" = 16, "MAJIQ-L" = 17), name = "Method") +
+  scale_color_manual(values = METHOD_COLORS, name = "Method",
+                     labels = c("TUSCO" = "TUSCO evaluation", "MAJIQ-L" = "MAJIQ-L")) +
+  scale_shape_manual(values = c("TUSCO" = 16, "MAJIQ-L" = 17), name = "Method",
+                     labels = c("TUSCO" = "TUSCO evaluation", "MAJIQ-L" = "MAJIQ-L")) +
   scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
   labs(
     title = "Sensitivity",
@@ -281,8 +283,10 @@ p_fn_rate <- ggplot() +
     aes(x = pipeline_label, y = fn_rate, color = method, shape = method),
     size = 4, alpha = 0.9
   ) +
-  scale_color_manual(values = METHOD_COLORS, name = "Method") +
-  scale_shape_manual(values = c("TUSCO" = 16, "MAJIQ-L" = 17), name = "Method") +
+  scale_color_manual(values = METHOD_COLORS, name = "Method",
+                     labels = c("TUSCO" = "TUSCO evaluation", "MAJIQ-L" = "MAJIQ-L")) +
+  scale_shape_manual(values = c("TUSCO" = 16, "MAJIQ-L" = 17), name = "Method",
+                     labels = c("TUSCO" = "TUSCO evaluation", "MAJIQ-L" = "MAJIQ-L")) +
   scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
   labs(
     title = "False Negative Rate",
@@ -307,8 +311,10 @@ p_fdr <- ggplot() +
     aes(x = pipeline_label, y = fdr, color = method, shape = method),
     size = 4, alpha = 0.9
   ) +
-  scale_color_manual(values = METHOD_COLORS, name = "Method") +
-  scale_shape_manual(values = c("TUSCO" = 16, "MAJIQ-L" = 17), name = "Method") +
+  scale_color_manual(values = METHOD_COLORS, name = "Method",
+                     labels = c("TUSCO" = "TUSCO evaluation", "MAJIQ-L" = "MAJIQ-L")) +
+  scale_shape_manual(values = c("TUSCO" = 16, "MAJIQ-L" = 17), name = "Method",
+                     labels = c("TUSCO" = "TUSCO evaluation", "MAJIQ-L" = "MAJIQ-L")) +
   scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
   labs(
     title = "False Discovery Rate",

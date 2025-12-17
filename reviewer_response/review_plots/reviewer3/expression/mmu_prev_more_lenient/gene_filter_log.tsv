@@ -1,0 +1,912 @@
+GeneID	FilterReason
+ENSMUSG00000057697	Expression+Alphagenome Filter
+ENSMUSG00000111709	Expression+Alphagenome Filter
+ENSMUSG00000076918	Expression+Alphagenome Filter
+ENSMUSG00000051279	Expression+Alphagenome Filter
+ENSMUSG00000043501	Expression+Alphagenome Filter
+ENSMUSG00000078324	Expression+Alphagenome Filter
+ENSMUSG00000064363	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000076926	Expression+Alphagenome Filter
+ENSMUSG00000071169	Expression+Alphagenome Filter
+ENSMUSG00000045566	Expression+Alphagenome Filter
+ENSMUSG00000044772	Expression+Alphagenome Filter
+ENSMUSG00000059251	Expression+Alphagenome Filter
+ENSMUSG00000036951	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000070298	Expression+Alphagenome Filter
+ENSMUSG00000055691	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000045210	Passed
+ENSMUSG00000037790	Expression+Alphagenome Filter
+ENSMUSG00000091264	Passed
+ENSMUSG00000076879	Expression+Alphagenome Filter
+ENSMUSG00000091260	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000104630	Expression+Alphagenome Filter
+ENSMUSG00000051081	Expression+Alphagenome Filter
+ENSMUSG00000044400	Expression+Alphagenome Filter
+ENSMUSG00000045267	Expression+Alphagenome Filter
+ENSMUSG00000078719	Expression+Alphagenome Filter
+ENSMUSG00000044863	Expression+Alphagenome Filter
+ENSMUSG00000063177	Expression+Alphagenome Filter
+ENSMUSG00000071909	Expression+Alphagenome Filter
+ENSMUSG00000068129	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000036357	Expression+Alphagenome Filter
+ENSMUSG00000025929	Expression+Alphagenome Filter
+ENSMUSG00000057444	Expression+Alphagenome Filter
+ENSMUSG00000054383	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000090631	Expression+Alphagenome Filter
+ENSMUSG00000076581	Expression+Alphagenome Filter
+ENSMUSG00000072625	Expression+Alphagenome Filter
+ENSMUSG00000064360	Expression+Alphagenome Filter
+ENSMUSG00000044121	Expression+Alphagenome Filter
+ENSMUSG00000095358	Expression+Alphagenome Filter
+ENSMUSG00000094307	Expression+Alphagenome Filter
+ENSMUSG00000076556	Expression+Alphagenome Filter
+ENSMUSG00000070583	Passed
+ENSMUSG00000076892	Expression+Alphagenome Filter
+ENSMUSG00000095931	Expression+Alphagenome Filter
+ENSMUSG00000071276	Expression+Alphagenome Filter
+ENSMUSG00000078799	Expression+Alphagenome Filter
+ENSMUSG00000060177	Expression+Alphagenome Filter
+ENSMUSG00000053961	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000100937	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000095897	Expression+Alphagenome Filter
+ENSMUSG00000022243	Expression+Alphagenome Filter
+ENSMUSG00000040138	Expression+Alphagenome Filter
+ENSMUSG00000095870	Expression+Alphagenome Filter
+ENSMUSG00000095662	Expression+Alphagenome Filter
+ENSMUSG00000022055	Expression+Alphagenome Filter
+ENSMUSG00000061974	Expression+Alphagenome Filter
+ENSMUSG00000095338	Expression+Alphagenome Filter
+ENSMUSG00000020062	Expression+Alphagenome Filter
+ENSMUSG00000061024	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000037001	Expression+Alphagenome Filter
+ENSMUSG00000042816	Passed
+ENSMUSG00000093941	Expression+Alphagenome Filter
+ENSMUSG00000095768	Expression+Alphagenome Filter
+ENSMUSG00000021367	Expression+Alphagenome Filter
+ENSMUSG00000095171	Expression+Alphagenome Filter
+ENSMUSG00000076864	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000103897	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000072722	Expression+Alphagenome Filter
+ENSMUSG00000075402	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076493	Expression+Alphagenome Filter
+ENSMUSG00000094978	Expression+Alphagenome Filter
+ENSMUSG00000046518	Expression+Alphagenome Filter
+ENSMUSG00000097638	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000026394	Expression+Alphagenome Filter
+ENSMUSG00000058250	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000095257	Expression+Alphagenome Filter
+ENSMUSG00000031130	Expression+Alphagenome Filter
+ENSMUSG00000096068	Expression+Alphagenome Filter
+ENSMUSG00000025784	Expression+Alphagenome Filter
+ENSMUSG00000062376	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000025051	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000041567	Expression+Alphagenome Filter
+ENSMUSG00000093820	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000096813	Expression+Alphagenome Filter
+ENSMUSG00000020846	Passed
+ENSMUSG00000064357	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000095656	Expression+Alphagenome Filter
+ENSMUSG00000096011	Expression+Alphagenome Filter
+ENSMUSG00000045954	Expression+Alphagenome Filter
+ENSMUSG00000061977	Expression+Alphagenome Filter
+ENSMUSG00000110573	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000104962	Expression+Alphagenome Filter
+ENSMUSG00000036376	Passed
+ENSMUSG00000064213	Expression+Alphagenome Filter
+ENSMUSG00000105533	Expression+Alphagenome Filter
+ENSMUSG00000094149	Expression+Alphagenome Filter
+ENSMUSG00000046652	Expression+Alphagenome Filter
+ENSMUSG00000078520	Expression+Alphagenome Filter
+ENSMUSG00000030196	Expression+Alphagenome Filter
+ENSMUSG00000094011	Expression+Alphagenome Filter
+ENSMUSG00000075142	Expression+Alphagenome Filter
+ENSMUSG00000068890	Expression+Alphagenome Filter
+ENSMUSG00000076653	Expression+Alphagenome Filter
+ENSMUSG00000048469	Expression+Alphagenome Filter
+ENSMUSG00000064351	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000076494	Passed
+ENSMUSG00000076914	Expression+Alphagenome Filter
+ENSMUSG00000076890	Expression+Alphagenome Filter
+ENSMUSG00000076894	Expression+Alphagenome Filter
+ENSMUSG00000059663	Expression+Alphagenome Filter
+ENSMUSG00000095586	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000063478	Expression+Alphagenome Filter
+ENSMUSG00000075181	Expression+Alphagenome Filter
+ENSMUSG00000001823	Expression+Alphagenome Filter
+ENSMUSG00000047667	Expression+Alphagenome Filter
+ENSMUSG00000096396	Expression+Alphagenome Filter
+ENSMUSG00000032718	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000072931	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000058052	Expression+Alphagenome Filter
+ENSMUSG00000091248	Expression+Alphagenome Filter
+ENSMUSG00000050756	Expression+Alphagenome Filter
+ENSMUSG00000075566	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000074679	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000046203	Expression+Alphagenome Filter
+ENSMUSG00000096386	Expression+Alphagenome Filter
+ENSMUSG00000094314	Expression+Alphagenome Filter
+ENSMUSG00000095426	Expression+Alphagenome Filter
+ENSMUSG00000076886	Expression+Alphagenome Filter
+ENSMUSG00000026497	Expression+Alphagenome Filter
+ENSMUSG00000039224	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000068149	Expression+Alphagenome Filter
+ENSMUSG00000025288	Expression+Alphagenome Filter
+ENSMUSG00000057805	Expression+Alphagenome Filter
+ENSMUSG00000009185	Expression+Alphagenome Filter
+ENSMUSG00000042448	Expression+Alphagenome Filter
+ENSMUSG00000053742	Expression+Alphagenome Filter
+ENSMUSG00000070797	Expression+Alphagenome Filter
+ENSMUSG00000031518	Expression+Alphagenome Filter
+ENSMUSG00000033967	Expression+Alphagenome Filter
+ENSMUSG00000051495	Passed
+ENSMUSG00000053863	Expression+Alphagenome Filter
+ENSMUSG00000086545	Expression+Alphagenome Filter
+ENSMUSG00000094957	Expression+Alphagenome Filter
+ENSMUSG00000096697	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000046615	Expression+Alphagenome Filter
+ENSMUSG00000094311	Expression+Alphagenome Filter
+ENSMUSG00000036551	Expression+Alphagenome Filter
+ENSMUSG00000061584	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000078506	Expression+Alphagenome Filter
+ENSMUSG00000066720	Passed
+ENSMUSG00000096903	Expression+Alphagenome Filter
+ENSMUSG00000104769	Expression+Alphagenome Filter
+ENSMUSG00000095191	Expression+Alphagenome Filter
+ENSMUSG00000020671	Passed
+ENSMUSG00000057754	Expression+Alphagenome Filter
+ENSMUSG00000029679	Expression+Alphagenome Filter
+ENSMUSG00000078605	Expression+Alphagenome Filter
+ENSMUSG00000048981	Expression+Alphagenome Filter
+ENSMUSG00000094010	Expression+Alphagenome Filter
+ENSMUSG00000103906	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000076900	Expression+Alphagenome Filter
+ENSMUSG00000078576	Expression+Alphagenome Filter
+ENSMUSG00000082482	Expression+Alphagenome Filter
+ENSMUSG00000094271	Expression+Alphagenome Filter
+ENSMUSG00000044801	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000094197	Expression+Alphagenome Filter
+ENSMUSG00000101959	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000029282	Expression+Alphagenome Filter
+ENSMUSG00000073965	Expression+Alphagenome Filter
+ENSMUSG00000003070	Expression+Alphagenome Filter
+ENSMUSG00000091039	Expression+Alphagenome Filter
+ENSMUSG00000094085	Expression+Alphagenome Filter
+ENSMUSG00000060967	Expression+Alphagenome Filter
+ENSMUSG00000061000	Expression+Alphagenome Filter
+ENSMUSG00000075148	Expression+Alphagenome Filter
+ENSMUSG00000105231	Expression+Alphagenome Filter
+ENSMUSG00000042243	Expression+Alphagenome Filter
+ENSMUSG00000026735	Expression+Alphagenome Filter
+ENSMUSG00000095064	Expression+Alphagenome Filter
+ENSMUSG00000096348	Expression+Alphagenome Filter
+ENSMUSG00000071489	Expression+Alphagenome Filter
+ENSMUSG00000093986	Expression+Alphagenome Filter
+ENSMUSG00000075334	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000007877	Passed
+ENSMUSG00000044819	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000094552	Expression+Alphagenome Filter
+ENSMUSG00000094648	Expression+Alphagenome Filter
+ENSMUSG00000046714	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000079522	Expression+Alphagenome Filter
+ENSMUSG00000092305	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000093871	Expression+Alphagenome Filter
+ENSMUSG00000069707	Expression+Alphagenome Filter
+ENSMUSG00000078137	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000057381	Expression+Alphagenome Filter
+ENSMUSG00000076839	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000028367	Passed
+ENSMUSG00000078935	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076908	Expression+Alphagenome Filter
+ENSMUSG00000096304	Expression+Alphagenome Filter
+ENSMUSG00000096844	Expression+Alphagenome Filter
+ENSMUSG00000094748	Expression+Alphagenome Filter
+ENSMUSG00000022315	Expression+Alphagenome Filter
+ENSMUSG00000095498	Expression+Alphagenome Filter
+ENSMUSG00000078795	Expression+Alphagenome Filter
+ENSMUSG00000042595	Expression+Alphagenome Filter
+ENSMUSG00000060256	Expression+Alphagenome Filter
+ENSMUSG00000038692	Expression+Alphagenome Filter
+ENSMUSG00000076922	Expression+Alphagenome Filter
+ENSMUSG00000094910	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000094735	Expression+Alphagenome Filter
+ENSMUSG00000074671	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000073894	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000041358	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000031160	Expression+Alphagenome Filter
+ENSMUSG00000027923	Expression+Alphagenome Filter
+ENSMUSG00000078280	Expression+Alphagenome Filter
+ENSMUSG00000060187	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000018543	Expression+Alphagenome Filter
+ENSMUSG00000094876	Expression+Alphagenome Filter
+ENSMUSG00000056901	Expression+Alphagenome Filter
+ENSMUSG00000055811	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000062426	Expression+Alphagenome Filter
+ENSMUSG00000042845	Expression+Alphagenome Filter
+ENSMUSG00000076903	Expression+Alphagenome Filter
+ENSMUSG00000076921	Expression+Alphagenome Filter
+ENSMUSG00000094881	Expression+Alphagenome Filter
+ENSMUSG00000116179	Expression+Alphagenome Filter
+ENSMUSG00000110332	Expression+Alphagenome Filter
+ENSMUSG00000031983	Passed
+ENSMUSG00000096255	Manual Filter
+ENSMUSG00000044485	Expression+Alphagenome Filter
+ENSMUSG00000094163	Expression+Alphagenome Filter
+ENSMUSG00000062694	Expression+Alphagenome Filter
+ENSMUSG00000082226	Passed
+ENSMUSG00000076469	Expression+Alphagenome Filter
+ENSMUSG00000104629	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000096000	Expression+Alphagenome Filter
+ENSMUSG00000079364	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000051437	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000094262	Expression+Alphagenome Filter
+ENSMUSG00000074359	Expression+Alphagenome Filter
+ENSMUSG00000053389	Expression+Alphagenome Filter
+ENSMUSG00000048087	Passed
+ENSMUSG00000114755	Expression+Alphagenome Filter
+ENSMUSG00000079579	Expression+Alphagenome Filter
+ENSMUSG00000037482	Expression+Alphagenome Filter
+ENSMUSG00000095522	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000027788	Expression+Alphagenome Filter
+ENSMUSG00000054364	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000063529	Expression+Alphagenome Filter
+ENSMUSG00000095444	Expression+Alphagenome Filter
+ENSMUSG00000059503	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000096580	Expression+Alphagenome Filter
+ENSMUSG00000076534	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076652	Expression+Alphagenome Filter
+ENSMUSG00000096345	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000100950	Expression+Alphagenome Filter
+ENSMUSG00000096097	Expression+Alphagenome Filter
+ENSMUSG00000076762	Expression+Alphagenome Filter
+ENSMUSG00000059668	Expression+Alphagenome Filter
+ENSMUSG00000079112	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000056043	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000070908	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000108728	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000096424	Expression+Alphagenome Filter
+ENSMUSG00000076877	Expression+Alphagenome Filter
+ENSMUSG00000090176	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000031212	Expression+Alphagenome Filter
+ENSMUSG00000093818	Expression+Alphagenome Filter
+ENSMUSG00000073764	Expression+Alphagenome Filter
+ENSMUSG00000048429	Passed
+ENSMUSG00000051777	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000094284	Expression+Alphagenome Filter
+ENSMUSG00000031224	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000056423	Expression+Alphagenome Filter
+ENSMUSG00000069036	Expression+Alphagenome Filter
+ENSMUSG00000047102	Expression+Alphagenome Filter
+ENSMUSG00000076532	Expression+Alphagenome Filter
+ENSMUSG00000042092	Expression+Alphagenome Filter
+ENSMUSG00000062952	Expression+Alphagenome Filter
+ENSMUSG00000076478	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000067519	Expression+Alphagenome Filter
+ENSMUSG00000095621	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000008590	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000069706	Expression+Alphagenome Filter
+ENSMUSG00000060742	Expression+Alphagenome Filter
+ENSMUSG00000020010	Expression+Alphagenome Filter
+ENSMUSG00000096672	Expression+Alphagenome Filter
+ENSMUSG00000096591	Expression+Alphagenome Filter
+ENSMUSG00000073043	Expression+Alphagenome Filter
+ENSMUSG00000020583	Expression+Alphagenome Filter
+ENSMUSG00000106445	Expression+Alphagenome Filter
+ENSMUSG00000095973	Expression+Alphagenome Filter
+ENSMUSG00000024366	Expression+Alphagenome Filter
+ENSMUSG00000079440	Expression+Alphagenome Filter
+ENSMUSG00000050870	Expression+Alphagenome Filter
+ENSMUSG00000058287	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000035831	Expression+Alphagenome Filter
+ENSMUSG00000076925	Expression+Alphagenome Filter
+ENSMUSG00000096744	Expression+Alphagenome Filter
+ENSMUSG00000048355	Passed
+ENSMUSG00000079594	Expression+Alphagenome Filter
+ENSMUSG00000095758	Expression+Alphagenome Filter
+ENSMUSG00000047654	Passed
+ENSMUSG00000094733	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000095647	Expression+Alphagenome Filter
+ENSMUSG00000056529	Expression+Alphagenome Filter
+ENSMUSG00000094680	Expression+Alphagenome Filter
+ENSMUSG00000037424	Expression+Alphagenome Filter
+ENSMUSG00000026285	Expression+Alphagenome Filter
+ENSMUSG00000026919	Expression+Alphagenome Filter
+ENSMUSG00000095682	Expression+Alphagenome Filter
+ENSMUSG00000063225	Expression+Alphagenome Filter
+ENSMUSG00000112856	Expression+Alphagenome Filter
+ENSMUSG00000045498	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000051732	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000103088	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000020052	Expression+Alphagenome Filter
+ENSMUSG00000039337	Expression+Alphagenome Filter
+ENSMUSG00000076485	Expression+Alphagenome Filter
+ENSMUSG00000069721	Expression+Alphagenome Filter
+ENSMUSG00000095862	Expression+Alphagenome Filter
+ENSMUSG00000090897	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000078256	Expression+Alphagenome Filter
+ENSMUSG00000067684	Expression+Alphagenome Filter
+ENSMUSG00000062528	Expression+Alphagenome Filter
+ENSMUSG00000076619	Passed
+ENSMUSG00000094461	Expression+Alphagenome Filter
+ENSMUSG00000043485	Expression+Alphagenome Filter
+ENSMUSG00000051652	Expression+Alphagenome Filter
+ENSMUSG00000079244	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000049489	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000096760	Expression+Alphagenome Filter
+ENSMUSG00000073960	Expression+Alphagenome Filter
+ENSMUSG00000094700	Expression+Alphagenome Filter
+ENSMUSG00000058172	Expression+Alphagenome Filter
+ENSMUSG00000054272	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000010529	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000079532	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000110991	Expression+Alphagenome Filter
+ENSMUSG00000028963	Expression+Alphagenome Filter
+ENSMUSG00000075510	Expression+Alphagenome Filter
+ENSMUSG00000073574	Expression+Alphagenome Filter
+ENSMUSG00000091017	Expression+Alphagenome Filter
+ENSMUSG00000095275	Expression+Alphagenome Filter
+ENSMUSG00000076899	Expression+Alphagenome Filter
+ENSMUSG00000070609	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000096601	Expression+Alphagenome Filter
+ENSMUSG00000051481	Expression+Alphagenome Filter
+ENSMUSG00000076496	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000018930	Expression+Alphagenome Filter
+ENSMUSG00000023802	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000058005	Expression+Alphagenome Filter
+ENSMUSG00000094413	Expression+Alphagenome Filter
+ENSMUSG00000076909	Expression+Alphagenome Filter
+ENSMUSG00000076470	Expression+Alphagenome Filter
+ENSMUSG00000040258	Expression+Alphagenome Filter
+ENSMUSG00000106668	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000094649	Expression+Alphagenome Filter
+ENSMUSG00000073028	Expression+Alphagenome Filter
+ENSMUSG00000031491	Expression+Alphagenome Filter
+ENSMUSG00000094102	Expression+Alphagenome Filter
+ENSMUSG00000073680	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000051917	Expression+Alphagenome Filter
+ENSMUSG00000040659	Passed
+ENSMUSG00000052271	Expression+Alphagenome Filter
+ENSMUSG00000076481	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000050803	Expression+Alphagenome Filter
+ENSMUSG00000076895	Expression+Alphagenome Filter
+ENSMUSG00000085139	Expression+Alphagenome Filter
+ENSMUSG00000049285	Passed
+ENSMUSG00000078507	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000094001	Expression+Alphagenome Filter
+ENSMUSG00000076575	Expression+Alphagenome Filter
+ENSMUSG00000094757	Expression+Alphagenome Filter
+ENSMUSG00000060509	Expression+Alphagenome Filter
+ENSMUSG00000024245	Expression+Alphagenome Filter
+ENSMUSG00000066241	Expression+Alphagenome Filter
+ENSMUSG00000059832	Expression+Alphagenome Filter
+ENSMUSG00000029378	Expression+Alphagenome Filter
+ENSMUSG00000076912	Expression+Alphagenome Filter
+ENSMUSG00000071890	Expression+Alphagenome Filter
+ENSMUSG00000047980	Expression+Alphagenome Filter
+ENSMUSG00000018822	Expression+Alphagenome Filter
+ENSMUSG00000038327	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000027399	Expression+Alphagenome Filter
+ENSMUSG00000079699	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000074918	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000060565	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076487	Expression+Alphagenome Filter
+ENSMUSG00000047564	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000054052	Expression+Alphagenome Filter
+ENSMUSG00000096515	Passed
+ENSMUSG00000096737	Expression+Alphagenome Filter
+ENSMUSG00000020830	Expression+Alphagenome Filter
+ENSMUSG00000050445	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000094860	Expression+Alphagenome Filter
+ENSMUSG00000007836	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000054905	Expression+Alphagenome Filter
+ENSMUSG00000056426	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000013584	Expression+Alphagenome Filter
+ENSMUSG00000080907	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000079008	Expression+Alphagenome Filter
+ENSMUSG00000076540	Expression+Alphagenome Filter
+ENSMUSG00000040808	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000095572	Expression+Alphagenome Filter
+ENSMUSG00000056858	Expression+Alphagenome Filter
+ENSMUSG00000096554	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000039552	Expression+Alphagenome Filter
+ENSMUSG00000113489	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000038537	Expression+Alphagenome Filter
+ENSMUSG00000066368	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000076621	Passed
+ENSMUSG00000006948	Expression+Alphagenome Filter
+ENSMUSG00000093957	Expression+Alphagenome Filter
+ENSMUSG00000037843	Expression+Alphagenome Filter
+ENSMUSG00000094934	Expression+Alphagenome Filter
+ENSMUSG00000050435	Expression+Alphagenome Filter
+ENSMUSG00000094569	Expression+Alphagenome Filter
+ENSMUSG00000028635	Expression+Alphagenome Filter
+ENSMUSG00000067441	Expression+Alphagenome Filter
+ENSMUSG00000078260	Expression+Alphagenome Filter
+ENSMUSG00000094319	Expression+Alphagenome Filter
+ENSMUSG00000076604	Expression+Alphagenome Filter
+ENSMUSG00000022650	Expression+Alphagenome Filter
+ENSMUSG00000094904	Expression+Alphagenome Filter
+ENSMUSG00000020295	Expression+Alphagenome Filter
+ENSMUSG00000033578	Expression+Alphagenome Filter
+ENSMUSG00000096884	Expression+Alphagenome Filter
+ENSMUSG00000035337	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000031831	Expression+Alphagenome Filter
+ENSMUSG00000038044	Expression+Alphagenome Filter
+ENSMUSG00000095273	Expression+Alphagenome Filter
+ENSMUSG00000076484	Passed
+ENSMUSG00000093917	Expression+Alphagenome Filter
+ENSMUSG00000078505	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000027581	Expression+Alphagenome Filter
+ENSMUSG00000045509	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000031471	Expression+Alphagenome Filter
+ENSMUSG00000049037	Expression+Alphagenome Filter
+ENSMUSG00000073062	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000009588	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000071361	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000036144	Expression+Alphagenome Filter
+ENSMUSG00000047604	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000020081	Expression+Alphagenome Filter
+ENSMUSG00000075220	Expression+Alphagenome Filter
+ENSMUSG00000051617	Expression+Alphagenome Filter
+ENSMUSG00000076871	Expression+Alphagenome Filter
+ENSMUSG00000068068	Expression+Alphagenome Filter
+ENSMUSG00000075151	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000095270	Expression+Alphagenome Filter
+ENSMUSG00000094315	Expression+Alphagenome Filter
+ENSMUSG00000032108	Expression+Alphagenome Filter
+ENSMUSG00000076878	Expression+Alphagenome Filter
+ENSMUSG00000075185	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000076476	Expression+Alphagenome Filter
+ENSMUSG00000076896	Expression+Alphagenome Filter
+ENSMUSG00000068074	Expression+Alphagenome Filter
+ENSMUSG00000025431	Expression+Alphagenome Filter
+ENSMUSG00000042433	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000064368	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000076483	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000043865	Expression+Alphagenome Filter
+ENSMUSG00000047565	Expression+Alphagenome Filter
+ENSMUSG00000076486	Passed
+ENSMUSG00000030194	Expression+Alphagenome Filter
+ENSMUSG00000046248	Expression+Alphagenome Filter
+ENSMUSG00000106039	Expression+Alphagenome Filter
+ENSMUSG00000076923	Expression+Alphagenome Filter
+ENSMUSG00000095383	Expression+Alphagenome Filter
+ENSMUSG00000057761	Expression+Alphagenome Filter
+ENSMUSG00000059763	Expression+Alphagenome Filter
+ENSMUSG00000042031	Expression+Alphagenome Filter
+ENSMUSG00000028593	Expression+Alphagenome Filter
+ENSMUSG00000050603	Expression+Alphagenome Filter
+ENSMUSG00000020872	Expression+Alphagenome Filter
+ENSMUSG00000103362	Expression+Alphagenome Filter
+ENSMUSG00000094187	Expression+Alphagenome Filter
+ENSMUSG00000095115	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000029372	Expression+Alphagenome Filter
+ENSMUSG00000042041	Expression+Alphagenome Filter
+ENSMUSG00000075136	Expression+Alphagenome Filter
+ENSMUSG00000076901	Expression+Alphagenome Filter
+ENSMUSG00000071150	Expression+Alphagenome Filter
+ENSMUSG00000027555	Expression+Alphagenome Filter
+ENSMUSG00000100689	Expression+Alphagenome Filter
+ENSMUSG00000075206	Expression+Alphagenome Filter
+ENSMUSG00000036907	Expression+Alphagenome Filter
+ENSMUSG00000056270	Expression+Alphagenome Filter
+ENSMUSG00000076665	Passed
+ENSMUSG00000058921	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000096461	Expression+Alphagenome Filter
+ENSMUSG00000056885	Expression+Alphagenome Filter
+ENSMUSG00000076505	Expression+Alphagenome Filter
+ENSMUSG00000076630	Expression+Alphagenome Filter
+ENSMUSG00000066071	Expression+Alphagenome Filter
+ENSMUSG00000070637	Expression+Alphagenome Filter
+ENSMUSG00000051242	Passed
+ENSMUSG00000075212	Expression+Alphagenome Filter
+ENSMUSG00000076893	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000041378	Passed
+ENSMUSG00000096708	Expression+Alphagenome Filter
+ENSMUSG00000094861	Expression+Alphagenome Filter
+ENSMUSG00000094221	Expression+Alphagenome Filter
+ENSMUSG00000118388	Expression+Alphagenome Filter
+ENSMUSG00000076526	Expression+Alphagenome Filter
+ENSMUSG00000073970	Expression+Alphagenome Filter
+ENSMUSG00000094282	Expression+Alphagenome Filter
+ENSMUSG00000061923	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000094596	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000095061	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000091212	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000079476	Expression+Alphagenome Filter
+ENSMUSG00000027811	Passed
+ENSMUSG00000073247	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000071471	Expression+Alphagenome Filter
+ENSMUSG00000050425	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076881	Expression+Alphagenome Filter
+ENSMUSG00000038527	Expression+Alphagenome Filter
+ENSMUSG00000094298	Expression+Alphagenome Filter
+ENSMUSG00000078668	Expression+Alphagenome Filter
+ENSMUSG00000073257	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000095007	Expression+Alphagenome Filter
+ENSMUSG00000049892	Passed
+ENSMUSG00000094057	Expression+Alphagenome Filter
+ENSMUSG00000046546	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000042380	Passed
+ENSMUSG00000095737	Expression+Alphagenome Filter
+ENSMUSG00000076904	Expression+Alphagenome Filter
+ENSMUSG00000094905	Expression+Alphagenome Filter
+ENSMUSG00000064370	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000062793	Expression+Alphagenome Filter
+ENSMUSG00000076888	Expression+Alphagenome Filter
+ENSMUSG00000053217	Expression+Alphagenome Filter
+ENSMUSG00000060560	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000069297	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000095251	Expression+Alphagenome Filter
+ENSMUSG00000042200	Expression+Alphagenome Filter
+ENSMUSG00000103770	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000094532	Expression+Alphagenome Filter
+ENSMUSG00000045111	Expression+Alphagenome Filter
+ENSMUSG00000061633	Expression+Alphagenome Filter
+ENSMUSG00000076898	Expression+Alphagenome Filter
+ENSMUSG00000094478	Expression+Alphagenome Filter
+ENSMUSG00000046676	Expression+Alphagenome Filter
+ENSMUSG00000046082	Expression+Alphagenome Filter
+ENSMUSG00000051257	Expression+Alphagenome Filter
+ENSMUSG00000095163	Expression+Alphagenome Filter
+ENSMUSG00000074593	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000032915	Expression+Alphagenome Filter
+ENSMUSG00000117495	Expression+Alphagenome Filter
+ENSMUSG00000109864	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000076891	Expression+Alphagenome Filter
+ENSMUSG00000076492	Passed
+ENSMUSG00000092118	Passed
+ENSMUSG00000074433	Expression+Alphagenome Filter
+ENSMUSG00000073747	Expression+Alphagenome Filter
+ENSMUSG00000033774	Expression+Alphagenome Filter
+ENSMUSG00000054117	Expression+Alphagenome Filter
+ENSMUSG00000042525	Expression+Alphagenome Filter
+ENSMUSG00000029882	Expression+Alphagenome Filter
+ENSMUSG00000070943	Expression+Alphagenome Filter
+ENSMUSG00000096073	Expression+Alphagenome Filter
+ENSMUSG00000096513	Expression+Alphagenome Filter
+ENSMUSG00000044220	Expression+Alphagenome Filter
+ENSMUSG00000094542	Expression+Alphagenome Filter
+ENSMUSG00000022769	Passed
+ENSMUSG00000067513	Expression+Alphagenome Filter
+ENSMUSG00000093876	Expression+Alphagenome Filter
+ENSMUSG00000105888	Expression+Alphagenome Filter
+ENSMUSG00000093906	Expression+Alphagenome Filter
+ENSMUSG00000074300	Expression+Alphagenome Filter
+ENSMUSG00000101928	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076924	Expression+Alphagenome Filter
+ENSMUSG00000061457	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000023988	Passed
+ENSMUSG00000095413	Expression+Alphagenome Filter
+ENSMUSG00000050625	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000094266	Expression+Alphagenome Filter
+ENSMUSG00000095540	Expression+Alphagenome Filter
+ENSMUSG00000004821	Expression+Alphagenome Filter
+ENSMUSG00000038994	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000067543	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000032451	Expression+Alphagenome Filter
+ENSMUSG00000076497	Passed
+ENSMUSG00000060412	Expression+Alphagenome Filter
+ENSMUSG00000094117	Expression+Alphagenome Filter
+ENSMUSG00000076911	Expression+Alphagenome Filter
+ENSMUSG00000074676	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000091874	Expression+Alphagenome Filter
+ENSMUSG00000076489	Expression+Alphagenome Filter
+ENSMUSG00000062204	Expression+Alphagenome Filter
+ENSMUSG00000075156	Expression+Alphagenome Filter
+ENSMUSG00000068522	Expression+Alphagenome Filter
+ENSMUSG00000043429	Expression+Alphagenome Filter
+ENSMUSG00000048699	Expression+Alphagenome Filter
+ENSMUSG00000094024	Expression+Alphagenome Filter
+ENSMUSG00000095554	Expression+Alphagenome Filter
+ENSMUSG00000091638	Expression+Alphagenome Filter
+ENSMUSG00000079519	Expression+Alphagenome Filter
+ENSMUSG00000079513	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000078698	Expression+Alphagenome Filter
+ENSMUSG00000029885	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000079566	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076570	Expression+Alphagenome Filter
+ENSMUSG00000095962	Expression+Alphagenome Filter
+ENSMUSG00000095569	Expression+Alphagenome Filter
+ENSMUSG00000042821	Passed
+ENSMUSG00000073601	Expression+Alphagenome Filter
+ENSMUSG00000044243	Passed
+ENSMUSG00000076907	Expression+Alphagenome Filter
+ENSMUSG00000095817	Expression+Alphagenome Filter
+ENSMUSG00000035651	Expression+Alphagenome Filter
+ENSMUSG00000029557	Passed
+ENSMUSG00000005892	Expression+Alphagenome Filter
+ENSMUSG00000069044	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000064356	Passed
+ENSMUSG00000094755	Expression+Alphagenome Filter
+ENSMUSG00000111159	Expression+Alphagenome Filter
+ENSMUSG00000076562	Expression+Alphagenome Filter
+ENSMUSG00000033940	Passed
+ENSMUSG00000094103	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000055745	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000070697	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000116636	Expression+Alphagenome Filter
+ENSMUSG00000062651	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000091771	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000047079	Expression+Alphagenome Filter
+ENSMUSG00000094931	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000090967	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076906	Expression+Alphagenome Filter
+ENSMUSG00000040205	Expression+Alphagenome Filter
+ENSMUSG00000076633	Expression+Alphagenome Filter
+ENSMUSG00000049796	Expression+Alphagenome Filter
+ENSMUSG00000095668	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000109497	Expression+Alphagenome Filter
+ENSMUSG00000046287	Expression+Alphagenome Filter
+ENSMUSG00000078518	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000095081	Expression+Alphagenome Filter
+ENSMUSG00000078202	Passed
+ENSMUSG00000045364	Expression+Alphagenome Filter
+ENSMUSG00000076541	Expression+Alphagenome Filter
+ENSMUSG00000055069	Expression+Alphagenome Filter
+ENSMUSG00000095837	Expression+Alphagenome Filter
+ENSMUSG00000090738	Expression+Alphagenome Filter
+ENSMUSG00000095655	Expression+Alphagenome Filter
+ENSMUSG00000043458	Passed
+ENSMUSG00000095525	Expression+Alphagenome Filter
+ENSMUSG00000075203	Expression+Alphagenome Filter
+ENSMUSG00000091950	Expression+Alphagenome Filter
+ENSMUSG00000049972	Expression+Alphagenome Filter
+ENSMUSG00000073909	Expression+Alphagenome Filter
+ENSMUSG00000105830	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000020396	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000060188	Expression+Alphagenome Filter
+ENSMUSG00000071341	Expression+Alphagenome Filter
+ENSMUSG00000051456	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000093980	Expression+Alphagenome Filter
+ENSMUSG00000095592	Expression+Alphagenome Filter
+ENSMUSG00000047819	Expression+Alphagenome Filter
+ENSMUSG00000067872	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000072726	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000051209	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000055547	Expression+Alphagenome Filter
+ENSMUSG00000063133	Expression+Alphagenome Filter
+ENSMUSG00000062833	Expression+Alphagenome Filter
+ENSMUSG00000039084	Expression+Alphagenome Filter
+ENSMUSG00000034384	Expression+Alphagenome Filter
+ENSMUSG00000096164	Expression+Alphagenome Filter
+ENSMUSG00000076573	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000056350	Expression+Alphagenome Filter
+ENSMUSG00000096871	Expression+Alphagenome Filter
+ENSMUSG00000091101	Expression+Alphagenome Filter
+ENSMUSG00000045528	Expression+Alphagenome Filter
+ENSMUSG00000076750	Expression+Alphagenome Filter
+ENSMUSG00000071726	Expression+Alphagenome Filter
+ENSMUSG00000020913	Expression+Alphagenome Filter
+ENSMUSG00000050961	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000072995	Expression+Alphagenome Filter
+ENSMUSG00000076795	Expression+Alphagenome Filter
+ENSMUSG00000095309	Expression+Alphagenome Filter
+ENSMUSG00000020469	Expression+Alphagenome Filter
+ENSMUSG00000068888	Expression+Alphagenome Filter
+ENSMUSG00000064345	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000096761	Expression+Alphagenome Filter
+ENSMUSG00000044743	Expression+Alphagenome Filter
+ENSMUSG00000069038	Expression+Alphagenome Filter
+ENSMUSG00000062042	Expression+Alphagenome Filter
+ENSMUSG00000055882	Expression+Alphagenome Filter
+ENSMUSG00000072905	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000096152	Expression+Alphagenome Filter
+ENSMUSG00000068745	Expression+Alphagenome Filter
+ENSMUSG00000078504	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000059606	Expression+Alphagenome Filter
+ENSMUSG00000106405	Expression+Alphagenome Filter
+ENSMUSG00000073811	Expression+Alphagenome Filter
+ENSMUSG00000057592	Expression+Alphagenome Filter
+ENSMUSG00000076910	Expression+Alphagenome Filter
+ENSMUSG00000096442	Expression+Alphagenome Filter
+ENSMUSG00000033383	Expression+Alphagenome Filter
+ENSMUSG00000095619	Expression+Alphagenome Filter
+ENSMUSG00000076618	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000091530	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000045414	Expression+Alphagenome Filter
+ENSMUSG00000095066	Expression+Alphagenome Filter
+ENSMUSG00000070464	Expression+Alphagenome Filter
+ENSMUSG00000095806	Expression+Alphagenome Filter
+ENSMUSG00000059246	Expression+Alphagenome Filter
+ENSMUSG00000057674	Expression+Alphagenome Filter
+ENSMUSG00000029375	Expression+Alphagenome Filter
+ENSMUSG00000044444	Expression+Alphagenome Filter
+ENSMUSG00000035454	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000045521	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000043932	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000075094	Expression+Alphagenome Filter
+ENSMUSG00000050650	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000095814	Expression+Alphagenome Filter
+ENSMUSG00000027908	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000043986	Expression+Alphagenome Filter
+ENSMUSG00000050075	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000023057	Expression+Alphagenome Filter
+ENSMUSG00000075572	Expression+Alphagenome Filter
+ENSMUSG00000093890	Expression+Alphagenome Filter
+ENSMUSG00000076913	Expression+Alphagenome Filter
+ENSMUSG00000051316	Passed
+ENSMUSG00000070529	Expression+Alphagenome Filter
+ENSMUSG00000095984	Expression+Alphagenome Filter
+ENSMUSG00000044988	Expression+Alphagenome Filter
+ENSMUSG00000056926	Expression+Alphagenome Filter
+ENSMUSG00000096705	Expression+Alphagenome Filter
+ENSMUSG00000103243	Expression+Alphagenome Filter
+ENSMUSG00000054988	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000039462	Expression+Alphagenome Filter
+ENSMUSG00000096615	Expression+Alphagenome Filter
+ENSMUSG00000112931	Expression+Alphagenome Filter
+ENSMUSG00000043811	Expression+Alphagenome Filter
+ENSMUSG00000096568	Expression+Alphagenome Filter
+ENSMUSG00000065947	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000060170	Expression+Alphagenome Filter
+ENSMUSG00000050164	Expression+Alphagenome Filter
+ENSMUSG00000039321	Expression+Alphagenome Filter
+ENSMUSG00000064367	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000075543	Expression+Alphagenome Filter
+ENSMUSG00000078258	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000071275	Expression+Alphagenome Filter
+ENSMUSG00000032719	Expression+Alphagenome Filter
+ENSMUSG00000037171	Expression+Alphagenome Filter
+ENSMUSG00000064354	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000055194	Expression+Alphagenome Filter
+ENSMUSG00000074195	Expression+Alphagenome Filter
+ENSMUSG00000048329	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000076870	Passed
+ENSMUSG00000041984	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000068085	Expression+Alphagenome Filter
+ENSMUSG00000076531	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000092342	Expression+Alphagenome Filter
+ENSMUSG00000026688	Expression+Alphagenome Filter
+ENSMUSG00000095573	Expression+Alphagenome Filter
+ENSMUSG00000062310	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000070526	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000076916	Expression+Alphagenome Filter
+ENSMUSG00000096250	Expression+Alphagenome Filter
+ENSMUSG00000069080	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000094797	Expression+Alphagenome Filter
+ENSMUSG00000078597	Expression+Alphagenome Filter
+ENSMUSG00000108995	Expression+Alphagenome Filter
+ENSMUSG00000050621	Passed
+ENSMUSG00000070330	Expression+Alphagenome Filter
+ENSMUSG00000021718	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000002930	Expression+Alphagenome Filter
+ENSMUSG00000117924	Passed
+ENSMUSG00000094545	Expression+Alphagenome Filter
+ENSMUSG00000064341	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000073785	Expression+Alphagenome Filter
+ENSMUSG00000106677	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000096188	Passed
+ENSMUSG00000076889	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000094558	Expression+Alphagenome Filter
+ENSMUSG00000098799	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000049593	Expression+Alphagenome Filter
+ENSMUSG00000094981	Expression+Alphagenome Filter
+ENSMUSG00000044231	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000025433	Expression+Alphagenome Filter
+ENSMUSG00000091539	Expression+Alphagenome Filter
+ENSMUSG00000047822	Expression+Alphagenome Filter
+ENSMUSG00000096490	Expression+Alphagenome Filter
+ENSMUSG00000044957	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000032937	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000096176	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000095724	Expression+Alphagenome Filter
+ENSMUSG00000021797	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076548	Expression+Alphagenome Filter
+ENSMUSG00000064358	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000109941	Passed
+ENSMUSG00000035373	Expression+Alphagenome Filter
+ENSMUSG00000056494	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000063376	Expression+Alphagenome Filter
+ENSMUSG00000076761	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000101113	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000048062	Expression+Alphagenome Filter
+ENSMUSG00000057723	Expression+Alphagenome Filter
+ENSMUSG00000056706	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000072620	Passed
+ENSMUSG00000034936	Passed
+ENSMUSG00000094589	Expression+Alphagenome Filter
+ENSMUSG00000039278	Expression+Alphagenome Filter
+ENSMUSG00000045767	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000073730	Expression+Alphagenome Filter
+ENSMUSG00000058252	Expression+Alphagenome Filter
+ENSMUSG00000033520	Expression+Alphagenome Filter
+ENSMUSG00000074443	Expression+Alphagenome Filter
+ENSMUSG00000045797	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000096459	Passed
+ENSMUSG00000100186	Expression+Alphagenome Filter
+ENSMUSG00000071195	Expression+Alphagenome Filter
+ENSMUSG00000101315	Expression+Alphagenome Filter
+ENSMUSG00000096071	Expression+Alphagenome Filter
+ENSMUSG00000054408	Passed
+ENSMUSG00000076897	Expression+Alphagenome Filter
+ENSMUSG00000079396	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000043430	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000054136	Expression+Alphagenome Filter
+ENSMUSG00000094208	Expression+Alphagenome Filter
+ENSMUSG00000090225	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000020229	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000104975	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000042248	Expression+Alphagenome Filter
+ENSMUSG00000076495	Expression+Alphagenome Filter
+ENSMUSG00000094268	Expression+Alphagenome Filter
+ENSMUSG00000020331	Expression+Alphagenome Filter
+ENSMUSG00000121954	Expression+Alphagenome Filter
+ENSMUSG00000045019	Expression+Alphagenome Filter
+ENSMUSG00000094028	Expression+Alphagenome Filter
+ENSMUSG00000050645	Expression+Alphagenome Filter
+ENSMUSG00000040770	Expression+Alphagenome Filter
+ENSMUSG00000058856	Expression+Alphagenome Filter
+ENSMUSG00000095745	Expression+Alphagenome Filter
+ENSMUSG00000076583	Expression+Alphagenome Filter
+ENSMUSG00000076607	Passed
+ENSMUSG00000079494	Expression+Alphagenome Filter
+ENSMUSG00000037010	Expression+Alphagenome Filter
+ENSMUSG00000112187	Expression+Alphagenome Filter
+ENSMUSG00000078208	Expression+Alphagenome Filter
+ENSMUSG00000089768	Expression+Alphagenome Filter
+ENSMUSG00000060469	Expression+Alphagenome Filter
+ENSMUSG00000096663	Expression+Alphagenome Filter
+ENSMUSG00000059042	Expression+Alphagenome Filter
+ENSMUSG00000096854	Expression+Alphagenome Filter
+ENSMUSG00000109389	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000045493	Expression+Alphagenome Filter
+ENSMUSG00000094624	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000036362	Expression+Alphagenome Filter
+ENSMUSG00000057513	Expression+Alphagenome Filter
+ENSMUSG00000067199	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000076488	Passed
+ENSMUSG00000029819	Expression+Alphagenome Filter
+ENSMUSG00000060701	Expression+Alphagenome Filter
+ENSMUSG00000095896	Expression+Alphagenome Filter
+ENSMUSG00000076919	Expression+Alphagenome Filter
+ENSMUSG00000053820	Expression+Alphagenome Filter
+ENSMUSG00000076764	Expression+Alphagenome Filter
+ENSMUSG00000079031	Expression+Alphagenome Filter
+ENSMUSG00000105066	Expression+Alphagenome Filter
+ENSMUSG00000091376	Expression+Alphagenome Filter
+ENSMUSG00000079543	Expression+Alphagenome Filter
+ENSMUSG00000091435	Expression+Alphagenome Filter
+ENSMUSG00000033794	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000106289	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000034774	Expression+Alphagenome Filter
+ENSMUSG00000074440	Expression+Alphagenome Filter
+ENSMUSG00000094618	Expression+Alphagenome Filter
+ENSMUSG00000078157	Expression+Alphagenome Filter
+ENSMUSG00000059845	Expression+Alphagenome Filter
+ENSMUSG00000094879	Expression+Alphagenome Filter
+ENSMUSG00000094940	Expression+Alphagenome Filter
+ENSMUSG00000094385	Expression+Alphagenome Filter
+ENSMUSG00000093853	Expression+Alphagenome Filter
+ENSMUSG00000044641	Expression+Alphagenome Filter
+ENSMUSG00000111239	Expression+Alphagenome Filter
+ENSMUSG00000096038	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000098207	Expression+Alphagenome Filter
+ENSMUSG00000076887	Expression+Alphagenome Filter
+ENSMUSG00000100626	Expression+Alphagenome Filter
+ENSMUSG00000047674	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000047356	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000111179	Expression+Alphagenome Filter
+ENSMUSG00000094273	Expression+Alphagenome Filter
+ENSMUSG00000095445	Expression+Alphagenome Filter
+ENSMUSG00000057890	Expression+Alphagenome Filter
+ENSMUSG00000072437	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000027713	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000032593	Passed
+ENSMUSG00000072813	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000076535	Expression+Alphagenome Filter
+ENSMUSG00000070802	Splice/TSS Filter (Alternative TSS (Multiple Overlaps))
+ENSMUSG00000096682	Expression+Alphagenome Filter
+ENSMUSG00000049232	Passed
+ENSMUSG00000069708	Expression+Alphagenome Filter
+ENSMUSG00000091736	Passed
+ENSMUSG00000067704	Expression+Alphagenome Filter
+ENSMUSG00000094762	Expression+Alphagenome Filter
+ENSMUSG00000074123	Splice/TSS Filter (TSS Mismatch)
+ENSMUSG00000076875	Expression+Alphagenome Filter
+ENSMUSG00000076902	Expression+Alphagenome Filter
+ENSMUSG00000060499	Expression+Alphagenome Filter
+ENSMUSG00000019489	Expression+Alphagenome Filter
+ENSMUSG00000070552	Expression+Alphagenome Filter
+ENSMUSG00000076861	Expression+Alphagenome Filter
+ENSMUSG00000076538	Splice/TSS Filter (Novel Splice Junction)
+ENSMUSG00000007682	Expression+Alphagenome Filter

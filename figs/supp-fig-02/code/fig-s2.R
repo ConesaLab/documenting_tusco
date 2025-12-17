@@ -246,8 +246,8 @@ p_log <- ggplot(plot_dt_log, aes(x = Group, y = log_score, fill = PlotGroup)) +
                aes(group = interaction(Species, Group))) +
   facet_grid(ScoreType ~ Species, scales = "fixed") +
   scale_fill_manual(values = custom_colors, name = "Group",
-                    labels = c("Human TUSCO", "Mouse TUSCO", "Human Others", "Mouse Others")) +
-  scale_x_discrete(labels = c("TUSCO" = "TUSCO", "Other" = "Other")) +
+                    labels = c("Human TUSCO gene set", "Mouse TUSCO gene set", "Human Others", "Mouse Others")) +
+  scale_x_discrete(labels = c("TUSCO" = "TUSCO gene set", "Other" = "Other")) +
   labs(x = "", y = "log10 [Score + 1e-04]") +
   theme_classic(base_family = "Helvetica", base_size = 7) +
   theme(

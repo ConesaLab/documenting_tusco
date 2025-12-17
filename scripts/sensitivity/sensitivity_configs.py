@@ -154,7 +154,7 @@ def get_mmu_default() -> TUSCOConfig:
         # Step 3
         novel_threshold=0.05,
         tss_scope="single",
-        tss_region_check=300,
+        tss_region_check=0,  # Mouse uses exon-overlap only, no CAGE window check (unlike human)
         # Step 5 - Mouse uses gold+silver only (no bronze)
         bgee_quality=["gold quality", "silver quality"],
         bgee_prevalence_threshold=0.90,

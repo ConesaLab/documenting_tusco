@@ -36,8 +36,8 @@ suppressPackageStartupMessages({
 ###############################################################
 palette_colors <- c(
   # TUSCO group - Greens
-  "Human (TUSCO)"   = "#a8d5a0",  # dark green
-  "Mouse (TUSCO)"   = "#1b9e77",  # light green
+  "Human (TUSCO gene set)"   = "#a8d5a0",  # dark green
+  "Mouse (TUSCO gene set)"   = "#1b9e77",  # light green
 
   # GENCODE/MANE/RefSeq group - Oranges/Reds
   "Human (GENCODE)" = "#fdbf6f",  # light orange
@@ -53,13 +53,13 @@ palette_colors <- c(
 )
 
 # Datasets for the legend (excluding RefSeq as per image)
-human_datasets_legend <- c("Human (TUSCO)", "Human (GENCODE)", "Human (MANE)")
-mouse_datasets_legend <- c("Mouse (TUSCO)", "Mouse (GENCODE)")
+human_datasets_legend <- c("Human (TUSCO gene set)", "Human (GENCODE)", "Human (MANE)")
+mouse_datasets_legend <- c("Mouse (TUSCO gene set)", "Mouse (GENCODE)")
 spikein_datasets_legend <- c("SIRVs", "ERCCs", "Sequins") # Keep all spike-ins
 
 # Combined groups for plotting (still include RefSeq in plots if data exists)
-human_datasets_plot <- c("Human (TUSCO)", "Human (GENCODE)", "Human (MANE)", "Human (RefSeq)")
-mouse_datasets_plot <- c("Mouse (TUSCO)", "Mouse (GENCODE)", "Mouse (RefSeq)")
+human_datasets_plot <- c("Human (TUSCO gene set)", "Human (GENCODE)", "Human (MANE)", "Human (RefSeq)")
+mouse_datasets_plot <- c("Mouse (TUSCO gene set)", "Mouse (GENCODE)", "Mouse (RefSeq)")
 spikein_datasets_plot <- c("SIRVs", "ERCCs", "Sequins")
 
 human_plus_spikeins_plot <- c(human_datasets_plot, spikein_datasets_plot)
@@ -73,7 +73,7 @@ mouse_plus_spikeins_plot <- c(mouse_datasets_plot, spikein_datasets_plot)
 # )
 # New order based on target image (2 rows)
 legend_order <- c(
-    "Human (TUSCO)", "Mouse (TUSCO)", "Human (GENCODE)", "Mouse (GENCODE)",
+    "Human (TUSCO gene set)", "Mouse (TUSCO gene set)", "Human (GENCODE)", "Mouse (GENCODE)",
     "Human (RefSeq)", "Mouse (RefSeq)", "Human (MANE)"
 )
 
@@ -489,8 +489,8 @@ cat("mouse_refseq_df:", ifelse(is.null(mouse_refseq_df), "NULL", paste0(nrow(mou
 cat("\n")
 
 # Assemble datasets list
-datasets_list[["Human (TUSCO)"]]  <- extract_features(human_tusco_df,   "Human (TUSCO)")
-datasets_list[["Mouse (TUSCO)"]]  <- extract_features(mouse_tusco_df,   "Mouse (TUSCO)")
+datasets_list[["Human (TUSCO gene set)"]]  <- extract_features(human_tusco_df,   "Human (TUSCO gene set)")
+datasets_list[["Mouse (TUSCO gene set)"]]  <- extract_features(mouse_tusco_df,   "Mouse (TUSCO gene set)")
 datasets_list[["Human (GENCODE)"]] <- extract_features(human_gencode_df, "Human (GENCODE)")
 datasets_list[["Mouse (GENCODE)"]] <- extract_features(mouse_gencode_df, "Mouse (GENCODE)")
 datasets_list[["Human (MANE)"]]    <- extract_features(human_mane_df,    "Human (MANE)")
@@ -605,7 +605,7 @@ gc_content_mouse <- combine_features_subset(datasets_list, "gc_content", mouse_d
 
 # Define final legend order and apply it to combined datasets
 final_legend_order <- c(
-    "Human (TUSCO)", "Mouse (TUSCO)", "Human (GENCODE)", "Mouse (GENCODE)",
+    "Human (TUSCO gene set)", "Mouse (TUSCO gene set)", "Human (GENCODE)", "Mouse (GENCODE)",
     "Human (RefSeq)", "Mouse (RefSeq)", "Human (MANE)"
 )
 
@@ -708,33 +708,44 @@ nature_theme <- theme_classic(base_family = "Helvetica", base_size = 7) +
 # Define Plotting Functions
 ###############################################################
 
-# 1. Transcript Length Density Plot
-plot_transcript_density <- function(data, title, species_colors) {
-  cat("plot_transcript_density called with:", ifelse(is.null(data), "NULL", paste0(nrow(data), " rows")), "\n")
+# 1. Transcript Length Binned Plot (updated per reviewer request)
+plot_transcript_length_binned <- function(data, title, species_colors) {
+  cat("plot_transcript_length_binned called with:", ifelse(is.null(data), "NULL", paste0(nrow(data), " rows")), "\n")
   if (is.null(data) || nrow(data) == 0) return(ggplot() + ggtitle(paste(title, "(No Data)")) + nature_theme)
-  
-  # Filter out zero-length transcripts just in case
-  data <- data %>% filter(transcript_length > 0)
+
+  bin_breaks <- c(0, 600, 1000, 2000, 4000, Inf)
+  bin_labels <- c("<600", "600-1kb", "1kb-2kb", "2kb-4kb", ">4kb")
+
+  data <- data %>%
+    filter(transcript_length > 0) %>%
+    mutate(
+      length_bin = cut(
+        transcript_length,
+        breaks = bin_breaks,
+        labels = bin_labels,
+        include.lowest = TRUE,
+        right = FALSE
+      )
+    )
   if (nrow(data) == 0) return(ggplot() + ggtitle(paste(title, "(No Positive Length Data)")) + nature_theme)
 
-  ggplot(data, aes(x = transcript_length, color = dataset)) +
-    geom_density(linewidth = 0.5, key_glyph = "path") + # Use linewidth, path glyph better for density lines
-    scale_x_log10(
-      breaks = scales::trans_breaks("log10", function(x) 10^x, n = 5), # Auto breaks
-      labels = scales::trans_format("log10", scales::math_format(10^.x)), # Nicer labels
-      limits = c(NA, 1e5) # Ensure upper limit consistent if needed
-    ) +
-    annotation_logticks(sides = "b", linewidth = 0.25, outside = TRUE, # Add log ticks below axis
-                        short = unit(0.05, "cm"), mid = unit(0.1, "cm"), long = unit(0.15, "cm")) +
-    coord_cartesian(clip = "off") + # Allow ticks outside panel
-    scale_color_manual(values = species_colors, name = "Dataset") +
+  plot_data <- data %>%
+    count(dataset, length_bin, name = "count") %>%
+    group_by(dataset) %>%
+    mutate(freq = count / sum(count) * 100) %>%
+    ungroup()
+
+  ggplot(plot_data, aes(x = length_bin, y = freq, fill = dataset)) +
+    geom_col(position = position_dodge(width = 0.8), width = 0.7, linewidth = 0.2, color = "black") +
+    scale_fill_manual(values = species_colors, name = "Dataset") +
+    scale_y_continuous(limits = c(0, NA), expand = expansion(mult = c(0, 0.05))) +
     labs(
       title = title,
-      x = "Transcript Length (nt, log scale)",
-      y = "Density"
+      x = "Transcript Length (bp)",
+      y = "Frequency (%)"
     ) +
     nature_theme +
-    theme(plot.margin = margin(t = 5, r = 5, b = 15, l = 5, unit = "pt")) # Adjust margin for ticks
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
 }
 
 # 2. Exon Counts Bar Plot
@@ -832,7 +843,7 @@ plot_gc_content <- function(data, title, species_colors) {
 # Filter palette for Human datasets only
 human_palette <- palette_colors[names(palette_colors) %in% human_datasets_plot]
 
-plot_h_transcript_density <- plot_transcript_density(transcript_lengths_human, "", human_palette)
+plot_h_transcript_density <- plot_transcript_length_binned(transcript_lengths_human, "", human_palette)
 plot_h_exon_counts <- plot_exon_counts(exon_counts_human, "", human_palette)
 plot_h_intron_density <- plot_intron_density(intron_lengths_human, "", human_palette)
 plot_h_gc_content <- plot_gc_content(gc_content_human, "", human_palette)
@@ -843,7 +854,7 @@ plot_h_gc_content <- plot_gc_content(gc_content_human, "", human_palette)
 # Filter palette for Mouse datasets only
 mouse_palette <- palette_colors[names(palette_colors) %in% mouse_datasets_plot]
 
-plot_m_transcript_density <- plot_transcript_density(transcript_lengths_mouse, "", mouse_palette)
+plot_m_transcript_density <- plot_transcript_length_binned(transcript_lengths_mouse, "", mouse_palette)
 plot_m_exon_counts <- plot_exon_counts(exon_counts_mouse, "", mouse_palette)
 plot_m_intron_density <- plot_intron_density(intron_lengths_mouse, "", mouse_palette)
 plot_m_gc_content <- plot_gc_content(gc_content_mouse, "", mouse_palette)
@@ -855,8 +866,8 @@ message("Generating specific transcript length plot...")
 
 # Define the target datasets for the specific plot
 target_datasets_specific <- c(
-  "Human (TUSCO)",
-  "Mouse (TUSCO)",
+  "Human (TUSCO gene set)",
+  "Mouse (TUSCO gene set)",
   "Human (GENCODE)",
   "Mouse (GENCODE)",
   "SIRVs",

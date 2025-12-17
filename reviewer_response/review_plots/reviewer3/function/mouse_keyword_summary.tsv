@@ -1,0 +1,31 @@
+ontology	keyword	n_terms	best_padj	best_term
+BP	ribosome	4	0.041978537482011434	ribosome biogenesis
+BP	translation	1	0.17589560141997154	'de novo' post-translational protein folding
+BP	mitochond	12	0.17410043980800263	protein insertion into mitochondrial inner membrane
+BP	metabolic	18	0.03221113811950727	rRNA metabolic process
+BP	enzyme	0	NA	NA
+BP	cytoskeleton	2	0.27587542245807445	positive regulation of cytoskeleton organization
+BP	structural	0	NA	NA
+BP	actin	13	0.17410043980800263	positive regulation of actin nucleation
+BP	microtubule	0	NA	NA
+BP	extracellular matrix	0	NA	NA
+CC	ribosome	4	0.15026447360374665	preribosome
+CC	translation	0	NA	NA
+CC	mitochond	4	0.18464790817669804	inner mitochondrial membrane protein complex
+CC	metabolic	0	NA	NA
+CC	enzyme	1	0.201564764517986	RNA polymerase II, holoenzyme
+CC	cytoskeleton	0	NA	NA
+CC	structural	0	NA	NA
+CC	actin	1	0.201564764517986	actin filament bundle
+CC	microtubule	2	0.21473072368665688	cytoplasmic microtubule
+CC	extracellular matrix	0	NA	NA
+MF	ribosome	3	0.07841012826992351	ribosome binding
+MF	translation	0	NA	NA
+MF	mitochond	1	0.0900227321317827	mitochondrial ribosome binding
+MF	metabolic	0	NA	NA
+MF	enzyme	0	NA	NA
+MF	cytoskeleton	0	NA	NA
+MF	structural	1	0.22089144872534022	structural constituent of ribosome
+MF	actin	4	0.07841012826992351	catalytic activity, acting on RNA
+MF	microtubule	0	NA	NA
+MF	extracellular matrix	0	NA	NA

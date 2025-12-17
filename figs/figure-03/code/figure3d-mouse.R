@@ -276,16 +276,16 @@ if (has_ComplexUpset && nrow(upset_data) > 0) {
     keep_empty_groups = TRUE,
     wrap = TRUE,
     set_sizes = FALSE,
-    base_annotations = list(
-      'Intersect\nFN TUSCO\nGenes' = ComplexUpset::intersection_size(counts = TRUE, text_size = 7, point_size = 2)
-    )
-  ) +
-    ggplot2::labs(
-      title = "False Negative TUSCO Genes UpSet Plot",
-      subtitle = NULL,
-      caption = NULL,
-      y = "TUSCO\n(Mouse)"
-    ) +
+	    base_annotations = list(
+	      'Intersect\nFN TUSCO gene set\nGenes' = ComplexUpset::intersection_size(counts = TRUE, text_size = 7, point_size = 2)
+	    )
+	  ) +
+	    ggplot2::labs(
+	      title = "False Negative (TUSCO gene set) Genes UpSet Plot",
+	      subtitle = NULL,
+	      caption = NULL,
+	      y = "TUSCO gene set\n(Mouse)"
+	    ) +
     ggplot2::theme_classic(base_family = "Helvetica", base_size = 7) +
     ggplot2::theme(
       text = ggplot2::element_text(size = 7),
@@ -361,7 +361,7 @@ p_dist <- ggplot2::ggplot(plot_df, ggplot2::aes(x = base::factor(num_samples_sha
   ggplot2::labs(
     title = NULL,
     x = "#Mouse Sample", 
-    y = "FN TUSCO Genes" # Changed from BUGSI
+    y = "FN TUSCO gene set\nGenes" # Updated y-axis label
   ) +
   # Set fixed y-axis scale and breaks
   ggplot2::scale_y_continuous(breaks = c(0, 5, 10, 15), limits = c(0, 15)) + # Matched human script

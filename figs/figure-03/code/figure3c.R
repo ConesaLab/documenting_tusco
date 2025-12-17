@@ -669,7 +669,7 @@ p_tusco <- ggplot(subset(all_data, Dataset == "TUSCO"), aes(x = TP_TPPTP, y = RI
   scale_shape_manual(values = group_shapes) +
   custom_theme +
   theme(legend.position = "none") +
-  ggtitle("TUSCO")
+  ggtitle("TUSCO evaluation")
 
 
 # Create correlation plot for Sequin data
@@ -711,7 +711,11 @@ p_mane <- ggplot(subset(all_data, Dataset == "MANE"), aes(x = TP_TPPTP, y = RIN)
 
 legend_plot <- ggplot(all_data, aes(x = TP_TPPTP, y = RIN, color = Dataset, shape = Group)) +
   geom_point() +
-  scale_color_manual(values = dataset_colors, name = "Dataset") + # Added legend title
+  scale_color_manual(
+    values = dataset_colors,
+    name = "Dataset",
+    labels = c("TUSCO" = "TUSCO evaluation", "Sequin" = "Sequin", "MANE" = "MANE")
+  ) + # Added legend title
   scale_shape_manual(values = group_shapes, name = "Group") +   # Added legend title
   custom_theme +
   guides(color = guide_legend(title="Dataset"), shape = guide_legend(title="Group")) + # Ensure titles appear

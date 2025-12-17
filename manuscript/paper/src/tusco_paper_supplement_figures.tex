@@ -9,8 +9,8 @@
   Supplementary Figure S1 contrasts fundamental transcript properties between
   TUSCO controls and canonical annotations in human and mouse, while
   Supplementary Figure~S2 benchmarks expression and splicing invariance of
-  TUSCO genes against other single-isoform loci. Figure~S3 links sequencing
-  yield with TUSCO false negatives, Figure~S4 profiles long-read reconstruction
+  TUSCO genes against other single-isoform loci. Figure~S3 relates sequencing
+  technology and yield summaries to TUSCO false negatives, Figure~S4 profiles long-read reconstruction
   pipelines under native and TUSCO-novel evaluations, and Figure~S5 examines
   per-read coverage distributions supporting TUSCO transcripts. Finally,
   Figure~S6 evaluates how SIRV-based concordance metrics respond to replicate
@@ -23,7 +23,7 @@
   \begin{figure}[htbp]
       \centering
       \includegraphics[width=\textwidth]{../assets/fig/fig-s1.pdf}
-      \caption{\textbf{Comparative properties of TUSCO transcripts versus reference annotations in human and mouse.} \textbf{a--b}, Kernel density of transcript lengths (log10) for human \textbf{a}, and mouse \textbf{b}. \textbf{c--d}, Exon count per transcript shown as frequency within each dataset (\%) for human \textbf{c}, and mouse \textbf{d}; the ``10+'' bin groups transcripts with $\geq$10 exons. \textbf{e--f}, Kernel density of intron lengths (log10) for human \textbf{e}, and mouse \textbf{f}. \textbf{g--h}, Density of exonic GC content (\%) for human \textbf{g}, and mouse \textbf{h}; x-axis truncated to 20--80\%.}
+      \caption{\textbf{Comparative properties of TUSCO transcripts versus reference annotations in human and mouse.} \textbf{a--b}, Transcript length distributions in discrete bins ($<$600 bp, 600--1kb, 1kb--2kb, 2kb--4kb, $>$4kb) for human \textbf{a}, and mouse \textbf{b}. \textbf{c--d}, Exon count per transcript shown as frequency within each dataset (\%) for human \textbf{c}, and mouse \textbf{d}; the ``10+'' bin groups transcripts with $\geq$10 exons. \textbf{e--f}, Kernel density of intron lengths (log10) for human \textbf{e}, and mouse \textbf{f}. \textbf{g--h}, Density of exonic GC content (\%) for human \textbf{g}, and mouse \textbf{h}; x-axis truncated to 20--80\%.}
       \label{fig:s1}
   \end{figure}
 
@@ -41,7 +41,7 @@
   \begin{figure}[htbp]
       \centering
       \includegraphics[width=\textwidth]{../assets/fig/fig-s3.pdf}
-      \caption{\textbf{False negatives decrease with effective sequencing yield.} Scatter plot showing the percentage of recomputed TUSCO false negatives (y-axis) versus a composite metric, $\log(\text{Total Reads}) \times \text{Median Read Length}$ (x-axis), across LRGASP datasets. Point shape encodes method (triangle: ONT-cDNA; diamond: ONT-dRNA; circle: PacBio-cDNA), color indicates cell line (ES, WTC11), and point size denotes short-read support (larger = yes). Labels include dataset names; ``-LS'' marks libraries with length selection. A linear fit with 95\% confidence band (gray) reveals a strong negative correlation (Pearson $r$ and $p$ shown on plot), indicating that higher effective depth and longer reads substantially reduce false negatives, consistent with technical rather than biological causes. Total TUSCO genes: human $n=57$; mouse $n=30$.}
+      \caption{\textbf{False-negative rates cluster by sequencing technology in LRGASP.} Scatter plot showing the percentage of recomputed TUSCO false negatives (y-axis) versus a composite metric, $\log_{10}(\text{Total Reads}) \times \text{Median Read Length}$ (x-axis), across LRGASP datasets. Point shape encodes method (triangle: ONT-cDNA; diamond: ONT-dRNA; circle: PacBio-cDNA), color indicates cell line (ES, WTC11), and point size denotes short-read support (larger = yes). Labels include dataset names; ``-LS'' marks long+short (Illumina-supported) reconstructions. The two sequencing platforms (ONT and PacBio) form distinct clusters in both the composite metric and FN rate, so this plot is interpreted descriptively as evidence of technology- and protocol-driven differences in sensitivity. Total TUSCO genes: human $n=46$; mouse $n=32$.}
       \label{fig:s3}
   \end{figure}
 

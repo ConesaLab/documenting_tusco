@@ -1,0 +1,9 @@
+config_name	species	species_label	config_type	config_label	n_genes	median_tusco_fn_pct	q1_tusco_fn_pct	q3_tusco_fn_pct	median_sirv_fn_pct	fn_difference	n_pipelines
+hsa_prev_current	hsa	Human	current	Current	46	18.47826086956522	14.130434782608695	26.08695652173913	3.669724770642202	14.808536098923017	6
+hsa_prev_lenient	hsa	Human	lenient	Lenient	64	28.90625	23.4375	33.203125	3.669724770642202	25.2365252293578	6
+hsa_prev_more_lenient	hsa	Human	more_lenient	More Lenient	79	36.075949367088604	28.79746835443038	36.70886075949367	3.669724770642202	32.4062245964464	6
+hsa_prev_strict	hsa	Human	strict	Strict	36	9.722222222222221	6.25	19.444444444444443	3.669724770642202	6.052497451580019	6
+mmu_prev_current	mmu	Mouse	current	Current	32	23.4375	10.15625	25	4.500396510705789	18.93710348929421	6
+mmu_prev_lenient	mmu	Mouse	lenient	Lenient	40	31.25	20	35	4.500396510705789	26.74960348929421	6
+mmu_prev_more_lenient	mmu	Mouse	more_lenient	More Lenient	58	49.13793103448276	40.08620689655172	51.724137931034484	4.500396510705789	44.63753452377697	6
+mmu_prev_strict	mmu	Mouse	strict	Strict	30	20	10	22.5	4.500396510705789	15.499603489294211	6

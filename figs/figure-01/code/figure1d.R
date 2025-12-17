@@ -555,7 +555,7 @@ p <- ggplot(plot_data, aes(x = Group, y = log_median_value, fill = PlotGroup)) +
       values = custom_colors,
       name = "Group", # Legend title
       # --- MODIFIED: Updated legend labels ---
-      labels = c("Human TUSCO", "Mouse TUSCO", "Human Top 10k Genes", "Mouse Top 10k Genes")
+      labels = c("Human TUSCO gene set", "Mouse TUSCO gene set", "Human Top 10k Genes", "Mouse Top 10k Genes")
       ) +
   guides(fill = "none") +
   coord_cartesian(ylim = quantile(plot_data$log_median_value, c(0.01, 0.99), na.rm=TRUE)) + # Zoom in, excluding extreme outliers
@@ -566,7 +566,7 @@ p <- ggplot(plot_data, aes(x = Group, y = log_median_value, fill = PlotGroup)) +
     tag = "d"
   ) +
   # --- MODIFIED: Updated x-axis labels ---
-  scale_x_discrete(labels = c("TUSCO" = "TUSCO", "Top_10k_Genes" = "Top 10k Genes")) + # Clean up x-axis labels
+  scale_x_discrete(labels = c("TUSCO" = "TUSCO gene set", "Top_10k_Genes" = "Top 10k Genes")) + # Clean up x-axis labels
   # --- MODIFIED: Set base font size to 7pt ---
   theme_classic(base_family = "Helvetica", base_size = 7) +
   # --- MODIFIED: Adjusted line widths ---
