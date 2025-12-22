@@ -12,15 +12,28 @@
 #SBATCH --array=0-17
 
 # Load conda environment
-source /home/tyuan/miniconda3/etc/profile.d/conda.sh
+CONDA_SH="${CONDA_SH:-}"
+if [[ -z "$CONDA_SH" ]]; then
+    if command -v conda >/dev/null 2>&1; then
+        CONDA_SH="$(conda info --base)/etc/profile.d/conda.sh"
+    else
+        CONDA_SH="$HOME/miniconda3/etc/profile.d/conda.sh"
+    fi
+fi
+source "$CONDA_SH"
 conda activate SQANTI3.env
 
 # Variables
 ANNOTATION="/storage/gge/genomes/sequin_standards/rnasequin_annotation_2.4.gtf"
 GENOME="/storage/gge/genomes/sequin_standards/rnasequin_decoychr_2.4.fa"
-GTF_LIST="/home/tyuan/RIN_sequin/gtf_files.txt"
-WORK_DIR="/home/tyuan/RIN_sequin"
+WORK_DIR="${WORK_DIR:-$HOME/RIN_sequin}"
+GTF_LIST="${GTF_LIST:-$WORK_DIR/gtf_files.txt}"
 THREADS=10
+SQANTI3_PATH="${SQANTI3_PATH:-}"
+SQANTI3_QC="sqanti3_qc.py"
+if [[ -n "$SQANTI3_PATH" ]]; then
+    SQANTI3_QC="$SQANTI3_PATH/sqanti3_qc.py"
+fi
 
 # Change to working directory
 cd "$WORK_DIR" || { echo "Cannot change to WORK_DIR: $WORK_DIR"; exit 1; }
@@ -46,7 +59,7 @@ mkdir -p "$OUTPUT_DIR"
 
 # Run SQANTI3
 echo "[SQANTI3] Running SQANTI3 for $SAMPLE_ID"
-/home/tyuan/GitHub/SQANTI3/sqanti3_qc.py "$CURRENT_GTF" \
+"$SQANTI3_QC" "$CURRENT_GTF" \
              "$ANNOTATION" \
              "$GENOME" \
              -o "$SAMPLE_ID" \
@@ -62,4 +75,3 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "[SQANTI3] Completed SQANTI3 for $SAMPLE_ID"
-

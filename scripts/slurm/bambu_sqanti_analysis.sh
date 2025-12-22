@@ -21,7 +21,7 @@
 # ----------------------------- CONFIGURATION -------------------------------- #
 BAMBU_ENV="bambu_env"                 # conda env that has R + bambu + dependencies
 SQANTI3_ENV="SQANTI3.env"         # conda env with SQANTI3 + python deps
-SQANTI3_PATH="/home/tyuan/GitHub/SQANTI3"  # path to sqanti3_qc.py
+SQANTI3_PATH="${SQANTI3_PATH:-}"  # optional: directory containing sqanti3_qc.py (leave empty if in PATH)
 
 BASE_DATA_DIR="/storage/gge/Tian/lrgasp_data"        # FASTQ root
 OUTPUT_BASE_DIR="/storage/gge/Tian/lrgasp_analysis/bambu_sq3"  # main out dir

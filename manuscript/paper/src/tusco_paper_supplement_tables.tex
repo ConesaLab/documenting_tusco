@@ -7,12 +7,12 @@
   \section{Supplementary Tables}
   \setcounter{table}{0}
   \renewcommand{\tablename}{Supplementary Table}
-  \renewcommand{\thetable}{S\arabic{table}}
+  \renewcommand{\thetable}{\arabic{table}}
 
   \begin{table}[htbp]
       \centering
       \caption{\textbf{Cosine similarity between TUSCO and SIRV benchmarks.} Six evaluation metrics---non-redundant sensitivity (Sn), non-redundant precision (nrPre), inverse redundancy (1/red), one minus false-discovery rate (1-FDR), positive detection rate (PDR), and redundant precision (rPre)---were computed as percentages for SIRVs and TUSCO across pipelines spanning distinct data modalities (direct RNA or cDNA; ONT or PacBio). ``LS'' indicates integration of long- and short-read evidence. Values near 1 denote closely matched benchmark performance.}
-      \label{tab:s1}
+      \label{tab:1}
       \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llr@{}}
           \toprule
           Cell type & Pipeline & Cosim \\
@@ -33,32 +33,32 @@
       \end{tabular*}
   \end{table}
 
-  \begin{table}[htbp]
-      \centering
-      \caption{\textbf{Area-based performance drop between native and TUSCO-novel evaluations.} Radar polygon areas were computed for native-reference and TUSCO-novel metrics per sample; the percentage drop is $(A_{\mathrm{ref}} - A_{\mathrm{novel}}) / A_{\mathrm{ref}} \times 100$. Values are summarised separately for human (WTC11) and mouse (ES) samples of each pipeline.}
-      \label{tab:s2}
-      {\footnotesize
-      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrr@{}}
-          \toprule
-          Tool & Species & $n_{\text{pairs}}$ & Median drop (\%) & Median area (ref) & Median area (novel) \\
-          \midrule
-          Bambu & Human & 4 & 81.25 & 2.598 & 0.484 \\
-          Bambu & Mouse & 4 & 74.41 & 2.499 & 0.639 \\
-          StringTie2 & Human & 4 & 55.35 & 1.454 & 0.666 \\
-          StringTie2 & Mouse & 4 & 80.12 & 1.733 & 0.355 \\
-          FLAIR & Human & 4 & 38.88 & 1.653 & 0.989 \\
-          FLAIR & Mouse & 4 & 43.77 & 1.571 & 0.864 \\
-          Iso-Seq + SQANTI3 ML & Human & 1 & -1.91 & 1.471 & 1.499 \\
-          Iso-Seq + SQANTI3 ML & Mouse & 1 & 2.71 & 1.345 & 1.309 \\
-          \bottomrule
-      \end{tabular*}
-      }
-  \end{table}
+	  \begin{table}[htbp]
+	      \centering
+	      \caption{\textbf{Composite-score drop between native and TUSCO-novel evaluations.} For each sample, we computed a composite score as the mean of the six TUSCO metrics shown in the Fig.~4b dumbbell plots (Sn, nrPre, $\mathrm{Redundancy}^{-1}$, $1-\mathrm{FDR}$, PDR, rPre; all in percent). The percentage drop is $(S_{\mathrm{ref}} - S_{\mathrm{novel}}) / S_{\mathrm{ref}} \times 100$. Values are summarised separately for human (WTC11) and mouse (ES) samples of each pipeline.}
+	      \label{tab:2}
+	      {\footnotesize
+	      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrr@{}}
+	          \toprule
+	          Tool & Species & $n_{\text{pairs}}$ & Median drop (\%) & Median score (ref) & Median score (novel) \\
+	          \midrule
+	          Bambu & Human & 4 & 52.70 & 100.00 & 47.01 \\
+	          Bambu & Mouse & 4 & 45.22 & 98.08 & 53.73 \\
+	          StringTie2 & Human & 4 & 30.48 & 75.79 & 53.16 \\
+	          StringTie2 & Mouse & 4 & 49.87 & 82.11 & 40.63 \\
+	          FLAIR & Human & 4 & 21.86 & 79.99 & 62.48 \\
+	          FLAIR & Mouse & 4 & 22.67 & 78.49 & 59.77 \\
+	          Iso-Seq + SQANTI3 ML & Human & 1 & -0.73 & 76.29 & 76.85 \\
+	          Iso-Seq + SQANTI3 ML & Mouse & 1 & 1.43 & 73.38 & 72.33 \\
+	          \bottomrule
+	      \end{tabular*}
+	      }
+	  \end{table}
 
   \begin{table}[htbp]
       \centering
-      \caption{\textbf{PacBio Iso-Seq read counts.} Full-length non-chimeric (FLNC) HiFi read counts for PacBio Iso-Seq samples from mouse kidney (K31--K35) and brain (B31--B35). Each value represents the total number of mapped reads per sample, as determined by samtools.}
-      \label{tab:s3}
+      \caption{\textbf{PacBio Iso-Seq read counts.} Full-length non-chimeric (FLNC) HiFi read counts for PacBio Iso-Seq samples from mouse kidney (K31--K35) and brain (B31--B35). These per-sample yields provide the sequencing-depth context for the replicate analysis in Fig.~5 and Supplementary Fig.~7 and help readers assess the trade-off between additional replicates versus deeper sequencing under a fixed budget. Each value represents the total number of mapped reads per sample, as determined by samtools.}
+      \label{tab:3}
       \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrl@{}}
           \toprule
           Sample & Read Count & Tissue \\
@@ -75,6 +75,49 @@
           B35 & 3,914,079 & Brain \\
           \bottomrule
       \end{tabular*}
+  \end{table}
+
+  \begin{table}[htbp]
+      \centering
+      \caption{\textbf{TUSCO benchmarking framework gene selection parameter choices and sensitivity analysis summary.} Key parameters for gene selection in the TUSCO benchmarking framework with their selected values and rationale. Window sizes, expression thresholds, and splice ratios were validated as described in Supplementary Fig.~8.}
+      \label{tab:4}
+      {\footnotesize
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{3cm}p{2.2cm}p{2.2cm}p{5.5cm}@{}}
+          \toprule
+          Parameter & Human & Mouse & Justification \\
+          \midrule
+          TSS CAGE window & $\pm$300 bp & N/A & Balances 96.6\% sensitivity with 2.1\% collision rate (Supplementary Fig.~8a--b) \\
+          Novel splice $\alpha$ & 0.01 & 0.05 & Captures $>$95\% of genes in the TUSCO gene set below threshold (Supplementary Fig.~8e) \\
+          Min junction length & 80 bp & 80 bp & Excludes short artifactual junctions \\
+          Expression median & $\geq$1.0 RPKM & $\geq$0.25 RPKM & Balances gene count vs.\ FN rate and selects the high-expression tail (median gene in the TUSCO gene set ranks at the 90.3545th percentile in human and the 96.5232nd percentile in mouse by AlphaGenome tissue-median RPKM; Supplementary Fig.~8c--d; Fig.~3d) \\
+          Tissue prevalence & $\geq$95\% & $\geq$90\% & Ensures universal expression \\
+          Splice purity & $\geq$95\% & $\geq$90\% & Excludes alternative splicing \\
+          \bottomrule
+      \end{tabular*}
+      }
+  \end{table}
+
+  \begin{table}[htbp]
+      \centering
+      \caption{\textbf{MAJIQ-L benchmarking metric definitions.} Junction-level metrics used for comparison with TUSCO evaluation. MAJIQ-L uses matched short-read data processed by MAJIQ as ground truth; junctions are classified as known (present in annotation) or novel (absent from annotation). True negatives cannot be computed because unexpressed genes cannot be distinguished from expressed but undetected genes.}
+      \label{tab:5}
+      {\footnotesize
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{2cm}p{5.5cm}p{5.5cm}@{}}
+          \toprule
+          Metric & Known Junctions & Novel Junctions \\
+          \midrule
+          Ground truth & All junctions identified by MAJIQ from short reads & All novel junctions identified by MAJIQ from short reads \\
+          TP & LR junction present in annotation + MAJIQ & LR novel junction + MAJIQ novel junction \\
+          FP & LR junction present in annotation, not in MAJIQ & LR novel junction, not in MAJIQ \\
+          TN & \textit{Not computable (unknown expression)} & \textit{Not computable} \\
+          FN & No LR junction, present in MAJIQ & No LR novel junction, present in MAJIQ \\
+          \midrule
+          Sensitivity & TP / (TP + FN) & \\
+          FN rate & FN / (TP + FN) & \\
+          FDR & 100 $\times$ (N $-$ TP) / N, where N = total LR junctions & \\
+          \bottomrule
+      \end{tabular*}
+      }
   \end{table}
 }
 
@@ -113,7 +156,7 @@
 \begin{document}
 
 \title{Supplementary Tables for:\\
-Transcriptome Universal Single-isoform COntrol: A Framework for Evaluating Transcriptome Reconstruction Quality}
+Transcriptome Universal Single-isoform COntrol (TUSCO): a benchmarking framework for transcriptome reconstruction quality}
 
 \author[1]{\fnm{Tianyuan} \sur{Liu}}
 \author[1]{\fnm{Alejandro} \sur{Paniagua}}

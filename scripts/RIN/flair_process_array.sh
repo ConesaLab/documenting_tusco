@@ -12,13 +12,21 @@
 #SBATCH --array=0-17
 
 # Load environment and modules
-source /home/tyuan/miniconda3/etc/profile.d/conda.sh
+CONDA_SH="${CONDA_SH:-}"
+if [[ -z "$CONDA_SH" ]]; then
+    if command -v conda >/dev/null 2>&1; then
+        CONDA_SH="$(conda info --base)/etc/profile.d/conda.sh"
+    else
+        CONDA_SH="$HOME/miniconda3/etc/profile.d/conda.sh"
+    fi
+fi
+source "$CONDA_SH"
 conda activate flair
 
 # Set variables
 GENOME="/storage/gge/genomes/sequin_standards/rnasequin_decoychr_2.4.fa"
 ANNOTATION="/storage/gge/genomes/sequin_standards/rnasequin_annotation_2.4.gtf"
-WORK_DIR="/home/tyuan/RIN_sequin"
+WORK_DIR="${WORK_DIR:-$HOME/RIN_sequin}"
 FASTQ_LIST="$WORK_DIR/fastq_list.txt"
 THREADS=12
 
@@ -83,4 +91,3 @@ flair collapse \
     --threads "$THREADS" 
 
 echo "[FLAIR] Completed processing for $SAMPLE_ID"
-

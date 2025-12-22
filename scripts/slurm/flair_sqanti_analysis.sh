@@ -15,7 +15,7 @@
 # Removed CONDA_BASE_PATH, using module system instead
 FLAIR_ENV="flair" # Corrected FLAIR environment name
 SQANTI3_ENV="SQANTI3.env"
-SQANTI3_PATH="/home/tyuan/GitHub/SQANTI3" # Add the specific path to SQANTI3
+SQANTI3_PATH="${SQANTI3_PATH:-}" # optional: directory containing sqanti3_qc.py (leave empty if in PATH)
 BASE_DATA_DIR="/storage/gge/Tian/lrgasp_data"
 OUTPUT_BASE_DIR="/storage/gge/Tian/lrgasp_analysis/flair_sq3" # Updated output directory
 

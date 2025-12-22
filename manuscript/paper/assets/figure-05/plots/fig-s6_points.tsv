@@ -1,0 +1,373 @@
+Tissue	Samples	Combo	Metric	Value	SamplesLabel
+Brain	1	B31.isoforms	Sensitivity	84.05797101449275	1
+Brain	1	B31.isoforms	Non-redundant Precision	98.30508474576271	1
+Brain	1	B31.isoforms	Inv. Redundancy	100	1
+Brain	1	B31.isoforms	1 - FDR	98.30508474576271	1
+Brain	1	B31.isoforms	PDR	84.05797101449275	1
+Brain	1	B31.isoforms	F1	90.62499999999999	1
+Brain	1	B32.isoforms	Sensitivity	86.95652173913044	1
+Brain	1	B32.isoforms	Non-redundant Precision	100	1
+Brain	1	B32.isoforms	Inv. Redundancy	100	1
+Brain	1	B32.isoforms	1 - FDR	100	1
+Brain	1	B32.isoforms	PDR	86.95652173913044	1
+Brain	1	B32.isoforms	F1	93.02325581395348	1
+Brain	1	B33.isoforms	Sensitivity	84.05797101449275	1
+Brain	1	B33.isoforms	Non-redundant Precision	100	1
+Brain	1	B33.isoforms	Inv. Redundancy	100	1
+Brain	1	B33.isoforms	1 - FDR	100	1
+Brain	1	B33.isoforms	PDR	84.05797101449275	1
+Brain	1	B33.isoforms	F1	91.33858267716535	1
+Brain	1	B34.isoforms	Sensitivity	88.40579710144928	1
+Brain	1	B34.isoforms	Non-redundant Precision	98.38709677419355	1
+Brain	1	B34.isoforms	Inv. Redundancy	100	1
+Brain	1	B34.isoforms	1 - FDR	98.38709677419355	1
+Brain	1	B34.isoforms	PDR	88.40579710144928	1
+Brain	1	B34.isoforms	F1	93.12977099236642	1
+Brain	1	B35.isoforms	Sensitivity	86.95652173913044	1
+Brain	1	B35.isoforms	Non-redundant Precision	100	1
+Brain	1	B35.isoforms	Inv. Redundancy	100	1
+Brain	1	B35.isoforms	1 - FDR	100	1
+Brain	1	B35.isoforms	PDR	86.95652173913044	1
+Brain	1	B35.isoforms	F1	93.02325581395348	1
+Kidney	1	K31.isoforms	Sensitivity	88.40579710144928	1
+Kidney	1	K31.isoforms	Non-redundant Precision	98.38709677419355	1
+Kidney	1	K31.isoforms	Inv. Redundancy	100	1
+Kidney	1	K31.isoforms	1 - FDR	98.38709677419355	1
+Kidney	1	K31.isoforms	PDR	88.40579710144928	1
+Kidney	1	K31.isoforms	F1	93.12977099236642	1
+Kidney	1	K32.isoforms	Sensitivity	81.15942028985508	1
+Kidney	1	K32.isoforms	Non-redundant Precision	98.24561403508771	1
+Kidney	1	K32.isoforms	Inv. Redundancy	100	1
+Kidney	1	K32.isoforms	1 - FDR	98.24561403508773	1
+Kidney	1	K32.isoforms	PDR	81.15942028985508	1
+Kidney	1	K32.isoforms	F1	88.8888888888889	1
+Kidney	1	K33.isoforms	Sensitivity	84.05797101449275	1
+Kidney	1	K33.isoforms	Non-redundant Precision	100	1
+Kidney	1	K33.isoforms	Inv. Redundancy	100	1
+Kidney	1	K33.isoforms	1 - FDR	100	1
+Kidney	1	K33.isoforms	PDR	84.05797101449275	1
+Kidney	1	K33.isoforms	F1	91.33858267716535	1
+Kidney	1	K34.isoforms	Sensitivity	84.05797101449275	1
+Kidney	1	K34.isoforms	Non-redundant Precision	100	1
+Kidney	1	K34.isoforms	Inv. Redundancy	100	1
+Kidney	1	K34.isoforms	1 - FDR	100	1
+Kidney	1	K34.isoforms	PDR	84.05797101449275	1
+Kidney	1	K34.isoforms	F1	91.33858267716535	1
+Kidney	1	K35.isoforms	Sensitivity	85.5072463768116	1
+Kidney	1	K35.isoforms	Non-redundant Precision	98.33333333333333	1
+Kidney	1	K35.isoforms	Inv. Redundancy	100	1
+Kidney	1	K35.isoforms	1 - FDR	98.33333333333333	1
+Kidney	1	K35.isoforms	PDR	85.5072463768116	1
+Kidney	1	K35.isoforms	F1	91.47286821705427	1
+Brain	2	B31_B32	Sensitivity	82.6086956521739	2
+Brain	2	B31_B32	Non-redundant Precision	100	2
+Brain	2	B31_B32	Inv. Redundancy	100	2
+Brain	2	B31_B32	1 - FDR	100	2
+Brain	2	B31_B32	PDR	82.6086956521739	2
+Brain	2	B31_B32	F1	90.47619047619047	2
+Brain	3	B31_B32_B33	Sensitivity	85.5072463768116	3
+Brain	3	B31_B32_B33	Non-redundant Precision	100	3
+Brain	3	B31_B32_B33	Inv. Redundancy	100	3
+Brain	3	B31_B32_B33	1 - FDR	100	3
+Brain	3	B31_B32_B33	PDR	85.5072463768116	3
+Brain	3	B31_B32_B33	F1	92.1875	3
+Brain	4	B31_B32_B33_B34	Sensitivity	85.5072463768116	4
+Brain	4	B31_B32_B33_B34	Non-redundant Precision	100	4
+Brain	4	B31_B32_B33_B34	Inv. Redundancy	100	4
+Brain	4	B31_B32_B33_B34	1 - FDR	100	4
+Brain	4	B31_B32_B33_B34	PDR	85.5072463768116	4
+Brain	4	B31_B32_B33_B34	F1	92.1875	4
+Brain	5	B31_B32_B33_B34_B35	Sensitivity	85.5072463768116	5
+Brain	5	B31_B32_B33_B34_B35	Non-redundant Precision	100	5
+Brain	5	B31_B32_B33_B34_B35	Inv. Redundancy	100	5
+Brain	5	B31_B32_B33_B34_B35	1 - FDR	100	5
+Brain	5	B31_B32_B33_B34_B35	PDR	85.5072463768116	5
+Brain	5	B31_B32_B33_B34_B35	F1	92.1875	5
+Brain	4	B31_B32_B33_B35	Sensitivity	85.5072463768116	4
+Brain	4	B31_B32_B33_B35	Non-redundant Precision	100	4
+Brain	4	B31_B32_B33_B35	Inv. Redundancy	100	4
+Brain	4	B31_B32_B33_B35	1 - FDR	100	4
+Brain	4	B31_B32_B33_B35	PDR	85.5072463768116	4
+Brain	4	B31_B32_B33_B35	F1	92.1875	4
+Brain	3	B31_B32_B34	Sensitivity	85.5072463768116	3
+Brain	3	B31_B32_B34	Non-redundant Precision	100	3
+Brain	3	B31_B32_B34	Inv. Redundancy	100	3
+Brain	3	B31_B32_B34	1 - FDR	100	3
+Brain	3	B31_B32_B34	PDR	85.5072463768116	3
+Brain	3	B31_B32_B34	F1	92.1875	3
+Brain	4	B31_B32_B34_B35	Sensitivity	85.5072463768116	4
+Brain	4	B31_B32_B34_B35	Non-redundant Precision	100	4
+Brain	4	B31_B32_B34_B35	Inv. Redundancy	100	4
+Brain	4	B31_B32_B34_B35	1 - FDR	100	4
+Brain	4	B31_B32_B34_B35	PDR	85.5072463768116	4
+Brain	4	B31_B32_B34_B35	F1	92.1875	4
+Brain	3	B31_B32_B35	Sensitivity	85.5072463768116	3
+Brain	3	B31_B32_B35	Non-redundant Precision	100	3
+Brain	3	B31_B32_B35	Inv. Redundancy	100	3
+Brain	3	B31_B32_B35	1 - FDR	100	3
+Brain	3	B31_B32_B35	PDR	85.5072463768116	3
+Brain	3	B31_B32_B35	F1	92.1875	3
+Brain	2	B31_B33	Sensitivity	79.71014492753623	2
+Brain	2	B31_B33	Non-redundant Precision	100	2
+Brain	2	B31_B33	Inv. Redundancy	100	2
+Brain	2	B31_B33	1 - FDR	100	2
+Brain	2	B31_B33	PDR	79.71014492753623	2
+Brain	2	B31_B33	F1	88.70967741935483	2
+Brain	3	B31_B33_B34	Sensitivity	85.5072463768116	3
+Brain	3	B31_B33_B34	Non-redundant Precision	100	3
+Brain	3	B31_B33_B34	Inv. Redundancy	100	3
+Brain	3	B31_B33_B34	1 - FDR	100	3
+Brain	3	B31_B33_B34	PDR	85.5072463768116	3
+Brain	3	B31_B33_B34	F1	92.1875	3
+Brain	4	B31_B33_B34_B35	Sensitivity	85.5072463768116	4
+Brain	4	B31_B33_B34_B35	Non-redundant Precision	100	4
+Brain	4	B31_B33_B34_B35	Inv. Redundancy	100	4
+Brain	4	B31_B33_B34_B35	1 - FDR	100	4
+Brain	4	B31_B33_B34_B35	PDR	85.5072463768116	4
+Brain	4	B31_B33_B34_B35	F1	92.1875	4
+Brain	3	B31_B33_B35	Sensitivity	85.5072463768116	3
+Brain	3	B31_B33_B35	Non-redundant Precision	100	3
+Brain	3	B31_B33_B35	Inv. Redundancy	100	3
+Brain	3	B31_B33_B35	1 - FDR	100	3
+Brain	3	B31_B33_B35	PDR	85.5072463768116	3
+Brain	3	B31_B33_B35	F1	92.1875	3
+Brain	2	B31_B34	Sensitivity	82.6086956521739	2
+Brain	2	B31_B34	Non-redundant Precision	100	2
+Brain	2	B31_B34	Inv. Redundancy	100	2
+Brain	2	B31_B34	1 - FDR	100	2
+Brain	2	B31_B34	PDR	82.6086956521739	2
+Brain	2	B31_B34	F1	90.47619047619047	2
+Brain	3	B31_B34_B35	Sensitivity	85.5072463768116	3
+Brain	3	B31_B34_B35	Non-redundant Precision	100	3
+Brain	3	B31_B34_B35	Inv. Redundancy	100	3
+Brain	3	B31_B34_B35	1 - FDR	100	3
+Brain	3	B31_B34_B35	PDR	85.5072463768116	3
+Brain	3	B31_B34_B35	F1	92.1875	3
+Brain	2	B31_B35	Sensitivity	82.6086956521739	2
+Brain	2	B31_B35	Non-redundant Precision	100	2
+Brain	2	B31_B35	Inv. Redundancy	100	2
+Brain	2	B31_B35	1 - FDR	100	2
+Brain	2	B31_B35	PDR	82.6086956521739	2
+Brain	2	B31_B35	F1	90.47619047619047	2
+Brain	2	B32_B33	Sensitivity	82.6086956521739	2
+Brain	2	B32_B33	Non-redundant Precision	100	2
+Brain	2	B32_B33	Inv. Redundancy	100	2
+Brain	2	B32_B33	1 - FDR	100	2
+Brain	2	B32_B33	PDR	82.6086956521739	2
+Brain	2	B32_B33	F1	90.47619047619047	2
+Brain	3	B32_B33_B34	Sensitivity	85.5072463768116	3
+Brain	3	B32_B33_B34	Non-redundant Precision	100	3
+Brain	3	B32_B33_B34	Inv. Redundancy	100	3
+Brain	3	B32_B33_B34	1 - FDR	100	3
+Brain	3	B32_B33_B34	PDR	85.5072463768116	3
+Brain	3	B32_B33_B34	F1	92.1875	3
+Brain	4	B32_B33_B34_B35	Sensitivity	85.5072463768116	4
+Brain	4	B32_B33_B34_B35	Non-redundant Precision	100	4
+Brain	4	B32_B33_B34_B35	Inv. Redundancy	100	4
+Brain	4	B32_B33_B34_B35	1 - FDR	100	4
+Brain	4	B32_B33_B34_B35	PDR	85.5072463768116	4
+Brain	4	B32_B33_B34_B35	F1	92.1875	4
+Brain	3	B32_B33_B35	Sensitivity	85.5072463768116	3
+Brain	3	B32_B33_B35	Non-redundant Precision	100	3
+Brain	3	B32_B33_B35	Inv. Redundancy	100	3
+Brain	3	B32_B33_B35	1 - FDR	100	3
+Brain	3	B32_B33_B35	PDR	85.5072463768116	3
+Brain	3	B32_B33_B35	F1	92.1875	3
+Brain	2	B32_B34	Sensitivity	85.5072463768116	2
+Brain	2	B32_B34	Non-redundant Precision	100	2
+Brain	2	B32_B34	Inv. Redundancy	100	2
+Brain	2	B32_B34	1 - FDR	100	2
+Brain	2	B32_B34	PDR	85.5072463768116	2
+Brain	2	B32_B34	F1	92.1875	2
+Brain	3	B32_B34_B35	Sensitivity	85.5072463768116	3
+Brain	3	B32_B34_B35	Non-redundant Precision	100	3
+Brain	3	B32_B34_B35	Inv. Redundancy	100	3
+Brain	3	B32_B34_B35	1 - FDR	100	3
+Brain	3	B32_B34_B35	PDR	85.5072463768116	3
+Brain	3	B32_B34_B35	F1	92.1875	3
+Brain	2	B32_B35	Sensitivity	85.5072463768116	2
+Brain	2	B32_B35	Non-redundant Precision	100	2
+Brain	2	B32_B35	Inv. Redundancy	100	2
+Brain	2	B32_B35	1 - FDR	100	2
+Brain	2	B32_B35	PDR	85.5072463768116	2
+Brain	2	B32_B35	F1	92.1875	2
+Brain	2	B33_B34	Sensitivity	82.6086956521739	2
+Brain	2	B33_B34	Non-redundant Precision	100	2
+Brain	2	B33_B34	Inv. Redundancy	100	2
+Brain	2	B33_B34	1 - FDR	100	2
+Brain	2	B33_B34	PDR	82.6086956521739	2
+Brain	2	B33_B34	F1	90.47619047619047	2
+Brain	3	B33_B34_B35	Sensitivity	85.5072463768116	3
+Brain	3	B33_B34_B35	Non-redundant Precision	100	3
+Brain	3	B33_B34_B35	Inv. Redundancy	100	3
+Brain	3	B33_B34_B35	1 - FDR	100	3
+Brain	3	B33_B34_B35	PDR	85.5072463768116	3
+Brain	3	B33_B34_B35	F1	92.1875	3
+Brain	2	B33_B35	Sensitivity	82.6086956521739	2
+Brain	2	B33_B35	Non-redundant Precision	100	2
+Brain	2	B33_B35	Inv. Redundancy	100	2
+Brain	2	B33_B35	1 - FDR	100	2
+Brain	2	B33_B35	PDR	82.6086956521739	2
+Brain	2	B33_B35	F1	90.47619047619047	2
+Brain	2	B34_B35	Sensitivity	85.5072463768116	2
+Brain	2	B34_B35	Non-redundant Precision	100	2
+Brain	2	B34_B35	Inv. Redundancy	100	2
+Brain	2	B34_B35	1 - FDR	100	2
+Brain	2	B34_B35	PDR	85.5072463768116	2
+Brain	2	B34_B35	F1	92.1875	2
+Kidney	2	K31_K32	Sensitivity	78.26086956521739	2
+Kidney	2	K31_K32	Non-redundant Precision	100	2
+Kidney	2	K31_K32	Inv. Redundancy	100	2
+Kidney	2	K31_K32	1 - FDR	100	2
+Kidney	2	K31_K32	PDR	78.26086956521739	2
+Kidney	2	K31_K32	F1	87.8048780487805	2
+Kidney	3	K31_K32_K33	Sensitivity	82.6086956521739	3
+Kidney	3	K31_K32_K33	Non-redundant Precision	100	3
+Kidney	3	K31_K32_K33	Inv. Redundancy	100	3
+Kidney	3	K31_K32_K33	1 - FDR	100	3
+Kidney	3	K31_K32_K33	PDR	82.6086956521739	3
+Kidney	3	K31_K32_K33	F1	90.47619047619047	3
+Kidney	4	K31_K32_K33_K34	Sensitivity	84.05797101449275	4
+Kidney	4	K31_K32_K33_K34	Non-redundant Precision	100	4
+Kidney	4	K31_K32_K33_K34	Inv. Redundancy	100	4
+Kidney	4	K31_K32_K33_K34	1 - FDR	100	4
+Kidney	4	K31_K32_K33_K34	PDR	84.05797101449275	4
+Kidney	4	K31_K32_K33_K34	F1	91.33858267716535	4
+Kidney	5	K31_K32_K33_K34_K35	Sensitivity	86.95652173913044	5
+Kidney	5	K31_K32_K33_K34_K35	Non-redundant Precision	100	5
+Kidney	5	K31_K32_K33_K34_K35	Inv. Redundancy	100	5
+Kidney	5	K31_K32_K33_K34_K35	1 - FDR	100	5
+Kidney	5	K31_K32_K33_K34_K35	PDR	86.95652173913044	5
+Kidney	5	K31_K32_K33_K34_K35	F1	93.02325581395348	5
+Kidney	4	K31_K32_K33_K35	Sensitivity	85.5072463768116	4
+Kidney	4	K31_K32_K33_K35	Non-redundant Precision	100	4
+Kidney	4	K31_K32_K33_K35	Inv. Redundancy	100	4
+Kidney	4	K31_K32_K33_K35	1 - FDR	100	4
+Kidney	4	K31_K32_K33_K35	PDR	85.5072463768116	4
+Kidney	4	K31_K32_K33_K35	F1	92.1875	4
+Kidney	3	K31_K32_K34	Sensitivity	84.05797101449275	3
+Kidney	3	K31_K32_K34	Non-redundant Precision	100	3
+Kidney	3	K31_K32_K34	Inv. Redundancy	100	3
+Kidney	3	K31_K32_K34	1 - FDR	100	3
+Kidney	3	K31_K32_K34	PDR	84.05797101449275	3
+Kidney	3	K31_K32_K34	F1	91.33858267716535	3
+Kidney	4	K31_K32_K34_K35	Sensitivity	86.95652173913044	4
+Kidney	4	K31_K32_K34_K35	Non-redundant Precision	100	4
+Kidney	4	K31_K32_K34_K35	Inv. Redundancy	100	4
+Kidney	4	K31_K32_K34_K35	1 - FDR	100	4
+Kidney	4	K31_K32_K34_K35	PDR	86.95652173913044	4
+Kidney	4	K31_K32_K34_K35	F1	93.02325581395348	4
+Kidney	3	K31_K32_K35	Sensitivity	85.5072463768116	3
+Kidney	3	K31_K32_K35	Non-redundant Precision	100	3
+Kidney	3	K31_K32_K35	Inv. Redundancy	100	3
+Kidney	3	K31_K32_K35	1 - FDR	100	3
+Kidney	3	K31_K32_K35	PDR	85.5072463768116	3
+Kidney	3	K31_K32_K35	F1	92.1875	3
+Kidney	2	K31_K33	Sensitivity	82.6086956521739	2
+Kidney	2	K31_K33	Non-redundant Precision	100	2
+Kidney	2	K31_K33	Inv. Redundancy	100	2
+Kidney	2	K31_K33	1 - FDR	100	2
+Kidney	2	K31_K33	PDR	82.6086956521739	2
+Kidney	2	K31_K33	F1	90.47619047619047	2
+Kidney	3	K31_K33_K34	Sensitivity	84.05797101449275	3
+Kidney	3	K31_K33_K34	Non-redundant Precision	100	3
+Kidney	3	K31_K33_K34	Inv. Redundancy	100	3
+Kidney	3	K31_K33_K34	1 - FDR	100	3
+Kidney	3	K31_K33_K34	PDR	84.05797101449275	3
+Kidney	3	K31_K33_K34	F1	91.33858267716535	3
+Kidney	4	K31_K33_K34_K35	Sensitivity	86.95652173913044	4
+Kidney	4	K31_K33_K34_K35	Non-redundant Precision	100	4
+Kidney	4	K31_K33_K34_K35	Inv. Redundancy	100	4
+Kidney	4	K31_K33_K34_K35	1 - FDR	100	4
+Kidney	4	K31_K33_K34_K35	PDR	86.95652173913044	4
+Kidney	4	K31_K33_K34_K35	F1	93.02325581395348	4
+Kidney	3	K31_K33_K35	Sensitivity	85.5072463768116	3
+Kidney	3	K31_K33_K35	Non-redundant Precision	100	3
+Kidney	3	K31_K33_K35	Inv. Redundancy	100	3
+Kidney	3	K31_K33_K35	1 - FDR	100	3
+Kidney	3	K31_K33_K35	PDR	85.5072463768116	3
+Kidney	3	K31_K33_K35	F1	92.1875	3
+Kidney	2	K31_K34	Sensitivity	82.6086956521739	2
+Kidney	2	K31_K34	Non-redundant Precision	100	2
+Kidney	2	K31_K34	Inv. Redundancy	100	2
+Kidney	2	K31_K34	1 - FDR	100	2
+Kidney	2	K31_K34	PDR	82.6086956521739	2
+Kidney	2	K31_K34	F1	90.47619047619047	2
+Kidney	3	K31_K34_K35	Sensitivity	85.5072463768116	3
+Kidney	3	K31_K34_K35	Non-redundant Precision	100	3
+Kidney	3	K31_K34_K35	Inv. Redundancy	100	3
+Kidney	3	K31_K34_K35	1 - FDR	100	3
+Kidney	3	K31_K34_K35	PDR	85.5072463768116	3
+Kidney	3	K31_K34_K35	F1	92.1875	3
+Kidney	2	K31_K35	Sensitivity	84.05797101449275	2
+Kidney	2	K31_K35	Non-redundant Precision	100	2
+Kidney	2	K31_K35	Inv. Redundancy	100	2
+Kidney	2	K31_K35	1 - FDR	100	2
+Kidney	2	K31_K35	PDR	84.05797101449275	2
+Kidney	2	K31_K35	F1	91.33858267716535	2
+Kidney	2	K32_K33	Sensitivity	78.26086956521739	2
+Kidney	2	K32_K33	Non-redundant Precision	100	2
+Kidney	2	K32_K33	Inv. Redundancy	100	2
+Kidney	2	K32_K33	1 - FDR	100	2
+Kidney	2	K32_K33	PDR	78.26086956521739	2
+Kidney	2	K32_K33	F1	87.8048780487805	2
+Kidney	3	K32_K33_K34	Sensitivity	82.6086956521739	3
+Kidney	3	K32_K33_K34	Non-redundant Precision	100	3
+Kidney	3	K32_K33_K34	Inv. Redundancy	100	3
+Kidney	3	K32_K33_K34	1 - FDR	100	3
+Kidney	3	K32_K33_K34	PDR	82.6086956521739	3
+Kidney	3	K32_K33_K34	F1	90.47619047619047	3
+Kidney	4	K32_K33_K34_K35	Sensitivity	82.6086956521739	4
+Kidney	4	K32_K33_K34_K35	Non-redundant Precision	100	4
+Kidney	4	K32_K33_K34_K35	Inv. Redundancy	100	4
+Kidney	4	K32_K33_K34_K35	1 - FDR	100	4
+Kidney	4	K32_K33_K34_K35	PDR	82.6086956521739	4
+Kidney	4	K32_K33_K34_K35	F1	90.47619047619047	4
+Kidney	3	K32_K33_K35	Sensitivity	82.6086956521739	3
+Kidney	3	K32_K33_K35	Non-redundant Precision	100	3
+Kidney	3	K32_K33_K35	Inv. Redundancy	100	3
+Kidney	3	K32_K33_K35	1 - FDR	100	3
+Kidney	3	K32_K33_K35	PDR	82.6086956521739	3
+Kidney	3	K32_K33_K35	F1	90.47619047619047	3
+Kidney	2	K32_K34	Sensitivity	76.81159420289855	2
+Kidney	2	K32_K34	Non-redundant Precision	100	2
+Kidney	2	K32_K34	Inv. Redundancy	100	2
+Kidney	2	K32_K34	1 - FDR	100	2
+Kidney	2	K32_K34	PDR	76.81159420289855	2
+Kidney	2	K32_K34	F1	86.88524590163935	2
+Kidney	3	K32_K34_K35	Sensitivity	81.15942028985508	3
+Kidney	3	K32_K34_K35	Non-redundant Precision	100	3
+Kidney	3	K32_K34_K35	Inv. Redundancy	100	3
+Kidney	3	K32_K34_K35	1 - FDR	100	3
+Kidney	3	K32_K34_K35	PDR	81.15942028985508	3
+Kidney	3	K32_K34_K35	F1	89.60000000000001	3
+Kidney	2	K32_K35	Sensitivity	76.81159420289855	2
+Kidney	2	K32_K35	Non-redundant Precision	100	2
+Kidney	2	K32_K35	Inv. Redundancy	100	2
+Kidney	2	K32_K35	1 - FDR	100	2
+Kidney	2	K32_K35	PDR	76.81159420289855	2
+Kidney	2	K32_K35	F1	86.88524590163935	2
+Kidney	2	K33_K34	Sensitivity	81.15942028985508	2
+Kidney	2	K33_K34	Non-redundant Precision	100	2
+Kidney	2	K33_K34	Inv. Redundancy	100	2
+Kidney	2	K33_K34	1 - FDR	100	2
+Kidney	2	K33_K34	PDR	81.15942028985508	2
+Kidney	2	K33_K34	F1	89.60000000000001	2
+Kidney	3	K33_K34_K35	Sensitivity	81.15942028985508	3
+Kidney	3	K33_K34_K35	Non-redundant Precision	100	3
+Kidney	3	K33_K34_K35	Inv. Redundancy	100	3
+Kidney	3	K33_K34_K35	1 - FDR	100	3
+Kidney	3	K33_K34_K35	PDR	81.15942028985508	3
+Kidney	3	K33_K34_K35	F1	89.60000000000001	3
+Kidney	2	K33_K35	Sensitivity	81.15942028985508	2
+Kidney	2	K33_K35	Non-redundant Precision	100	2
+Kidney	2	K33_K35	Inv. Redundancy	100	2
+Kidney	2	K33_K35	1 - FDR	100	2
+Kidney	2	K33_K35	PDR	81.15942028985508	2
+Kidney	2	K33_K35	F1	89.60000000000001	2
+Kidney	2	K34_K35	Sensitivity	81.15942028985508	2
+Kidney	2	K34_K35	Non-redundant Precision	100	2
+Kidney	2	K34_K35	Inv. Redundancy	100	2
+Kidney	2	K34_K35	1 - FDR	100	2
+Kidney	2	K34_K35	PDR	81.15942028985508	2
+Kidney	2	K34_K35	F1	89.60000000000001	2

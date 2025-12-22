@@ -12,7 +12,7 @@
 
 # --- Configuration ---
 SQANTI3_ENV="SQANTI3.env"
-SQANTI3_PATH="/home/tyuan/GitHub/SQANTI3" # Add the specific path to SQANTI3
+SQANTI3_PATH="${SQANTI3_PATH:-}" # optional: directory containing sqanti3_qc.py (leave empty if in PATH)
 BASE_MAP_DIR="/storage/gge/Tian/lrgasp_data/map_result" # Directory with BAM files
 OUTPUT_BASE_DIR="/storage/gge/Tian/lrgasp_analysis/stringtie_sq3" # Updated output directory
 

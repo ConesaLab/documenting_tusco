@@ -1,0 +1,433 @@
+Tissue	Samples	Combo	Metric	Value	SamplesLabel	figure_id	panel_id	dataset	N	Mean	SD	SE	CI_lower	CI_upper
+Brain	1	B31.isoforms	Sensitivity	84.05797101449275	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B31.isoforms	Non-redundant Precision	98.30508474576273	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B31.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B31.isoforms	1 - FDR	98.30508474576273	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B31.isoforms	PDR	84.05797101449275	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B31.isoforms	F1	90.625	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B32.isoforms	Sensitivity	86.95652173913044	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B32.isoforms	Non-redundant Precision	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B32.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B32.isoforms	1 - FDR	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B32.isoforms	PDR	86.95652173913044	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B32.isoforms	F1	93.02325581395348	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B33.isoforms	Sensitivity	84.05797101449275	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B33.isoforms	Non-redundant Precision	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B33.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B33.isoforms	1 - FDR	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B33.isoforms	PDR	84.05797101449275	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B33.isoforms	F1	91.33858267716536	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B34.isoforms	Sensitivity	88.40579710144928	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B34.isoforms	Non-redundant Precision	98.38709677419357	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B34.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B34.isoforms	1 - FDR	98.38709677419357	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B34.isoforms	PDR	88.40579710144928	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B34.isoforms	F1	93.12977099236642	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B35.isoforms	Sensitivity	86.95652173913044	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B35.isoforms	Non-redundant Precision	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B35.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B35.isoforms	1 - FDR	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B35.isoforms	PDR	86.95652173913044	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	B35.isoforms	F1	93.02325581395348	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B32	Sensitivity	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B32	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B32	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B32	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B32	PDR	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B32	F1	90.47619047619048	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B33	Sensitivity	79.71014492753623	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B33	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B33	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B33	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B33	PDR	79.71014492753623	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B33	F1	88.70967741935483	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B34	Sensitivity	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B34	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B34	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B34	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B34	PDR	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B34	F1	90.47619047619048	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B35	Sensitivity	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B35	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B35	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B35	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B35	PDR	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B31_B35	F1	90.47619047619048	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B33	Sensitivity	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B33	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B33	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B33	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B33	PDR	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B33	F1	90.47619047619048	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B34	Sensitivity	85.5072463768116	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B34	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B34	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B34	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B34	PDR	85.5072463768116	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B34	F1	92.1875	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B35	Sensitivity	85.5072463768116	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B35	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B35	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B35	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B35	PDR	85.5072463768116	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B32_B35	F1	92.1875	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B34	Sensitivity	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B34	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B34	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B34	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B34	PDR	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B34	F1	90.47619047619048	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B35	Sensitivity	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B35	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B35	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B35	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B35	PDR	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B33_B35	F1	90.47619047619048	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B34_B35	Sensitivity	85.5072463768116	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B34_B35	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B34_B35	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B34_B35	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B34_B35	PDR	85.5072463768116	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	2	B34_B35	F1	92.1875	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B33	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B33	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B33	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B33	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B33	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B33	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B34	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B34	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B34	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B34	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B34	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B34	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B32_B35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B34	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B34	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B34	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B34	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B34	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B34	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B33_B35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B34_B35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B34_B35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B34_B35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B34_B35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B34_B35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B31_B34_B35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B34	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B34	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B34	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B34	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B34	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B34	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B33_B35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B34_B35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B34_B35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B34_B35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B34_B35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B34_B35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B32_B34_B35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B33_B34_B35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B33_B34_B35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B33_B34_B35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B33_B34_B35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B33_B34_B35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	3	B33_B34_B35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B34	Sensitivity	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B34	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B34	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B34	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B34	PDR	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B34	F1	92.1875	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B35	Sensitivity	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B35	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B35	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B35	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B35	PDR	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B33_B35	F1	92.1875	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B34_B35	Sensitivity	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B34_B35	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B34_B35	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B34_B35	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B34_B35	PDR	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B32_B34_B35	F1	92.1875	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B33_B34_B35	Sensitivity	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B33_B34_B35	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B33_B34_B35	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B33_B34_B35	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B33_B34_B35	PDR	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B31_B33_B34_B35	F1	92.1875	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B32_B33_B34_B35	Sensitivity	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B32_B33_B34_B35	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B32_B33_B34_B35	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B32_B33_B34_B35	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B32_B33_B34_B35	PDR	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	4	B32_B33_B34_B35	F1	92.1875	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	5	B31_B32_B33_B34_B35	Sensitivity	85.5072463768116	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	5	B31_B32_B33_B34_B35	Non-redundant Precision	100	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	5	B31_B32_B33_B34_B35	Inv. Redundancy	100	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	5	B31_B32_B33_B34_B35	1 - FDR	100	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	5	B31_B32_B33_B34_B35	PDR	85.5072463768116	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	5	B31_B32_B33_B34_B35	F1	92.1875	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K31.isoforms	Sensitivity	88.40579710144928	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K31.isoforms	Non-redundant Precision	98.38709677419357	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K31.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K31.isoforms	1 - FDR	98.38709677419357	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K31.isoforms	PDR	88.40579710144928	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K31.isoforms	F1	93.12977099236642	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K32.isoforms	Sensitivity	81.15942028985508	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K32.isoforms	Non-redundant Precision	98.24561403508773	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K32.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K32.isoforms	1 - FDR	98.24561403508773	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K32.isoforms	PDR	81.15942028985508	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K32.isoforms	F1	88.8888888888889	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K33.isoforms	Sensitivity	84.05797101449275	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K33.isoforms	Non-redundant Precision	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K33.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K33.isoforms	1 - FDR	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K33.isoforms	PDR	84.05797101449275	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K33.isoforms	F1	91.33858267716536	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K34.isoforms	Sensitivity	84.05797101449275	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K34.isoforms	Non-redundant Precision	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K34.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K34.isoforms	1 - FDR	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K34.isoforms	PDR	84.05797101449275	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K34.isoforms	F1	91.33858267716536	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K35.isoforms	Sensitivity	85.5072463768116	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K35.isoforms	Non-redundant Precision	98.33333333333331	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K35.isoforms	Inv. Redundancy	100	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K35.isoforms	1 - FDR	98.33333333333331	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K35.isoforms	PDR	85.5072463768116	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	1	K35.isoforms	F1	91.47286821705428	1	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K32	Sensitivity	78.26086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K32	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K32	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K32	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K32	PDR	78.26086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K32	F1	87.8048780487805	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K33	Sensitivity	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K33	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K33	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K33	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K33	PDR	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K33	F1	90.47619047619048	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K34	Sensitivity	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K34	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K34	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K34	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K34	PDR	82.6086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K34	F1	90.47619047619048	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K35	Sensitivity	84.05797101449275	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K35	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K35	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K35	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K35	PDR	84.05797101449275	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K31_K35	F1	91.33858267716536	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K33	Sensitivity	78.26086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K33	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K33	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K33	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K33	PDR	78.26086956521739	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K33	F1	87.8048780487805	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K34	Sensitivity	76.81159420289855	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K34	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K34	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K34	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K34	PDR	76.81159420289855	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K34	F1	86.88524590163935	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K35	Sensitivity	76.81159420289855	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K35	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K35	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K35	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K35	PDR	76.81159420289855	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K32_K35	F1	86.88524590163935	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K34	Sensitivity	81.15942028985508	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K34	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K34	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K34	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K34	PDR	81.15942028985508	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K34	F1	89.60000000000001	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K35	Sensitivity	81.15942028985508	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K35	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K35	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K35	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K35	PDR	81.15942028985508	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K33_K35	F1	89.60000000000001	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K34_K35	Sensitivity	81.15942028985508	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K34_K35	Non-redundant Precision	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K34_K35	Inv. Redundancy	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K34_K35	1 - FDR	100	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K34_K35	PDR	81.15942028985508	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	2	K34_K35	F1	89.60000000000001	2	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K33	Sensitivity	82.6086956521739	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K33	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K33	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K33	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K33	PDR	82.6086956521739	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K33	F1	90.47619047619048	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K34	Sensitivity	84.05797101449275	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K34	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K34	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K34	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K34	PDR	84.05797101449275	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K34	F1	91.33858267716536	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K32_K35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K34	Sensitivity	84.05797101449275	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K34	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K34	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K34	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K34	PDR	84.05797101449275	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K34	F1	91.33858267716536	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K33_K35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K34_K35	Sensitivity	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K34_K35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K34_K35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K34_K35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K34_K35	PDR	85.5072463768116	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K31_K34_K35	F1	92.1875	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K34	Sensitivity	82.6086956521739	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K34	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K34	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K34	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K34	PDR	82.6086956521739	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K34	F1	90.47619047619048	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K35	Sensitivity	82.6086956521739	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K35	PDR	82.6086956521739	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K33_K35	F1	90.47619047619048	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K34_K35	Sensitivity	81.15942028985508	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K34_K35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K34_K35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K34_K35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K34_K35	PDR	81.15942028985508	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K32_K34_K35	F1	89.60000000000001	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K33_K34_K35	Sensitivity	81.15942028985508	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K33_K34_K35	Non-redundant Precision	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K33_K34_K35	Inv. Redundancy	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K33_K34_K35	1 - FDR	100	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K33_K34_K35	PDR	81.15942028985508	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	3	K33_K34_K35	F1	89.60000000000001	3	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K34	Sensitivity	84.05797101449275	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K34	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K34	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K34	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K34	PDR	84.05797101449275	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K34	F1	91.33858267716536	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K35	Sensitivity	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K35	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K35	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K35	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K35	PDR	85.5072463768116	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K33_K35	F1	92.1875	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K34_K35	Sensitivity	86.95652173913044	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K34_K35	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K34_K35	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K34_K35	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K34_K35	PDR	86.95652173913044	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K32_K34_K35	F1	93.02325581395348	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K33_K34_K35	Sensitivity	86.95652173913044	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K33_K34_K35	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K33_K34_K35	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K33_K34_K35	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K33_K34_K35	PDR	86.95652173913044	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K31_K33_K34_K35	F1	93.02325581395348	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K32_K33_K34_K35	Sensitivity	82.6086956521739	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K32_K33_K34_K35	Non-redundant Precision	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K32_K33_K34_K35	Inv. Redundancy	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K32_K33_K34_K35	1 - FDR	100	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K32_K33_K34_K35	PDR	82.6086956521739	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	4	K32_K33_K34_K35	F1	90.47619047619048	4	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	5	K31_K32_K33_K34_K35	Sensitivity	86.95652173913044	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	5	K31_K32_K33_K34_K35	Non-redundant Precision	100	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	5	K31_K32_K33_K34_K35	Inv. Redundancy	100	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	5	K31_K32_K33_K34_K35	1 - FDR	100	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	5	K31_K32_K33_K34_K35	PDR	86.95652173913044	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Kidney	5	K31_K32_K33_K34_K35	F1	93.02325581395348	5	fig-s6	s6_points	s6_points	NA	NA	NA	NA	NA	NA
+Brain	1	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	5	99.33843630399126	0.9063473279432293	0.405330847301271	98.21305745701596	100.46381515096655
+Brain	1	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	5	92.22797305948774	1.1660538915994187	0.5214751534088943	90.78012592232336	93.67582019665213
+Brain	1	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	5	100	0	0	100	100
+Brain	1	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	5	99.33843630399126	0.9063473279432293	0.405330847301271	98.21305745701596	100.46381515096655
+Brain	1	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	5	86.08695652173913	1.9444069369563424	0.869565217391306	83.67265643026278	88.50125661321547
+Brain	1	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	5	86.08695652173913	1.9444069369563424	0.869565217391306	83.67265643026278	88.50125661321547
+Brain	2	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Brain	2	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	10	90.81293202764977	1.094042479066729	0.34596660908279486	90.03030118482411	91.59556287047542
+Brain	2	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Brain	2	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Brain	2	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	10	83.18840579710144	1.8332044406773225	0.5797101449275365	81.87701034040683	84.49980125379605
+Brain	2	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	10	83.18840579710144	1.8332044406773225	0.5797101449275365	81.87701034040683	84.49980125379605
+Brain	3	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Brain	3	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	10	92.1875	0	0	92.1875	92.1875
+Brain	3	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Brain	3	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Brain	3	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	10	85.5072463768116	0	0	85.5072463768116	85.5072463768116
+Brain	3	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	10	85.5072463768116	0	0	85.5072463768116	85.5072463768116
+Brain	4	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	5	100	0	0	100	100
+Brain	4	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	5	92.1875	0	0	92.1875	92.1875
+Brain	4	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	5	100	0	0	100	100
+Brain	4	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	5	100	0	0	100	100
+Brain	4	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	5	85.5072463768116	0	0	85.5072463768116	85.5072463768116
+Brain	4	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	5	85.5072463768116	0	0	85.5072463768116	85.5072463768116
+Brain	5	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	1	100	NA	NA	NA	NA
+Brain	5	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	1	92.1875	NA	NA	NA	NA
+Brain	5	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	1	100	NA	NA	NA	NA
+Brain	5	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	1	100	NA	NA	NA	NA
+Brain	5	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	1	85.5072463768116	NA	NA	NA	NA
+Brain	5	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	1	85.5072463768116	NA	NA	NA	NA
+Kidney	1	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	5	98.99320882852292	0.9204567334555802	0.4116407652708165	97.85031084068687	100.13610681635896
+Kidney	1	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	5	91.23373869052806	1.5143007078670272	0.6772158642333447	89.3534860191151	93.11399136194102
+Kidney	1	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	5	100	0	0	100	100
+Kidney	1	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	5	98.99320882852292	0.9204567334555832	0.4116407652708177	97.85031084068687	100.13610681635896
+Kidney	1	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	5	84.6376811594203	2.6327394383456455	1.1773968702370958	81.36870338217531	87.90665893666528
+Kidney	1	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	5	84.6376811594203	2.6327394383456455	1.1773968702370958	81.36870338217531	87.90665893666528
+Kidney	2	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Kidney	2	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	10	89.0471211530386	1.5876623031968748	0.5020629033290953	87.91137596009743	90.18286634597978
+Kidney	2	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Kidney	2	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Kidney	2	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	10	80.28985507246377	2.5744758636665175	0.8141207510315321	78.44818598413514	82.1315241607924
+Kidney	2	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	10	80.28985507246377	2.5744758636665175	0.8141207510315321	78.44818598413514	82.1315241607924
+Kidney	3	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Kidney	3	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	10	90.9868236782902	1.0111126053190431	0.3197418803715058	90.26351729336125	91.71013006321918
+Kidney	3	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Kidney	3	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	10	100	0	0	100	100
+Kidney	3	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	10	83.47826086956522	1.7011417257641546	0.5379482476164269	82.26133738800497	84.69518435112546
+Kidney	3	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	10	83.47826086956522	1.7011417257641546	0.5379482476164269	82.26133738800497	84.69518435112546
+Kidney	4	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	5	100	0	0	100	100
+Kidney	4	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	5	92.00975695625256	1.105469755398246	0.4943811040281086	90.63713495987145	93.38237895263369
+Kidney	4	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	5	100	0	0	100	100
+Kidney	4	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	5	100	0	0	100	100
+Kidney	4	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	5	85.21739130434783	1.8896238855659888	0.8450654920065669	82.87111335549463	87.56366925320103
+Kidney	4	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	5	85.21739130434783	1.8896238855659888	0.8450654920065669	82.87111335549463	87.56366925320103
+Kidney	5	NA	1 - FDR	NA	NA	fig-s6	s6_bars	s6_bars	1	100	NA	NA	NA	NA
+Kidney	5	NA	F1	NA	NA	fig-s6	s6_bars	s6_bars	1	93.02325581395348	NA	NA	NA	NA
+Kidney	5	NA	Inv. Redundancy	NA	NA	fig-s6	s6_bars	s6_bars	1	100	NA	NA	NA	NA
+Kidney	5	NA	Non-redundant Precision	NA	NA	fig-s6	s6_bars	s6_bars	1	100	NA	NA	NA	NA
+Kidney	5	NA	PDR	NA	NA	fig-s6	s6_bars	s6_bars	1	86.95652173913044	NA	NA	NA	NA
+Kidney	5	NA	Sensitivity	NA	NA	fig-s6	s6_bars	s6_bars	1	86.95652173913044	NA	NA	NA	NA

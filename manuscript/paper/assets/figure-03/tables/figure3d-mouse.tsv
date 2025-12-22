@@ -1,0 +1,8 @@
+num_samples_shared	num_genes	figure_id	panel_id	record_type
+1	4	fig-3	3d-mouse	distribution_counts
+2	4	fig-3	3d-mouse	distribution_counts
+3	0	fig-3	3d-mouse	distribution_counts
+4	4	fig-3	3d-mouse	distribution_counts
+5	0	fig-3	3d-mouse	distribution_counts
+6	2	fig-3	3d-mouse	distribution_counts
+7	0	fig-3	3d-mouse	distribution_counts

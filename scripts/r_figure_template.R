@@ -8,47 +8,27 @@
 # 1. COMMAND LINE ARGUMENT PARSING
 # =============================================================================
 
-# Source utilities library
-if (file.exists("../../scripts/figure_utils.R")) {
-  source("../../scripts/figure_utils.R")
-} else if (file.exists("../../../scripts/figure_utils.R")) {
-  source("../../../scripts/figure_utils.R")
-} else {
-  # Fallback - define minimal functions inline
-  parse_figure_args <- function(defaults = list(out_dir = "..", width = 3.35, height = 4.0)) {
-    args <- commandArgs(trailingOnly = TRUE)
-    result <- defaults
-    if (length(args) > 0) result$out_dir <- args[1]
-    if (length(args) > 1) result$width <- as.numeric(args[2])
-    if (length(args) > 2) result$height <- as.numeric(args[3])
-    return(result)
+# Robust repo root discovery - works from any working directory
+find_repo_root_for_utils <- function(start = getwd(), limit = 10) {
+  cur <- tryCatch(normalizePath(start, winslash = "/", mustWork = FALSE), error = function(e) start)
+  for (i in seq_len(limit)) {
+    if (file.exists(file.path(cur, "scripts", "figure_utils.R"))) return(cur)
+    parent <- dirname(cur)
+    if (identical(parent, cur)) break
+    cur <- parent
   }
-
-  create_output_dirs <- function(base_dir = ".") {
-    plot_dir <- file.path(base_dir, "plots")
-    table_dir <- file.path(base_dir, "tables")
-    dir.create(plot_dir, recursive = TRUE, showWarnings = FALSE)
-    dir.create(table_dir, recursive = TRUE, showWarnings = FALSE)
-    list(plot_dir = plot_dir, table_dir = table_dir)
-  }
-
-  save_figure <- function(plot_obj, fig_id, plot_dir = "plots", table_dir = "tables",
-                          width = 3.35, height = 4.0, data = NULL, data_suffix = NULL) {
-    plot_file <- file.path(plot_dir, paste0(fig_id, ".pdf"))
-    ggsave(plot_file, plot_obj,
-      width = width, height = height,
-      units = "in", device = "pdf", dpi = 300
-    )
-    message("Saved plot: ", plot_file)
-    if (!is.null(data)) {
-      data_name <- if (is.null(data_suffix)) fig_id else paste0(fig_id, "-", data_suffix)
-      data_file <- file.path(table_dir, paste0(data_name, ".tsv"))
-      readr::write_tsv(data, data_file)
-      message("Saved data: ", data_file)
-    }
-    invisible(plot_file)
-  }
+  stop("Could not find repo root containing scripts/figure_utils.R starting from: ", start)
 }
+
+# Detect script directory (handles Rscript and source())
+script_path <- sub("^--file=", "", commandArgs(trailingOnly = FALSE)[grep("^--file=", commandArgs(trailingOnly = FALSE))])
+script_dir <- if (length(script_path) == 1 && nzchar(script_path)) {
+  dirname(normalizePath(script_path, mustWork = FALSE))
+} else {
+  tryCatch(dirname(sys.frame(1)$ofile), error = function(e) getwd())
+}
+repo_root <- find_repo_root_for_utils(script_dir)
+source(file.path(repo_root, "scripts", "figure_utils.R"))
 
 # Parse arguments
 params <- parse_figure_args(defaults = list(

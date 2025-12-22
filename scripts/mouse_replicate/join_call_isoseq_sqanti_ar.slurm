@@ -22,12 +22,16 @@ conda activate SQANTI3.env
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 ANNOTATION="/storage/gge/genomes/mouse_ref_NIH/reference_genome/mm39.ncbiRefSeq_SIRV.gtf"
 GENOME="/storage/gge/genomes/mouse_ref_NIH/reference_genome/mm39_SIRV.fa"
-CAGE_peak="/home/tyuan/BUGSI_PAPER/JoinCall/CAGE_peak/refTSS_v4.1_mouse_coordinate.mm39.bed"
+BUGSI_PAPER_ROOT="${BUGSI_PAPER_ROOT:-$HOME/BUGSI_PAPER}"
+JOINCALL_ROOT="${JOINCALL_ROOT:-$BUGSI_PAPER_ROOT/JoinCall}"
+SQANTI3_DIR="${SQANTI3_DIR:-$HOME/GitHub/SQANTI3}"
 
-OUTPUT_REF_DIR="/home/tyuan/BUGSI_PAPER/REFERENCE/MOUSE/"
+CAGE_peak="${CAGE_peak:-$JOINCALL_ROOT/CAGE_peak/refTSS_v4.1_mouse_coordinate.mm39.bed}"
+
+OUTPUT_REF_DIR="${OUTPUT_REF_DIR:-$BUGSI_PAPER_ROOT/REFERENCE/MOUSE/}"
 REF_CLASSIF="${OUTPUT_REF_DIR}/$(basename "${ANNOTATION}" .gtf)_classification.txt"
 
-SQANTI_rules="/home/tyuan/GitHub/SQANTI3/utilities/filter/filter_default.json"
+SQANTI_rules="${SQANTI_rules:-$SQANTI3_DIR/utilities/filter/filter_default.json}"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 2.1) [ADDED] Check if reference classification exists
@@ -117,7 +121,7 @@ get_coverage_files() {
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 # 4) GTF list / array setup
 # ~~~~~~~~~~~~~~~~~~~~~~~~
-GTF_LIST="/home/tyuan/BUGSI_PAPER/JoinCall/result/my_flair_isoseq_gtfs_ar.txt"
+GTF_LIST="${GTF_LIST:-$JOINCALL_ROOT/result/my_flair_isoseq_gtfs_ar.txt}"
 mapfile -t GTF_ARRAY < "$GTF_LIST"
 
 if [ "$SLURM_ARRAY_TASK_ID" -ge "${#GTF_ARRAY[@]}" ]; then
@@ -148,7 +152,7 @@ done
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 # 6) Output folder
 # ~~~~~~~~~~~~~~~~~~~~~~~~
-OUTPUT_DIR="/home/tyuan/BUGSI_PAPER/JoinCall/result/isoseq_ar/${SAMPLE_ID}"
+OUTPUT_DIR="${OUTPUT_DIR:-$JOINCALL_ROOT/result/isoseq_ar/${SAMPLE_ID}}"
 mkdir -p "$OUTPUT_DIR"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,7 +160,7 @@ mkdir -p "$OUTPUT_DIR"
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 echo "[SQANTI3 QC] Starting for sample: $SAMPLE_ID"
 
-/home/tyuan/GitHub/SQANTI3/sqanti3_qc.py \
+"$SQANTI3_DIR/sqanti3_qc.py" \
     "$CURRENT_GTF" \
     "$ANNOTATION" \
     "$GENOME" \
@@ -185,7 +189,7 @@ mkdir -p "$FILTER_OUTPUT_DIR"
 CORRECTED_GTF="${OUTPUT_DIR}/${SAMPLE_ID}_corrected.gtf"
 
 echo "[SQANTI3 Filter] Starting filter for sample: $SAMPLE_ID"
-/home/tyuan/GitHub/SQANTI3/sqanti3_filter.py rules \
+"$SQANTI3_DIR/sqanti3_filter.py" rules \
     "$CLASSIFICATION_FILE" \
     --gtf "$CORRECTED_GTF" \
     -o "${SAMPLE_ID}_filtered" \
@@ -215,7 +219,7 @@ CORRECTED_FASTA="${OUTPUT_DIR}/${SAMPLE_ID}_corrected.fasta"
 
 echo "[SQANTI3 Rescue] Starting rescue for sample: $SAMPLE_ID"
 
-/home/tyuan/GitHub/SQANTI3/sqanti3_rescue.py rules \
+"$SQANTI3_DIR/sqanti3_rescue.py" rules \
     "$RESCUE_CLASSIFICATION" \
     -f "$GENOME" \
     --isoforms "$CORRECTED_FASTA" \

@@ -6,18 +6,18 @@
 # Derive base_dir as the parent of this script (fig-s2),
 # falling back to getwd() when not available.
 .script_args <- commandArgs(trailingOnly = FALSE)
-.script_file <- sub('^--file=', '', .script_args[grep('^--file=', .script_args)])
+.script_file <- sub("^--file=", "", .script_args[grep("^--file=", .script_args)])
 base_dir <- if (length(.script_file) == 1 && nzchar(.script_file)) {
   normalizePath(file.path(dirname(.script_file), ".."), mustWork = FALSE)
 } else {
   getwd()
 }
 plot_dir <- file.path(base_dir, "plots")
-tsv_dir  <- file.path(base_dir, "tables")
+tsv_dir <- file.path(base_dir, "tables")
 log_path <- file.path(base_dir, "run.log")
 
 # Input data: prefer local ./data/, then shared ../data/ (figs/data).
-local_data_root  <- file.path(base_dir, "data")
+local_data_root <- file.path(base_dir, "data")
 shared_data_root <- normalizePath(file.path(base_dir, "..", "data"), mustWork = FALSE)
 repo_root <- normalizePath(file.path(base_dir, "..", ".."), mustWork = FALSE)
 repo_data_raw <- file.path(repo_root, "data", "raw")
@@ -32,7 +32,9 @@ resolve_data_path <- function(...) {
     file.path(repo_data_processed, sub)
   )
   for (p in candidates) {
-    if (!is.na(p) && file.exists(p)) return(p)
+    if (!is.na(p) && file.exists(p)) {
+      return(p)
+    }
   }
   return(NA_character_)
 }
@@ -41,8 +43,8 @@ exists_path <- function(p) is.character(p) && length(p) == 1 && !is.na(p) && fil
 
 alphagenome_human_json <- resolve_data_path("alphagenome", "human_scores.json")
 alphagenome_mouse_json <- resolve_data_path("alphagenome", "mouse_scores.json")
-tusco_human_tsv        <- resolve_data_path("tusco", "tusco_human.tsv")
-tusco_mouse_tsv        <- resolve_data_path("tusco", "tusco_mouse.tsv")
+tusco_human_tsv <- resolve_data_path("tusco", "tusco_human.tsv")
+tusco_mouse_tsv <- resolve_data_path("tusco", "tusco_mouse.tsv")
 # Fallback to processed TUSCO locations by species
 if (is.na(tusco_human_tsv)) {
   cand <- file.path(repo_data_processed, "tusco", "hsa", "tusco_human.tsv")
@@ -54,10 +56,10 @@ if (is.na(tusco_mouse_tsv)) {
 }
 
 # Output (only log-scale figure requested)
-output_file_log    <- file.path(plot_dir, "fig-s2-log.pdf")
+output_file_log <- file.path(plot_dir, "fig-s2-log.pdf")
 
-# Plot parameters
-params <- list(width = 6, height = 4)
+# Plot parameters (wider format for side-by-side panels)
+params <- list(width = 7.09, height = 3.5)
 
 # Visual style constants (match Fig. 1d)
 LOG_OFFSET <- 1e-4
@@ -78,6 +80,7 @@ suppressPackageStartupMessages({
   library(data.table)
   library(stringr)
   library(ggplot2)
+  library(patchwork) # For multi-panel layout
 })
 
 `%||%` <- function(a, b) if (!is.null(a)) a else b
@@ -91,7 +94,9 @@ read_tusco_gene_ids <- function(tsv_file) {
   # Expect first column to be Ensembl Gene ID
   raw_lines <- readLines(tsv_file)
   raw_lines <- raw_lines[!startsWith(raw_lines, "#")]
-  if (length(raw_lines) == 0) return(character(0))
+  if (length(raw_lines) == 0) {
+    return(character(0))
+  }
   dt <- fread(text = raw_lines, sep = "\t", header = FALSE)
   gene_ids <- dt[[1]]
   gene_ids <- gsub("\\..*$", "", gene_ids) # drop version suffix
@@ -136,7 +141,7 @@ compute_scores_from_json <- function(json_path) {
 #############################
 
 dir.create(plot_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(tsv_dir,  showWarnings = FALSE, recursive = TRUE)
+dir.create(tsv_dir, showWarnings = FALSE, recursive = TRUE)
 cat(sprintf("[INFO] Ensured output dirs: %s, %s\n", plot_dir, tsv_dir))
 
 missing_inputs <- character(0)
@@ -173,7 +178,9 @@ if (length(missing_inputs) > 0) {
   for (p in missing_inputs) cat("  - ", p, "\n", sep = "")
   cat("[INFO] Exiting without generating PDFs/TSVs due to missing inputs.\n")
   cat(sprintf("[INFO] fig-s2 run finished at %s\n", format(Sys.time(), tz = "UTC")))
-  sink(type = "message"); sink(type = "output"); close(log_con)
+  sink(type = "message")
+  sink(type = "output")
+  close(log_con)
   quit(save = "no", status = 0)
 }
 
@@ -200,7 +207,7 @@ long_dt <- melt(
 if (!"Score" %in% names(long_dt)) {
   long_dt <- rbindlist(list(
     combined[, .(gene_id, Species, Group, ScoreType = "Expression", Score = expression_score)],
-    combined[, .(gene_id, Species, Group, ScoreType = "Splicing",   Score = splicing_score)]
+    combined[, .(gene_id, Species, Group, ScoreType = "Splicing", Score = splicing_score)]
   ), use.names = TRUE, fill = TRUE)
 }
 
@@ -214,57 +221,109 @@ long_dt[, Group := factor(Group, levels = c("TUSCO", "Other"))]
 long_dt[, PlotGroup := paste0(Species, "_", Group)]
 
 ############################################
-### 4. Plot (violin + boxplot; Fig 1d style) ###
+### 4. Plot (violin + boxplot; Nature-style) ###
 ############################################
 
+# Color palette matching other figures (TUSCO green, Other grey)
 custom_colors <- c(
-  "Human_TUSCO" = "#A8D5A0",  # Light Green
-  "Mouse_TUSCO" = "#1b9e77",  # Dark Green
-  "Human_Other" = "#D1D3D4",  # Light Grey
-  "Mouse_Other" = "#808080"   # Dark Grey
+  "Human_TUSCO" = "#A8D5A0", # Light Green
+  "Mouse_TUSCO" = "#1b9e77", # Dark Green
+  "Human_Other" = "#D1D3D4", # Light Grey
+  "Mouse_Other" = "#808080" # Dark Grey
+)
+
+# Define display labels for the legend (Species in parentheses format)
+label_names <- c(
+  "Human_TUSCO" = "TUSCO (Human)",
+  "Mouse_TUSCO" = "TUSCO (Mouse)",
+  "Human_Other" = "Other (Human)",
+  "Mouse_Other" = "Other (Mouse)"
 )
 
 long_dt[, PlotGroup := factor(PlotGroup, levels = names(custom_colors))]
 
-# Remove outliers: keep only 1st–99th percentile per Species × ScoreType
-facet_limits <- long_dt[, .(
-  qmin = quantile(Score, 0.01, na.rm = TRUE),
-  qmax = quantile(Score, 0.99, na.rm = TRUE)
-), by = .(Species, ScoreType)]
-
-filtered_dt <- merge(long_dt, facet_limits, by = c("Species", "ScoreType"), all.x = TRUE)
-filtered_dt <- filtered_dt[Score >= qmin & Score <= qmax]
-filtered_dt[, c("qmin", "qmax") := NULL]
-
-# Log-scale plot uses full data (no outlier removal)
+# Log-scale plot uses full data
 plot_dt_log <- copy(long_dt)
 plot_dt_log[, log_score := log10(Score + LOG_OFFSET)]
 
-p_log <- ggplot(plot_dt_log, aes(x = Group, y = log_score, fill = PlotGroup)) +
-  geom_violin(trim = TRUE, position = position_dodge(width = 0.9), alpha = 0.7, linewidth = 0.3) +
-  geom_boxplot(width = 0.15, outlier.shape = NA, position = position_dodge(width = 0.9), fill = "white", alpha = 0.5, linewidth = 0.3,
-               aes(group = interaction(Species, Group))) +
-  facet_grid(ScoreType ~ Species, scales = "fixed") +
-  scale_fill_manual(values = custom_colors, name = "Group",
-                    labels = c("Human TUSCO gene set", "Mouse TUSCO gene set", "Human Others", "Mouse Others")) +
-  scale_x_discrete(labels = c("TUSCO" = "TUSCO gene set", "Other" = "Other")) +
-  labs(x = "", y = "log10 [Score + 1e-04]") +
-  theme_classic(base_family = "Helvetica", base_size = 7) +
+# Nature-style theme (consistent with fig-s1.R and other figures)
+nature_theme <- theme_classic(base_family = "Helvetica", base_size = 7) +
   theme(
-    # Remove panel/plot backgrounds while keeping a boxed border
+    plot.title = element_text(size = 9, face = "bold", hjust = 0, margin = margin(b = 5)),
+    axis.title = element_text(size = 7),
+    axis.text = element_text(size = 7, color = "black"),
+    axis.text.x = element_text(angle = 0, hjust = 0.5),
+    axis.line = element_line(linewidth = 0.35, color = "black"),
+    axis.ticks = element_line(linewidth = 0.35, color = "black"),
     panel.background = element_blank(),
     plot.background = element_rect(fill = "transparent", colour = NA),
     panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.35),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
-    strip.background = element_rect(fill = NA, colour = "black"),
-    axis.line = element_blank(),
-    axis.ticks = element_line(color = "black", linewidth = 0.35),
-    axis.text.x = element_text(color = "black", angle = 0, hjust = 0.5),
-    axis.text.y = element_text(color = "black"),
-    axis.title.y = element_text(color = "black"),
-    legend.position = "right"
+    strip.background = element_rect(fill = "grey95", colour = "black", linewidth = 0.35),
+    strip.text = element_text(size = 7, face = "bold"),
+    legend.position = "bottom",
+    legend.title = element_text(size = 7, face = "bold"),
+    legend.text = element_text(size = 6),
+    legend.key.size = unit(0.4, "lines"),
+    legend.background = element_rect(fill = "white", colour = NA),
+    legend.box.background = element_rect(colour = "black", linewidth = 0.35),
+    legend.margin = margin(t = 2, r = 4, b = 2, l = 4)
   )
+
+# Create individual plots for Expression and Splicing (side-by-side layout)
+make_panel_plot <- function(data, score_type, panel_label) {
+  panel_data <- data[ScoreType == score_type]
+
+  ggplot(panel_data, aes(x = Group, y = log_score, fill = PlotGroup)) +
+    geom_violin(trim = TRUE, position = position_dodge(width = 0.9), alpha = 0.7, linewidth = 0.3) +
+    geom_boxplot(
+      width = 0.15, outlier.shape = NA,
+      position = position_dodge(width = 0.9),
+      fill = "white", alpha = 0.6, linewidth = 0.3,
+      aes(group = interaction(Species, Group))
+    ) +
+    facet_wrap(~Species, nrow = 1, scales = "fixed") +
+    scale_fill_manual(
+      values = custom_colors,
+      name = "Dataset",
+      labels = label_names
+    ) +
+    scale_x_discrete(labels = c("TUSCO" = "TUSCO", "Other" = "Other")) +
+    labs(
+      title = paste0(panel_label, "   ", ifelse(score_type == "Expression", "Expression Score", "Splicing Score")),
+      x = "",
+      y = expression(log[10](Score + 10^{
+        -4
+      }))
+    ) +
+    nature_theme +
+    theme(
+      legend.position = "none",
+      axis.line = element_blank()
+    )
+}
+
+# Create panels a (Expression) and b (Splicing)
+p_expression <- make_panel_plot(plot_dt_log, "Expression", "a")
+p_splicing <- make_panel_plot(plot_dt_log, "Splicing", "b")
+
+# Extract legend from one panel for shared legend
+p_legend_source <- ggplot(plot_dt_log, aes(x = Group, y = log_score, fill = PlotGroup)) +
+  geom_violin(alpha = 0.7) +
+  scale_fill_manual(
+    values = custom_colors,
+    name = "Dataset",
+    labels = label_names
+  ) +
+  nature_theme +
+  theme(legend.position = "bottom") +
+  guides(fill = guide_legend(nrow = 1, title.position = "left"))
+
+# Combine panels with shared legend
+p_log <- (p_expression | p_splicing) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
 
 ## Linear-scale version omitted per request. Only log-scale figure is generated.
 
@@ -277,8 +336,10 @@ p_log <- ggplot(plot_dt_log, aes(x = Group, y = log_score, fill = PlotGroup)) +
 # =============================================================================
 
 # Save plot to PDF with standardized dimensions
-ggsave(filename = output_file_log, plot = p_log, device = "pdf", 
-       width = params$width, height = params$height, units = "in", dpi = 300, bg = "transparent")
+ggsave(
+  filename = output_file_log, plot = p_log, device = "pdf",
+  width = params$width, height = params$height, units = "in", dpi = 300, bg = "transparent"
+)
 message("Saved plot: ", output_file_log)
 
 # Matching TSV with underlying data and minimal metadata.
@@ -292,7 +353,8 @@ summary_log <- raw_log[, .(
   mean = mean(value, na.rm = TRUE),
   sd = sd(value, na.rm = TRUE)
 ), by = .(figure_id, panel_id, Species, Group)]
-summary_log$variable <- "log10_score_plus_offset"; summary_log$value <- NA_real_
+summary_log$variable <- "log10_score_plus_offset"
+summary_log$value <- NA_real_
 summary_log$gene_id <- NA_character_
 
 raw_log[, record_type := "raw"]
@@ -314,48 +376,54 @@ extraction_data_list <- list()
 if (nrow(summary_log) > 0) {
   for (i in 1:nrow(summary_log)) {
     row <- summary_log[i]
-    metric_name <- paste0(tolower(row$Species), "_", 
-                         tolower(row$Group), "_", 
-                         tolower(row$panel_id), "_",
-                         "median")
-    
+    metric_name <- paste0(
+      tolower(row$Species), "_",
+      tolower(row$Group), "_",
+      tolower(row$panel_id), "_",
+      "median"
+    )
+
     extraction_data_list[[paste0(i, "_median")]] <- data.frame(
       figure_id = "fig-s2",
       metric_name = metric_name,
-      value = formatC(row$median, format="f", digits=3),
+      value = formatC(row$median, format = "f", digits = 3),
       ci_lower = NA,
       ci_upper = NA,
       notes = paste0("AlphaGenome ", row$panel_id, " score median"),
       stringsAsFactors = FALSE
     )
-    
+
     # Also extract mean and sd for reference
-    metric_name_mean <- paste0(tolower(row$Species), "_", 
-                              tolower(row$Group), "_", 
-                              tolower(row$panel_id), "_",
-                              "mean")
-                              
+    metric_name_mean <- paste0(
+      tolower(row$Species), "_",
+      tolower(row$Group), "_",
+      tolower(row$panel_id), "_",
+      "mean"
+    )
+
     extraction_data_list[[paste0(i, "_mean")]] <- data.frame(
       figure_id = "fig-s2",
       metric_name = metric_name_mean,
-      value = formatC(row$mean, format="f", digits=3),
+      value = formatC(row$mean, format = "f", digits = 3),
       ci_lower = NA,
       ci_upper = NA,
       notes = paste0("AlphaGenome ", row$panel_id, " score mean"),
       stringsAsFactors = FALSE
     )
-    
-    metric_name_sd <- paste0(tolower(row$Species), "_", 
-                            tolower(row$Group), "_", 
-                            tolower(row$panel_id), "_",
-                            "sd")
-    
+
+    metric_name_sd <- paste0(
+      tolower(row$Species), "_",
+      tolower(row$Group), "_",
+      tolower(row$panel_id), "_",
+      "sd"
+    )
+
     extraction_data_list[[paste0(i, "_sd")]] <- data.frame(
       figure_id = "fig-s2",
       metric_name = metric_name_sd,
-      value = formatC(row$sd, format="f", digits=3),
+      value = formatC(row$sd, format = "f", digits = 3),
       ci_lower = NA,
-      ci_upper = NA,  
+      ci_upper = NA,
       notes = paste0("AlphaGenome ", row$panel_id, " score SD"),
       stringsAsFactors = FALSE
     )
@@ -365,7 +433,7 @@ if (nrow(summary_log) > 0) {
 # Combine all extraction data
 if (length(extraction_data_list) > 0) {
   extraction_data <- rbindlist(extraction_data_list, use.names = TRUE, fill = TRUE)
-  
+
   # Write or append to file
   if (!file.exists(extraction_file)) {
     fwrite(extraction_data, extraction_file, sep = "\t", quote = FALSE)
@@ -373,7 +441,7 @@ if (length(extraction_data_list) > 0) {
   } else {
     fwrite(extraction_data, extraction_file, sep = "\t", quote = FALSE, append = TRUE, col.names = FALSE)
   }
-  
+
   cat("[INFO] Extracted ", nrow(extraction_data), " AlphaGenome metrics to: ", extraction_file, "\n", sep = "")
 } else {
   cat("[INFO] No AlphaGenome data available for extraction\n")
@@ -381,4 +449,6 @@ if (length(extraction_data_list) > 0) {
 # === END EXTRACTION ===
 
 cat(sprintf("[INFO] fig-s2 run finished at %s\n", format(Sys.time(), tz = "UTC")))
-sink(type = "message"); sink(type = "output"); close(log_con)
+sink(type = "message")
+sink(type = "output")
+close(log_con)

@@ -1,0 +1,17 @@
+Type	pipeline	gene_name
+TUSCO	es_drna_ont	ENSMUSG00000045210
+SIRVs	es_drna_ont	novel
+TUSCO	es_cdna_ont	ENSMUSG00000036376
+TUSCO	es_cdna_ont	ENSMUSG00000028367
+SIRVs	es_cdna_ont	novel
+TUSCO	es_cdna_pacbio	ENSMUSG00000117924
+TUSCO	es_cdna_pacbio	ENSMUSG00000031983
+TUSCO	es_cdna_pacbio	ENSMUSG00000020671
+TUSCO	es_drna_ont_ls	ENSMUSG00000045210
+SIRVs	es_drna_ont_ls	novel
+TUSCO	es_cdna_ont_ls	ENSMUSG00000036376
+TUSCO	es_cdna_ont_ls	ENSMUSG00000028367
+SIRVs	es_cdna_ont_ls	novel
+TUSCO	es_cdna_pacbio_ls	ENSMUSG00000117924
+TUSCO	es_cdna_pacbio_ls	ENSMUSG00000031983
+TUSCO	es_cdna_pacbio_ls	ENSMUSG00000020671

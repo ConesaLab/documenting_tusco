@@ -60,8 +60,8 @@ export VECLIB_MAXIMUM_THREADS=${VECLIB_MAXIMUM_THREADS:-1}
 export R_MAX_NUM_DLLS=${R_MAX_NUM_DLLS:-150}
 
 SCRIPTS=(
-  #figs/figure-01/code/figure1d.R
-  #figs/figure-01/code/figure1c_figure-s1.R
+  #figs/figure-02/code/figure2d.R
+  figs/figure-02/code/figure2c.R
   figs/figure-03/code/figure3a-human.R
   figs/figure-03/code/figure3a-mouse.R
   figs/figure-03/code/figure3b-human.R
@@ -71,11 +71,16 @@ SCRIPTS=(
   figs/figure-03/code/figure3d-mouse.R
   figs/figure-03/code/table-s1.R
   figs/figure-04/code/fig-4b.R
-  figs/figure-04/code/fig-s5.R
-  figs/figure-05/code/fig-5b-5c-s6.R
+  figs/figure-05/code/fig-5b-5c.R
+  figs/supp-fig-07/code/fig-s6.R
+  figs/supp-fig-01/code/fig-s1.R
   figs/supp-fig-02/code/fig-s2.R
-  figs/supp-fig-03/code/FigureS3_correlation.R
+  figs/supp-fig-03/code/fig-s3.R
+  figs/supp-fig-04/code/FigureS3_correlation.R
   figs/supp-fig-04/code/fig-s4.R
+  figs/supp-fig-05/code/fig-s5.R
+  figs/supp-fig-06/code/fig-s6.R
+  figs/supp-fig-08/code/fig-s8.R
 )
 
 STATUS_KEYS=()
@@ -94,9 +99,9 @@ run_rscript() {
   local start_ts end_ts
   start_ts=$(date +%s)
 
-  # Decide LOCAL_ONLY for fig-5b-5c-s6 if precomputed TSVs exist
+  # Decide LOCAL_ONLY for fig-5b-5c if precomputed TSVs exist
   local use_local_only=0
-  if [[ "$script_base" == "fig-5b-5c-s6.R" ]]; then
+  if [[ "$script_base" == "fig-5b-5c.R" ]]; then
     local plot_dir="$ROOT_DIR/figs/figure-05/plots"
     local p1="$plot_dir/fig-5b_points.tsv"
     local p2="$plot_dir/fig-5b_bars.tsv"

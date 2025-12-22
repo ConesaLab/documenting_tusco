@@ -22,7 +22,7 @@
 # ------------------------ Configuration ------------------------------------ #
 ISOQUANT_ENV="isoquant"            # name of conda env with IsoQuant installed
 SQANTI3_ENV="SQANTI3.env"         # conda env containing SQANTI3
-SQANTI3_PATH="/home/tyuan/GitHub/SQANTI3"  # path where sqanti3_qc.py resides
+SQANTI3_PATH="${SQANTI3_PATH:-}"  # optional: directory containing sqanti3_qc.py (leave empty if in PATH)
 
 BASE_DATA_DIR="/storage/gge/Tian/lrgasp_data"      # input FASTQ root
 OUTPUT_BASE_DIR="/storage/gge/Tian/lrgasp_analysis/isoquant_sq3"  # out root

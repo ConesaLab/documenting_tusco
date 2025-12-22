@@ -219,3 +219,289 @@ fig-s6	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensiti
 fig-s6	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
 fig-s6	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
 fig-s6	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-5b	brain_1rep_sensitivity	73.1	67.6	78.7	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	brain_1rep_precision	64.3	59.8	68.7	TUSCO 1-replicate precision (95% CI)
+fig-5b	brain_2rep_sensitivity	71.9	70.8	72.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	brain_2rep_precision	88.6	87.4	89.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	brain_3rep_sensitivity	74.4	73.4	75.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	brain_3rep_precision	88.6	87.5	89.8	TUSCO 3-replicate precision (95% CI)
+fig-5b	brain_4rep_sensitivity	75.6	73.9	77.4	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	brain_4rep_precision	88.6	87.5	89.8	TUSCO 4-replicate precision (95% CI)
+fig-5b	brain_5rep_sensitivity	76.6	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	brain_5rep_precision	89.1	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-5b	kidney_1rep_sensitivity	67.1	61.1	73.1	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	kidney_1rep_precision	62.7	59.0	66.5	TUSCO 1-replicate precision (95% CI)
+fig-5b	kidney_2rep_sensitivity	66.2	63.5	68.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	kidney_2rep_precision	85.9	83.9	87.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	kidney_3rep_sensitivity	70.9	69.5	72.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	kidney_3rep_precision	84.6	83.8	85.4	TUSCO 3-replicate precision (95% CI)
+fig-5b	kidney_4rep_sensitivity	72.0	69.5	74.5	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	kidney_4rep_precision	83.9	82.3	85.6	TUSCO 4-replicate precision (95% CI)
+fig-5b	kidney_5rep_sensitivity	73.3	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	kidney_5rep_precision	84.6	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-s6	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensitivity (95% CI)
+fig-s6	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
+fig-s6	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
+fig-s6	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-5b	brain_1rep_sensitivity	73.1	67.6	78.7	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	brain_1rep_precision	64.3	59.8	68.7	TUSCO 1-replicate precision (95% CI)
+fig-5b	brain_2rep_sensitivity	71.9	70.8	72.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	brain_2rep_precision	88.6	87.4	89.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	brain_3rep_sensitivity	74.4	73.4	75.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	brain_3rep_precision	88.6	87.5	89.8	TUSCO 3-replicate precision (95% CI)
+fig-5b	brain_4rep_sensitivity	75.6	73.9	77.4	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	brain_4rep_precision	88.6	87.5	89.8	TUSCO 4-replicate precision (95% CI)
+fig-5b	brain_5rep_sensitivity	76.6	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	brain_5rep_precision	89.1	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-5b	kidney_1rep_sensitivity	67.1	61.1	73.1	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	kidney_1rep_precision	62.7	59.0	66.5	TUSCO 1-replicate precision (95% CI)
+fig-5b	kidney_2rep_sensitivity	66.2	63.5	68.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	kidney_2rep_precision	85.9	83.9	87.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	kidney_3rep_sensitivity	70.9	69.5	72.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	kidney_3rep_precision	84.6	83.8	85.4	TUSCO 3-replicate precision (95% CI)
+fig-5b	kidney_4rep_sensitivity	72.0	69.5	74.5	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	kidney_4rep_precision	83.9	82.3	85.6	TUSCO 4-replicate precision (95% CI)
+fig-5b	kidney_5rep_sensitivity	73.3	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	kidney_5rep_precision	84.6	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-s6	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensitivity (95% CI)
+fig-s6	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
+fig-s6	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
+fig-s6	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-5b	brain_1rep_sensitivity	73.1	67.6	78.7	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	brain_1rep_precision	64.3	59.8	68.7	TUSCO 1-replicate precision (95% CI)
+fig-5b	brain_2rep_sensitivity	71.9	70.8	72.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	brain_2rep_precision	88.6	87.4	89.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	brain_3rep_sensitivity	74.4	73.4	75.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	brain_3rep_precision	88.6	87.5	89.8	TUSCO 3-replicate precision (95% CI)
+fig-5b	brain_4rep_sensitivity	75.6	73.9	77.4	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	brain_4rep_precision	88.6	87.5	89.8	TUSCO 4-replicate precision (95% CI)
+fig-5b	brain_5rep_sensitivity	76.6	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	brain_5rep_precision	89.1	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-5b	kidney_1rep_sensitivity	67.1	61.1	73.1	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	kidney_1rep_precision	62.7	59.0	66.5	TUSCO 1-replicate precision (95% CI)
+fig-5b	kidney_2rep_sensitivity	66.2	63.5	68.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	kidney_2rep_precision	85.9	83.9	87.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	kidney_3rep_sensitivity	70.9	69.5	72.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	kidney_3rep_precision	84.6	83.8	85.4	TUSCO 3-replicate precision (95% CI)
+fig-5b	kidney_4rep_sensitivity	72.0	69.5	74.5	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	kidney_4rep_precision	83.9	82.3	85.6	TUSCO 4-replicate precision (95% CI)
+fig-5b	kidney_5rep_sensitivity	73.3	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	kidney_5rep_precision	84.6	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-s6	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensitivity (95% CI)
+fig-s6	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
+fig-s6	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
+fig-s6	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-5b	brain_1rep_sensitivity	73.1	67.6	78.7	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	brain_1rep_precision	64.3	59.8	68.7	TUSCO 1-replicate precision (95% CI)
+fig-5b	brain_2rep_sensitivity	71.9	70.8	72.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	brain_2rep_precision	88.6	87.4	89.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	brain_3rep_sensitivity	74.4	73.4	75.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	brain_3rep_precision	88.6	87.5	89.8	TUSCO 3-replicate precision (95% CI)
+fig-5b	brain_4rep_sensitivity	75.6	73.9	77.4	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	brain_4rep_precision	88.6	87.5	89.8	TUSCO 4-replicate precision (95% CI)
+fig-5b	brain_5rep_sensitivity	76.6	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	brain_5rep_precision	89.1	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-5b	kidney_1rep_sensitivity	67.1	61.1	73.1	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	kidney_1rep_precision	62.7	59.0	66.5	TUSCO 1-replicate precision (95% CI)
+fig-5b	kidney_2rep_sensitivity	66.2	63.5	68.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	kidney_2rep_precision	85.9	83.9	87.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	kidney_3rep_sensitivity	70.9	69.5	72.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	kidney_3rep_precision	84.6	83.8	85.4	TUSCO 3-replicate precision (95% CI)
+fig-5b	kidney_4rep_sensitivity	72.0	69.5	74.5	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	kidney_4rep_precision	83.9	82.3	85.6	TUSCO 4-replicate precision (95% CI)
+fig-5b	kidney_5rep_sensitivity	73.3	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	kidney_5rep_precision	84.6	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-s6	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensitivity (95% CI)
+fig-s6	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
+fig-s6	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
+fig-s6	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-5b	brain_1rep_sensitivity	73.1	67.6	78.7	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	brain_1rep_precision	64.3	59.8	68.7	TUSCO 1-replicate precision (95% CI)
+fig-5b	brain_2rep_sensitivity	71.9	70.8	72.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	brain_2rep_precision	88.6	87.4	89.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	brain_3rep_sensitivity	74.4	73.4	75.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	brain_3rep_precision	88.6	87.5	89.8	TUSCO 3-replicate precision (95% CI)
+fig-5b	brain_4rep_sensitivity	75.6	73.9	77.4	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	brain_4rep_precision	88.6	87.5	89.8	TUSCO 4-replicate precision (95% CI)
+fig-5b	brain_5rep_sensitivity	76.6	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	brain_5rep_precision	89.1	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-5b	kidney_1rep_sensitivity	67.1	61.1	73.1	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	kidney_1rep_precision	62.7	59.0	66.5	TUSCO 1-replicate precision (95% CI)
+fig-5b	kidney_2rep_sensitivity	66.2	63.5	68.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	kidney_2rep_precision	85.9	83.9	87.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	kidney_3rep_sensitivity	70.9	69.5	72.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	kidney_3rep_precision	84.6	83.8	85.4	TUSCO 3-replicate precision (95% CI)
+fig-5b	kidney_4rep_sensitivity	72.0	69.5	74.5	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	kidney_4rep_precision	83.9	82.3	85.6	TUSCO 4-replicate precision (95% CI)
+fig-5b	kidney_5rep_sensitivity	73.3	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	kidney_5rep_precision	84.6	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-s6	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensitivity (95% CI)
+fig-s6	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
+fig-s6	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
+fig-s6	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-3b	human_PTP_pvalue	7.889e-02	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	4.876e-04	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	5.490e-04	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	1.054e-03	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	7.874e-02	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	1.800e-03	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	7.874e-02	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	1.800e-03	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	5.835e-04	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.744e-03	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	7.874e-02	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	1.800e-03	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	5.835e-04	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.744e-03	NA	NA	Two-sided paired t-test (TUSCO vs SIRVs); direction from mean(TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	3.501e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	3.501e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	3.501e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	3.501e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (Wilcoxon signed-rank; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	human_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_PTP_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3b	mouse_FN_pvalue	4.615e-02	NA	NA	Two-sided paired test (sign-flip permutation test; TUSCO vs SIRVs); direction from estimated shift (TUSCO-SIRVs)
+fig-3c	TUSCO_R_correlation	  NA	NA	NA	Pearson correlation: RIN vs TP/(TP+PTP)
+fig-3c	TUSCO_p_value	 NA	NA	NA	Pearson correlation: RIN vs TP/(TP+PTP)
+fig-3c	Sequins_R_correlation	  NA	NA	NA	Pearson correlation: RIN vs TP/(TP+PTP)
+fig-3c	Sequins_p_value	 NA	NA	NA	Pearson correlation: RIN vs TP/(TP+PTP)
+fig-5b	brain_1rep_sensitivity	73.1	67.6	78.7	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	brain_1rep_precision	64.3	59.8	68.7	TUSCO 1-replicate precision (95% CI)
+fig-5b	brain_2rep_sensitivity	71.9	70.8	72.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	brain_2rep_precision	88.6	87.4	89.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	brain_3rep_sensitivity	74.4	73.4	75.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	brain_3rep_precision	88.6	87.5	89.8	TUSCO 3-replicate precision (95% CI)
+fig-5b	brain_4rep_sensitivity	75.6	73.9	77.4	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	brain_4rep_precision	88.6	87.5	89.8	TUSCO 4-replicate precision (95% CI)
+fig-5b	brain_5rep_sensitivity	76.6	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	brain_5rep_precision	89.1	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-5b	kidney_1rep_sensitivity	67.1	61.1	73.1	TUSCO 1-replicate sensitivity (95% CI)
+fig-5b	kidney_1rep_precision	62.7	59.0	66.5	TUSCO 1-replicate precision (95% CI)
+fig-5b	kidney_2rep_sensitivity	66.2	63.5	68.9	TUSCO 2-replicate sensitivity (95% CI)
+fig-5b	kidney_2rep_precision	85.9	83.9	87.8	TUSCO 2-replicate precision (95% CI)
+fig-5b	kidney_3rep_sensitivity	70.9	69.5	72.3	TUSCO 3-replicate sensitivity (95% CI)
+fig-5b	kidney_3rep_precision	84.6	83.8	85.4	TUSCO 3-replicate precision (95% CI)
+fig-5b	kidney_4rep_sensitivity	72.0	69.5	74.5	TUSCO 4-replicate sensitivity (95% CI)
+fig-5b	kidney_4rep_precision	83.9	82.3	85.6	TUSCO 4-replicate precision (95% CI)
+fig-5b	kidney_5rep_sensitivity	73.3	NA	NA	TUSCO 5-replicate sensitivity (95% CI)
+fig-5b	kidney_5rep_precision	84.6	NA	NA	TUSCO 5-replicate precision (95% CI)
+fig-s6	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensitivity (95% CI)
+fig-s6	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
+fig-s6	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
+fig-s6	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-s2	human_other_expression_median	-2.213			AlphaGenome Expression score median
+fig-s2	human_other_expression_mean	-1.883			AlphaGenome Expression score mean
+fig-s2	human_other_expression_sd	1.633			AlphaGenome Expression score SD
+fig-s2	human_tusco_expression_median	0.731			AlphaGenome Expression score median
+fig-s2	human_tusco_expression_mean	0.704			AlphaGenome Expression score mean
+fig-s2	human_tusco_expression_sd	0.411			AlphaGenome Expression score SD
+fig-s2	mouse_other_expression_median	-2.569			AlphaGenome Expression score median
+fig-s2	mouse_other_expression_mean	-2.437			AlphaGenome Expression score mean
+fig-s2	mouse_other_expression_sd	1.219			AlphaGenome Expression score SD
+fig-s2	mouse_tusco_expression_median	0.489			AlphaGenome Expression score median
+fig-s2	mouse_tusco_expression_mean	0.658			AlphaGenome Expression score mean
+fig-s2	mouse_tusco_expression_sd	0.508			AlphaGenome Expression score SD
+fig-s2	human_other_splicing_median	-0.880			AlphaGenome Splicing score median
+fig-s2	human_other_splicing_mean	-2.053			AlphaGenome Splicing score mean
+fig-s2	human_other_splicing_sd	1.795			AlphaGenome Splicing score SD
+fig-s2	human_tusco_splicing_median	-4.000			AlphaGenome Splicing score median
+fig-s2	human_tusco_splicing_mean	-4.000			AlphaGenome Splicing score mean
+fig-s2	human_tusco_splicing_sd	0.000			AlphaGenome Splicing score SD
+fig-s2	mouse_other_splicing_median	-0.463			AlphaGenome Splicing score median
+fig-s2	mouse_other_splicing_mean	-1.548			AlphaGenome Splicing score mean
+fig-s2	mouse_other_splicing_sd	1.762			AlphaGenome Splicing score SD
+fig-s2	mouse_tusco_splicing_median	-4.000			AlphaGenome Splicing score median
+fig-s2	mouse_tusco_splicing_mean	-4.000			AlphaGenome Splicing score mean
+fig-s2	mouse_tusco_splicing_sd	0.000			AlphaGenome Splicing score SD
+fig-s5	human_tp_median_coverage	98.3			Median coverage percentage (Human TP)
+fig-s5	human_tp_mean_coverage	84.3			Mean coverage percentage (Human TP) - USE MEDIAN INSTEAD
+fig-s5	human_tp_sample_size	4892			Sample size (Human TP)
+fig-s5	human_ptp_median_coverage	31.7			Median coverage percentage (Human PTP)
+fig-s5	human_ptp_mean_coverage	54.7			Mean coverage percentage (Human PTP) - USE MEDIAN INSTEAD
+fig-s5	human_ptp_sample_size	633			Sample size (Human PTP)
+fig-s5	mouse_tp_median_coverage	94.7			Median coverage percentage (Mouse TP)
+fig-s5	mouse_tp_mean_coverage	79.7			Mean coverage percentage (Mouse TP) - USE MEDIAN INSTEAD
+fig-s5	mouse_tp_sample_size	8920			Sample size (Mouse TP)
+fig-s5	mouse_ptp_median_coverage	53.7			Median coverage percentage (Mouse PTP)
+fig-s5	mouse_ptp_mean_coverage	62.1			Mean coverage percentage (Mouse PTP) - USE MEDIAN INSTEAD
+fig-s5	mouse_ptp_sample_size	2564			Sample size (Mouse PTP)
+fig-s6	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensitivity (95% CI)
+fig-s6	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
+fig-s6	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
+fig-s6	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-s7	brain_sirv_1rep_sensitivity	86.1	83.7	88.5	SIRV brain 1-replicate sensitivity (95% CI)
+fig-s7	brain_sirv_1rep_precision	99.3	98.2	100.5	SIRV brain 1-replicate precision (95% CI)
+fig-s7	kidney_sirv_1rep_sensitivity	84.6	81.4	87.9	SIRV kidney 1-replicate sensitivity (95% CI)
+fig-s7	kidney_sirv_1rep_precision	99.0	97.9	100.1	SIRV kidney 1-replicate precision (95% CI)
+fig-s2	human_other_expression_median	-2.213			AlphaGenome Expression score median
+fig-s2	human_other_expression_mean	-1.883			AlphaGenome Expression score mean
+fig-s2	human_other_expression_sd	1.633			AlphaGenome Expression score SD
+fig-s2	human_tusco_expression_median	0.731			AlphaGenome Expression score median
+fig-s2	human_tusco_expression_mean	0.704			AlphaGenome Expression score mean
+fig-s2	human_tusco_expression_sd	0.411			AlphaGenome Expression score SD
+fig-s2	mouse_other_expression_median	-2.569			AlphaGenome Expression score median
+fig-s2	mouse_other_expression_mean	-2.437			AlphaGenome Expression score mean
+fig-s2	mouse_other_expression_sd	1.219			AlphaGenome Expression score SD
+fig-s2	mouse_tusco_expression_median	0.489			AlphaGenome Expression score median
+fig-s2	mouse_tusco_expression_mean	0.658			AlphaGenome Expression score mean
+fig-s2	mouse_tusco_expression_sd	0.508			AlphaGenome Expression score SD
+fig-s2	human_other_splicing_median	-0.880			AlphaGenome Splicing score median
+fig-s2	human_other_splicing_mean	-2.053			AlphaGenome Splicing score mean
+fig-s2	human_other_splicing_sd	1.795			AlphaGenome Splicing score SD
+fig-s2	human_tusco_splicing_median	-4.000			AlphaGenome Splicing score median
+fig-s2	human_tusco_splicing_mean	-4.000			AlphaGenome Splicing score mean
+fig-s2	human_tusco_splicing_sd	0.000			AlphaGenome Splicing score SD
+fig-s2	mouse_other_splicing_median	-0.463			AlphaGenome Splicing score median
+fig-s2	mouse_other_splicing_mean	-1.548			AlphaGenome Splicing score mean
+fig-s2	mouse_other_splicing_sd	1.762			AlphaGenome Splicing score SD
+fig-s2	mouse_tusco_splicing_median	-4.000			AlphaGenome Splicing score median
+fig-s2	mouse_tusco_splicing_mean	-4.000			AlphaGenome Splicing score mean
+fig-s2	mouse_tusco_splicing_sd	0.000			AlphaGenome Splicing score SD
+fig-s2	human_other_expression_median	-2.213			AlphaGenome Expression score median
+fig-s2	human_other_expression_mean	-1.883			AlphaGenome Expression score mean
+fig-s2	human_other_expression_sd	1.633			AlphaGenome Expression score SD
+fig-s2	human_tusco_expression_median	0.731			AlphaGenome Expression score median
+fig-s2	human_tusco_expression_mean	0.704			AlphaGenome Expression score mean
+fig-s2	human_tusco_expression_sd	0.411			AlphaGenome Expression score SD
+fig-s2	mouse_other_expression_median	-2.569			AlphaGenome Expression score median
+fig-s2	mouse_other_expression_mean	-2.437			AlphaGenome Expression score mean
+fig-s2	mouse_other_expression_sd	1.219			AlphaGenome Expression score SD
+fig-s2	mouse_tusco_expression_median	0.489			AlphaGenome Expression score median
+fig-s2	mouse_tusco_expression_mean	0.658			AlphaGenome Expression score mean
+fig-s2	mouse_tusco_expression_sd	0.508			AlphaGenome Expression score SD
+fig-s2	human_other_splicing_median	-0.880			AlphaGenome Splicing score median
+fig-s2	human_other_splicing_mean	-2.053			AlphaGenome Splicing score mean
+fig-s2	human_other_splicing_sd	1.795			AlphaGenome Splicing score SD
+fig-s2	human_tusco_splicing_median	-4.000			AlphaGenome Splicing score median
+fig-s2	human_tusco_splicing_mean	-4.000			AlphaGenome Splicing score mean
+fig-s2	human_tusco_splicing_sd	0.000			AlphaGenome Splicing score SD
+fig-s2	mouse_other_splicing_median	-0.463			AlphaGenome Splicing score median
+fig-s2	mouse_other_splicing_mean	-1.548			AlphaGenome Splicing score mean
+fig-s2	mouse_other_splicing_sd	1.762			AlphaGenome Splicing score SD
+fig-s2	mouse_tusco_splicing_median	-4.000			AlphaGenome Splicing score median
+fig-s2	mouse_tusco_splicing_mean	-4.000			AlphaGenome Splicing score mean
+fig-s2	mouse_tusco_splicing_sd	0.000			AlphaGenome Splicing score SD

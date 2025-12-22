@@ -57,7 +57,7 @@ At the 300bp threshold:
 ### Regenerate analysis from scratch:
 
 ```bash
-cd /Users/tianyuan/Desktop/github_dev/documenting_tusco/reviewer_response/review_plots/TSS
+cd reviewer_response/review_plots/reviewer3/TSS
 
 # 1. Calculate distance distributions and peak counts (takes ~2-3 minutes)
 python calculate_tss_distances_corrected.py

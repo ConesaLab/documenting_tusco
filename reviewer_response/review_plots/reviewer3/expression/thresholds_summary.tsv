@@ -1,0 +1,9 @@
+config	species	bgee_prevalence	bgee_tissues_required	bgee_tissues_total	gtex_prevalence	final_universal_genes	final_transcripts	genes_removed_step5
+hsa_prev_current	hsa	0.95	123	130	0.95	48	46	735
+hsa_prev_lenient	hsa	0.75	97	130	0.75	66	64	717
+hsa_prev_more_lenient	hsa	0.55	71	130	0.55	81	79	702
+hsa_prev_strict	hsa	0.99	128	130	0.99	37	36	746
+mmu_prev_current	mmu	0.9	26	29		33	32	671
+mmu_prev_lenient	mmu	0.7	20	29		41	40	663
+mmu_prev_more_lenient	mmu	0.5	14	29		59	58	645
+mmu_prev_strict	mmu	0.95	27	29		31	30	673

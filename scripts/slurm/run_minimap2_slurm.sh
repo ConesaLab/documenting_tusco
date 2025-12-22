@@ -40,7 +40,7 @@ source_conda_env() {
         exit 1
     fi
 
-    CONDA_ENV_PATH="/home/tyuan/.conda/envs/minimap2"
+    CONDA_ENV_PATH="${CONDA_ENV_PATH:-$HOME/.conda/envs/minimap2}"
     conda activate "${CONDA_ENV_PATH}"
     if [ $? -ne 0 ]; then
         echo "Error: Failed to activate conda environment ${CONDA_ENV_PATH}."

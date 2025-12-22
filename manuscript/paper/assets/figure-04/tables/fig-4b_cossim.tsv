@@ -1,0 +1,5 @@
+tool_id	tool	n_pairs	mean_cosine_similarity	median_cosine_similarity
+bambu	Bambu	8	0.9059793860607414	0.9052710273431872
+stringtie2	StringTie2	8	0.9226625938230585	0.9251745069427806
+flair	FLAIR	8	0.9750272085707472	0.9835649510233252
+isoseq_sqanti3ml	Iso-Seq + SQ3 ML	2	0.9959987491177222	0.9959987491177222
