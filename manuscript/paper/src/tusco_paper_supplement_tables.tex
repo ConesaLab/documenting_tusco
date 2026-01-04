@@ -79,17 +79,17 @@
 
   \begin{table}[htbp]
       \centering
-      \caption{\textbf{TUSCO benchmarking framework gene selection parameter choices and sensitivity analysis summary.} Key parameters for gene selection in the TUSCO benchmarking framework with their selected values and rationale. Window sizes, expression thresholds, and splice ratios were validated as described in Supplementary Fig.~8.}
+      \caption{\textbf{TUSCO benchmarking framework gene selection parameter choices and sensitivity analysis summary.} Key parameters for gene selection in the TUSCO benchmarking framework with their selected values and rationale.}
       \label{tab:4}
       {\footnotesize
       \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{3cm}p{2.2cm}p{2.2cm}p{5.5cm}@{}}
           \toprule
           Parameter & Human & Mouse & Justification \\
           \midrule
-          TSS CAGE window & $\pm$300 bp & N/A & Balances 96.6\% sensitivity with 2.1\% collision rate (Supplementary Fig.~8a--b) \\
-          Novel splice $\alpha$ & 0.01 & 0.05 & Captures $>$95\% of genes in the TUSCO gene set below threshold (Supplementary Fig.~8e) \\
+          TSS CAGE window & $\pm$300 bp & N/A & Balances 96.6\% sensitivity with 2.1\% collision rate \\
+          Novel splice $\alpha$ & 0.01 & 0.05 & Captures $>$95\% of genes in the TUSCO gene set below threshold \\
           Min junction length & 80 bp & 80 bp & Excludes short artifactual junctions \\
-          Expression median & $\geq$1.0 RPKM & $\geq$0.25 RPKM & Balances gene count vs.\ FN rate and selects the high-expression tail (median gene in the TUSCO gene set ranks at the 90.3545th percentile in human and the 96.5232nd percentile in mouse by AlphaGenome tissue-median RPKM; Supplementary Fig.~8c--d; Fig.~3d) \\
+          Expression median & $\geq$1.0 RPKM & $\geq$0.25 RPKM & Balances gene count vs.\ FN rate and selects the high-expression tail (median gene in the TUSCO gene set ranks at the 90.3545th percentile in human and the 96.5232nd percentile in mouse by AlphaGenome tissue-median RPKM; Fig.~3d) \\
           Tissue prevalence & $\geq$95\% & $\geq$90\% & Ensures universal expression \\
           Splice purity & $\geq$95\% & $\geq$90\% & Excludes alternative splicing \\
           \bottomrule

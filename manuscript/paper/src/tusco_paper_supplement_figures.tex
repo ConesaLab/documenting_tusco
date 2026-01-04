@@ -17,9 +17,7 @@
 		  per-read coverage by reference transcript exonic length. Finally,
 		  Supplementary Fig.~7 evaluates how SIRV-based concordance metrics respond to replicate
 		  number, contextualising the stability of spike-in controls relative to
-		  endogenous benchmarks. Supplementary Fig.~8 presents comprehensive parameter sensitivity
-		  analyses validating the threshold choices for TSS windows, expression levels,
-		  and splice junction ratios used in gene selection within the TUSCO benchmarking framework.
+		  endogenous benchmarks.
   \setcounter{figure}{0}
   \renewcommand{\figurename}{Supplementary Figure}
   \renewcommand{\thefigure}{\arabic{figure}}
@@ -85,14 +83,6 @@
 	      \label{fig:s7}
 	  \end{figure}
 
-  \clearpage
-
-	  \begin{figure}[htbp]
-	      \centering
-	      \includegraphics[width=\textwidth]{../assets/fig/fig-s8.pdf}
-	      \caption{\textbf{Parameter sensitivity analysis for gene selection in the TUSCO benchmarking framework.} \textbf{a}, ECDF of TSS distances showing sensitivity (within-gene) and collision rate (between-gene) as a function of window size for human and mouse; dashed line indicates the selected 300 bp threshold. \textbf{b}, Number of refTSS peaks per gene (75th percentile) at different window sizes; the 300 bp window captures genes with simple promoter architecture. \textbf{c}, Median false-negative rates across six LRGASP pipelines for four expression threshold configurations (Strict, Current, Lenient, More Lenient) in human and mouse; error bars show interquartile range; dashed line indicates SIRV baseline. \textbf{d}, Expression density distributions showing genes in the TUSCO gene set (green) vs.\ all GENCODE single-isoform genes (gray) for human and mouse; genes in the TUSCO gene set occupy the high-expression tail. \textbf{e}, ECDF of splice junction ratios (max novel reads / mean annotated reads) comparing genes in the TUSCO gene set to single-isoform genes outside the TUSCO gene set; dashed lines show species-specific $\alpha$ thresholds (human: 0.01, mouse: 0.05).}
-		      \label{fig:s8}
-		  \end{figure}
 		}
 
 \ifdefined\SupplementMaster

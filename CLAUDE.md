@@ -71,3 +71,9 @@ Download the dataset archive and extract to repository root:
 https://tusco-paper-data.s3.eu-north-1.amazonaws.com/data.zip
 ```
 The `run_all_figs.sh` script handles this automatically.
+
+### reply to reviewer
+1. the changes in red font in the main manuscript
+2. add line numbers
+3. Make sure in all responses you indicate the changed text (if applicable) and the line number. 
+
