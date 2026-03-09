@@ -9,6 +9,7 @@
   \renewcommand{\tablename}{Supplementary Table}
   \renewcommand{\thetable}{\arabic{table}}
 
+  %% Table 1: Cosine similarity (unchanged)
   \begin{table}[htbp]
       \centering
       \caption{\textbf{Cosine similarity between TUSCO and SIRV benchmarks.} Six evaluation metrics---non-redundant sensitivity (Sn), non-redundant precision (nrPre), inverse redundancy (1/red), one minus false-discovery rate (1-FDR), positive detection rate (PDR), and redundant precision (rPre)---were computed as percentages for SIRVs and TUSCO across pipelines spanning distinct data modalities (direct RNA or cDNA; ONT or PacBio). ``LS'' indicates integration of long- and short-read evidence. Values near 1 denote closely matched benchmark performance.}
@@ -33,32 +34,57 @@
       \end{tabular*}
   \end{table}
 
-	  \begin{table}[htbp]
-	      \centering
-	      \caption{\textbf{Composite-score drop between native and TUSCO-novel evaluations.} For each sample, we computed a composite score as the mean of the six TUSCO metrics shown in the Fig.~4b dumbbell plots (Sn, nrPre, $\mathrm{Redundancy}^{-1}$, $1-\mathrm{FDR}$, PDR, rPre; all in percent). The percentage drop is $(S_{\mathrm{ref}} - S_{\mathrm{novel}}) / S_{\mathrm{ref}} \times 100$. Values are summarised separately for human (WTC11) and mouse (ES) samples of each pipeline.}
-	      \label{tab:2}
-	      {\footnotesize
-	      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrr@{}}
-	          \toprule
-	          Tool & Species & $n_{\text{pairs}}$ & Median drop (\%) & Median score (ref) & Median score (novel) \\
-	          \midrule
-	          Bambu & Human & 4 & 52.70 & 100.00 & 47.01 \\
-	          Bambu & Mouse & 4 & 45.22 & 98.08 & 53.73 \\
-	          StringTie2 & Human & 4 & 30.48 & 75.79 & 53.16 \\
-	          StringTie2 & Mouse & 4 & 49.87 & 82.11 & 40.63 \\
-	          FLAIR & Human & 4 & 21.86 & 79.99 & 62.48 \\
-	          FLAIR & Mouse & 4 & 22.67 & 78.49 & 59.77 \\
-	          Iso-Seq + SQANTI3 ML & Human & 1 & -0.73 & 76.29 & 76.85 \\
-	          Iso-Seq + SQANTI3 ML & Mouse & 1 & 1.43 & 73.38 & 72.33 \\
-	          \bottomrule
-	      \end{tabular*}
-	      }
-	  \end{table}
-
+  %% Table 2: MAJIQ-L numerical results (was Table 4)
   \begin{table}[htbp]
       \centering
-      \caption{\textbf{PacBio Iso-Seq read counts.} Full-length non-chimeric (FLNC) HiFi read counts for PacBio Iso-Seq samples from mouse kidney (K31--K35) and brain (B31--B35). These per-sample yields provide the sequencing-depth context for the replicate analysis in Fig.~5 and Supplementary Fig.~7 and help readers assess the trade-off between additional replicates versus deeper sequencing under a fixed budget. Each value represents the total number of mapped reads per sample, as determined by samtools.}
+      \caption{\textbf{MAJIQ-L junction-level benchmarking results.} Junction counts for each LRGASP pipeline comparing long-read reconstructions against matched short-read MAJIQ data from WTC11 human samples. TP = True Positive (junction detected by both LR and MAJIQ); FP = False Positive (LR junction not in MAJIQ); FN = False Negative (MAJIQ junction not detected by LR). Known junctions are present in the reference annotation; novel junctions are absent. ``LS'' indicates integration of long- and short-read evidence.}
+      \label{tab:2}
+      {\footnotesize
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}
+          \toprule
+          Pipeline & TP-known & FP-known & FN-known & TP-novel & FP-novel & FN-novel \\
+          \midrule
+          cDNA-ONT & 80,021 & 4,397 & 124,611 & 839 & 2,385 & 12,847 \\
+          cDNA-ONT (LS) & 81,343 & 4,447 & 123,289 & 2,221 & 2,904 & 11,465 \\
+          cDNA-PacBio & 138,081 & 3,617 & 66,551 & 939 & 1,312 & 12,747 \\
+          cDNA-PacBio (LS) & 139,903 & 3,637 & 64,729 & 2,655 & 1,645 & 11,031 \\
+          dRNA-ONT & 57,801 & 971 & 146,831 & 52 & 208 & 13,634 \\
+          dRNA-ONT (LS) & 58,718 & 980 & 145,914 & 181 & 237 & 13,505 \\
+          \bottomrule
+      \end{tabular*}
+      }
+  \end{table}
+
+  %% Table 3: Performance metrics under native and TUSCO-novel annotations (was Table 2)
+  \begin{table}[htbp]
+      \centering
+      \caption{\textbf{Performance metrics under native and TUSCO-novel annotations.} Sensitivity (Sn) and non-redundant precision (nrPre) across library preparation protocols. Values show mean with range (min--max) across $n$ protocol variants (CapTrap/cDNA $\times$ PacBio/ONT). Iso-Seq + SQANTI3 ML has $n=1$ (PacBio cDNA only).}
       \label{tab:3}
+      {\footnotesize
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llcllll@{}}
+          \toprule
+          & & & \multicolumn{2}{c}{Sn (\%)} & \multicolumn{2}{c}{nrPre (\%)} \\
+          \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+          Tool & Species & $n$ & ref & novel & ref & novel \\
+          \midrule
+          Bambu & Human & 4 & 100.0 & 48.9 (39.1--73.9) & 99.0 (95.8--100.0) & 30.2 (25.0--41.5) \\
+          Bambu & Mouse & 4 & 100.0 & 56.0 (48.0--72.0) & 96.2 & 32.4 (30.0--37.5) \\
+          StringTie2 & Human & 4 & 70.7 (52.2--95.7) & 39.1 (30.4--47.8) & 69.5 (58.3--95.7) & 37.1 (33.3--45.8) \\
+          StringTie2 & Mouse & 4 & 78.0 (68.0--92.0) & 27.0 (24.0--32.0) & 74.8 (65.5--92.0) & 22.5 (17.6--26.1) \\
+          FLAIR & Human & 4 & 68.5 (52.2--91.3) & 42.4 (17.4--65.2) & 77.4 (75.0--80.8) & 47.4 (22.2--71.4) \\
+          FLAIR & Mouse & 4 & 79.0 (68.0--96.0) & 53.0 (44.0--68.0) & 61.9 (50.0--68.6) & 35.7 (24.5--50.0) \\
+          Iso-Seq + SQ3 ML & Human & 1 & 52.2 & 52.2 & 57.1 & 63.2 \\
+          Iso-Seq + SQ3 ML & Mouse & 1 & 52.0 & 44.0 & 50.0 & 55.0 \\
+          \bottomrule
+      \end{tabular*}
+      }
+  \end{table}
+
+  %% Table 4: Read counts (was Table 3)
+  \begin{table}[htbp]
+      \centering
+      \caption{\textbf{PacBio Iso-Seq read counts.} Full-length non-chimeric (FLNC) HiFi read counts for PacBio Iso-Seq samples from mouse kidney (K31--K35) and brain (B31--B35). These per-sample yields provide the sequencing-depth context for the replicate analysis in Fig.~5 and Supplementary Fig.~6 and help readers assess the trade-off between additional replicates versus deeper sequencing under a fixed budget. Each value represents the total number of mapped reads per sample, as determined by samtools.}
+      \label{tab:4}
       \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrl@{}}
           \toprule
           Sample & Read Count & Tissue \\
@@ -75,49 +101,6 @@
           B35 & 3,914,079 & Brain \\
           \bottomrule
       \end{tabular*}
-  \end{table}
-
-  \begin{table}[htbp]
-      \centering
-      \caption{\textbf{TUSCO benchmarking framework gene selection parameter choices and sensitivity analysis summary.} Key parameters for gene selection in the TUSCO benchmarking framework with their selected values and rationale.}
-      \label{tab:4}
-      {\footnotesize
-      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{3cm}p{2.2cm}p{2.2cm}p{5.5cm}@{}}
-          \toprule
-          Parameter & Human & Mouse & Justification \\
-          \midrule
-          TSS CAGE window & $\pm$300 bp & N/A & Balances 96.6\% sensitivity with 2.1\% collision rate \\
-          Novel splice $\alpha$ & 0.01 & 0.05 & Captures $>$95\% of genes in the TUSCO gene set below threshold \\
-          Min junction length & 80 bp & 80 bp & Excludes short artifactual junctions \\
-          Expression median & $\geq$1.0 RPKM & $\geq$0.25 RPKM & Balances gene count vs.\ FN rate and selects the high-expression tail (median gene in the TUSCO gene set ranks at the 90.3545th percentile in human and the 96.5232nd percentile in mouse by AlphaGenome tissue-median RPKM; Fig.~3d) \\
-          Tissue prevalence & $\geq$95\% & $\geq$90\% & Ensures universal expression \\
-          Splice purity & $\geq$95\% & $\geq$90\% & Excludes alternative splicing \\
-          \bottomrule
-      \end{tabular*}
-      }
-  \end{table}
-
-  \begin{table}[htbp]
-      \centering
-      \caption{\textbf{MAJIQ-L benchmarking metric definitions.} Junction-level metrics used for comparison with TUSCO evaluation. MAJIQ-L uses matched short-read data processed by MAJIQ as ground truth; junctions are classified as known (present in annotation) or novel (absent from annotation). True negatives cannot be computed because unexpressed genes cannot be distinguished from expressed but undetected genes.}
-      \label{tab:5}
-      {\footnotesize
-      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{2cm}p{5.5cm}p{5.5cm}@{}}
-          \toprule
-          Metric & Known Junctions & Novel Junctions \\
-          \midrule
-          Ground truth & All junctions identified by MAJIQ from short reads & All novel junctions identified by MAJIQ from short reads \\
-          TP & LR junction present in annotation + MAJIQ & LR novel junction + MAJIQ novel junction \\
-          FP & LR junction present in annotation, not in MAJIQ & LR novel junction, not in MAJIQ \\
-          TN & \textit{Not computable (unknown expression)} & \textit{Not computable} \\
-          FN & No LR junction, present in MAJIQ & No LR novel junction, present in MAJIQ \\
-          \midrule
-          Sensitivity & TP / (TP + FN) & \\
-          FN rate & FN / (TP + FN) & \\
-          FDR & 100 $\times$ (N $-$ TP) / N, where N = total LR junctions & \\
-          \bottomrule
-      \end{tabular*}
-      }
   \end{table}
 }
 

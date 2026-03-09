@@ -1,5 +1,8 @@
-Figure S6 (SIRV metrics across replicate combinations)
+This folder contains the unified Reviewer 3 supplementary figure for parameter selection.
 
-- Code: `code/fig-s6.R`
-- Output: `plots/fig-s6.pdf`
-- Tables: `tables/fig-s6.tsv`, `plots/fig-s6_points.tsv`, `plots/fig-s6_bars.tsv`
+- Code: `reviewer_response/review_plots/reviewer3/parameter_selection/code/fig-r3-parameter-selection.R`
+- Outputs: `reviewer_response/review_plots/reviewer3/parameter_selection/plots/fig-r3-parameter-selection.pdf`
+
+Run from the repository root:
+`Rscript reviewer_response/review_plots/reviewer3/parameter_selection/code/fig-r3-parameter-selection.R`
+
