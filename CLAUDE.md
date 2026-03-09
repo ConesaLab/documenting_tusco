@@ -72,8 +72,37 @@ https://tusco-paper-data.s3.eu-north-1.amazonaws.com/data.zip
 ```
 The `run_all_figs.sh` script handles this automatically.
 
-### reply to reviewer
-1. the changes in red font in the main manuscript
-2. add line numbers
-3. Make sure in all responses you indicate the changed text (if applicable) and the line number. 
+### Reviewer Response Guidelines
 
+#### Manuscript Formatting Requirements
+1. All changes must be highlighted in **red font** in the main manuscript
+2. Line numbers must be added to the manuscript
+3. In all reviewer responses, indicate:
+   - The changed text (if applicable)
+   - The specific line number(s) where changes appear
+
+#### Quality Control Before Submission
+1. Cross-reference every supplementary figure citation in manuscript
+2. Verify sequential ordering of supplementary materials
+3. Ensure line numbers are accurate in all reviewer response references
+4. Final read-through for oversight errors
+
+#### Key File Locations
+
+| Component | Path |
+|-----------|------|
+| Main paper | `manuscript/paper/src/tusco_paper.tex` |
+| Supplementary figures | `manuscript/paper/src/tusco_paper_supplement_figures.tex` |
+| Supplementary tables | `manuscript/paper/src/tusco_paper_supplement_tables.tex` |
+| Reviewer response | `reviewer_response/reviewer_response.tex` |
+| Figure source code | `figs/figure-0N/code/` and `figs/supp-fig-0N/code/` |
+| Figure outputs (plots) | `figs/*/plots/` |
+| Manuscript assets | `manuscript/paper/assets/` |
+
+#### Revision Workflow
+
+When making manuscript edits:
+1. Update the main paper or supplementary `.tex` files as needed
+2. Copy updated figures from `figs/*/plots/` to `manuscript/paper/assets/`
+3. Update the reviewer response to reflect changes (include line numbers)
+4. Compile all modified LaTeX files to verify changes
