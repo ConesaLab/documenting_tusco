@@ -1,0 +1,172 @@
+** If you wish to forward this email to your co-authors, please delete the link to your author home page below **
+
+Dear Ana,
+
+Sorry for the delay in reaching an editorial decision with your manuscript, and thanks again for submitting your manuscript to Nature Communications. We have now received reports from 5 reviewers and, based on their comments, we have decided to invite a minor revision of your work. Your revision should address all the points raised by our reviewers (see their reports below).
+
+When resubmitting, you must provide a point-by-point response to the reviewers’ comments. Please show all changes in the manuscript text file with track changes or colour highlighting. If you are unable to address specific reviewer requests or find any points invalid, please explain why in the point-by-point response. I remember that you mentioned that you have a deadline for highlight papers at a conference by mid April, and as soon as you resubmit I will prioritize your manuscript to try to have it accepted before the deadline. 
+
+Important: In addition to the above, you must comply with the following editorial requests; we will not be able to proceed with your revised manuscript otherwise. Please also see the Nature Communications formatting instructions, which you may find useful while preparing your revised manuscript. Please also ensure that you comply with our editorial policies.
+
+
+POLICIES AND FORMS REQUIRED FOR RESUBMISSION 
+
+Please follow all reporting standards below:
+
+* Please complete or update the following checklist(s) to verify compliance with our research ethics and data reporting standards. Address all points on the checklist, revising your manuscript in response to the points if needed. 
+
+The form(s) must be downloaded and completed in Adobe Reader rather than opened in a web browser. Each form must be uploaded as a Related Manuscript file at the time of resubmission. 
+
+Reporting summary:
+https://www.nature.com/documents/nr-reporting-summary.pdf 
+
+* Your paper uses custom code/software. Please complete the following code and software submission checklist and make your code available for reviewer assessment, if you have not already done so. The code/software can be provided in a zip file with a readme.txt file or other instructions for installing and running the software. If appropriate, also provide example data and expected output. If you have any issues with the file upload, please let me know. 
+https://www.nature.com/documents/nr-software-policy.pdf
+
+
+DATA AND CODE AVAILABILITY
+* All Nature Communications manuscripts must include a “Data Availability” section after the Methods section but before the References. If any of the data can only be shared on request or are subject to restrictions, please specify the reasons and explain how, when, and by whom the data can be accessed. For more information on this policy and a list of examples, see:
+https://www.nature.com/documents/nr-data-availability-statements-data-citations.pdf 
+
+* Please also include a “Code Availability” section after the “Data Availability” section. If the code can only be shared on request, please specify the reasons. For more information on our code sharing policy and requirements, please see:
+https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards#availability-of-computer-code
+
+* As Nature Portfolio policies strongly encourage you to share your research data in a public repository (e.g. spreadsheets, text, images), we are partnering with the figshare repository so that you can use the figshare integration via the ‘Research Data Deposition’ tab when submitting your revised manuscript. 
+
+Data are stored privately until a manuscript decision is reached and you can edit/withdraw them up to this point: you retain rights and control over your data. The data will be published at the same time as your article; you will receive a data DOI, with guidance on linking the data and manuscript. In the event your manuscript is not accepted, you can keep or remove your data in figshare.
+
+We recommend the use of discipline-specific repositories where available and for a number of data typesthis is mandatory. Ensure you do not submit these data types or any sensitive data to figshare.
+
+* We strongly encourage you to deposit all new data associated with the paper in a persistent repository where they can be freely and enduringly accessed. We recommend submitting the data to discipline-specific and community-recognised repositories; a list of repositories is provided here: http://www.nature.com/sdata/policies/repositories
+Refer to our data policies here: https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards#availability-of-data
+
+* To maximise the reproducibility of research data, we ask that you provide a Source Data file containing the raw data underlying the following types of display items:
+- Any reported means/averages in box plots, bar charts, and tables
+- Dot plots/scatter plots, especially when there are overlapping points
+- Line graphs
+- Uncropped and unprocessed scans of all blots and gels including all quantified replicates. The edge of membranes, molecular weight ladders and loading controls should be presented on all blots. Where membranes have been cut, please ensure that at least one marker above and below is present. For an example of presentation of full scan blots, see the Source Data file of https://www.nature.com/articles/s41467-020-16984-1#Sec35 and for more information, please refer to https://www.nature.com/nature-research/editorial-policies/image-integrity.
+
+The data should be provided in a single Excel file with data for each figure/table in a separate sheet, or in multiple labelled files within a zipped folder. Name this file or folder ‘Source Data’, and include a brief description in your cover letter. The “Data Availability” section should also include the statement “Source Data are provided with this paper.”
+
+To learn more about our motivation behind this policy, please see: https://www.nature.com/articles/s41467-018-06012-8
+
+A Source Data file is not necessary if all display items presented in the main manuscript and supplementary information can be reproduced from raw data and code that have already been shared in a public repository.
+
+* Please replace your bar graphs with plots that feature information about the distribution of the underlying data. All data points should be shown for plots with a sample size less than 10. For larger sample sizes, please consider box-and-whisker or violin plots as alternatives. Measures of centrality, dispersion and/or error bars should be plotted and described in the figure legend. 
+
+
+ORCID 
+* Nature Communications is committed to improving transparency in authorship. As part of our efforts in this direction, we are now requesting that all authors identified as ‘corresponding author’ create and link their Open Researcher and Contributor Identifier (ORCID) with their account on the Manuscript Tracking System prior to acceptance. ORCID helps the scientific community achieve unambiguous attribution of all scholarly contributions. 
+
+You can create and link your ORCID from the home page of the Manuscript Tracking System by clicking on ‘Modify my Springer Nature account’ and following these instructions. Please also inform all co-authors that they can add their ORCIDs to their accounts and that they must do so prior to acceptance.
+
+For more information please visit http://www.springernature.com/orcid 
+If you experience problems in linking your ORCID, please contact the Platform Support Helpdesk.
+
+
+AUTHOR CHANGES ON REVISION 
+If there are any changes to the author list in the revised manuscript, please use this approval form www.nature.com/documents/nr-author-list-change-form.pdf, arranging for all authors on your paper to sign the statement confirming that they agree to the author list being changed, and add this document to your resubmission.
+
+
+HOW TO SUBMIT
+Please use the link below to submit the following items as separate documents:
+- Revised manuscript 
+- Any supplementary files
+- Point-by-point response to the reviewers’ comments, reproduced verbatim 
+- Cover letter to the editor
+- Any completed checklist(s)
+https://mts-ncomms.nature.com/cgi-bin/main.plex?el=A3S2Eizh5B6NpGH4I2A9ftdJ5ULuR83liGOVix4KPKXAZ
+** If you wish to forward this email to your coauthors, please delete the link above **
+
+
+When evaluating your revised manuscript, we will not consider any similar papers published independently in the meantime to compromise the novelty of your study. See here for more information.
+
+Best regards from a very sunny Berlin,
+Marta
+
+Dr. Marta del Olmo
+Associate Editor, Interface
+Nature Communications
+
+****************************
+
+
+REVIEWER COMMENTS
+
+Reviewer #1 (Remarks to the Author):
+
+My comments have been addressed. I recommend publication.
+
+
+Reviewer #2 (Remarks to the Author):
+
+My comments have been adequately addressed.
+
+
+Reviewer #3 (Remarks to the Author):
+
+I am satisfied with the responses and improvements made by authors to the comments by all reviewers. I am confident that now the manuscript is in a way better shape, still it is very complex and it might be a challenge for readers. I do not have further comments.
+
+
+Reviewer #4 (Remarks to the Author):
+
+We would first like to congratulate the authors on a job well done revising the manuscript. The response to reviewers is one of the best organized, clearly written, and thorough responses we have seen and the authors should be proud of the quality of their work. The authors did an excellent job addressing the points raised by all reviewers in the previous round, adding new analysis, new details, and improving the manuscript. We find that the manuscript has been greatly improved and all our substantive concerns have been addressed. 
+
+We did have some minor concerns that we are confident the authors can address easily, listed below, and we also failed to execute the TUSCO tutorial successfully, which is important to fix (but we are confident the authors can take care of this with no need for additional review):
+
+Minor points regarding the manuscript revisions:
+
+1.
+Overall, the new comparison of TUSCO to MAJIQ-L is well done and illuminating. As suspected, the two approaches capture different things as is reflected in the results of the new analysis. It’s encouraging to see that when comparing the technologies they get similar trends and where they differ the authors do a good job of explaining why. That said, for some reason, the description in the actual paper ends up inaccurate. 
+
+1a.
+When introducing the comparison (line 272) the authors state “MAJIQ-L reflects sequencing depth across all expressed junctions” - since sequencing depth by MAJIQ-L approach is fixed for all methods (to make the comparison fair), this is incorrect. Maybe what the authors were trying to say is that “MAJIQ-L reflects a given method/technology ability to achieve good coverage across all expressed junctions given a fixed sequencing depth”.
+
+1b.
+Next, in the discussion section (lines 419-421) the authors make the following conclusion which is also incorrect “..In contrast, short-read-based methods appear to be more sensitive to sequencing depth limitations that affect the detection of low-abundance and shorter transcripts and require” First, this sounds like there is an issue there with short-reads, when in fact it’s about evaluation using short reads (not the reads themselves) and the converse is true: They are able to capture more junctions in complex (non single isoform) genes (i.e. it’s a good thing!), which results in lower lower sensitivity estimates of the long reads tech compared to sensitivity using TUSCO based transcripts. Second, it’s actually not the shorter transcripts - it’s the longer ones, with more splice junctions that are further away from the polyA 3’ end where all the long reads have to start. Making those two things clear is actually important as it highlights the complimentary nature of evaluation with TUSCO and methods such as MAJIQ-L. 
+
+If the authors believe our conclusions are incorrect based on their own data/results we would like a clear explanation why, otherwise we are sure the above statements can easily be fixed.
+
+2.
+It is not clear currently which junctions were used with MAJIQ-L; was it all junctions from all quantified LSVs? Were any non-standard parameters used? It’s ok to use all quantified LSV junctions with standard parameters. This information should be added to the manuscript.
+
+3.
+We understand that in their pipeline the authors take a given experiment “as is” to assess it against TUSCO’s isoforms, which is fine. However, the conclusions they draw are repeatedly about comparing technologies, not experiments. This is reflected in the labels of all plots. This technology comparison is problematic since these results are obviously highly dependent on sequencing depth. It’s true that other factors can have a strong effect (e.g. protocol used, sample quality) but depth is mostly a design choice that has a huge impact, and the datasets used here vary greatly in coverage. In MAJIQ-L evaluations the authors noted two options to tackle such differences: match costs or match total number of bases sequenced. We believe this form of normalization is better to draw conclusions between technologies. To their defense, the authors do state clearly depth is a factor and they even point to it when comparing dRNA-ONT and cDNA-ONT. We are *not* suggesting that the authors revise all their analysis - the evaluation of an experiment "as is" is valid. Nonetheless, at least clearly pointing out this important factor that affects their *comparative* analysis in the discussion section is warranted.
+
+
+
+Unable to execute the TUSCO tutorial:
+
+We followed the SQANTI wiki instructions to install squanti3 Version 5.5.4 on Linux using Anaconda (“Dependencies and installation” wiki). The installation succeeded. We did not additionally git clone the repository for development as described in the wiki. We added sqanti3 to the path as described in “Running SQANTI3 from the wrapper” wiki. However, the data files needed for the “TUSCO quick start (SQANTI3 QC)” were not included in the successful installation. Subsequently, we git cloned the repo since it includes those files in a /data/tusco/ directory. We then attempted to execute the “Basic Usage” example pointing to the data files (python sqanti3_qc.py \ …). However, this execution terminated with an error message written in the output log file GTF_to_genePred.log (see below). We strongly recommend fixing the tutorial, clarifying installation instructions, and including (corrected) data files in the installation distribution.
+
+ERROR:
+Details: Command '[/path/to]/sqanti3/src/utilities/gtfToGenePred-linux-x86_64 ./SQANTI3/data/tusco/tusco_annotation.gtf output/tusco_example/refAnnotation_isoforms.genePred -genePredExt -allErrors -ignoreGroupsWithoutExons' returned non-zero exit status 255.
+INFO:
+ERROR:
+Error: exonFrames field is being added, but I found a gene (ENST00000568411.5) with CDS but no valid frames. This can happen if program is invoked with -genePredExt but no valid frames are given in the file. If the 8th field of GFF/GTF file is always a placeholder, then don't use -genePredExt.
+1 errors
+
+
+Reviewer #4 (Remarks on code availability):
+
+We failed to run some of the code - see above.
+
+
+Reviewer #5 (Remarks to the Author):
+
+I co-reviewed this manuscript with one of the reviewers who provided the listed reports. This is part of the Nature Communications initiative to facilitate training in peer review and to provide appropriate recognition for Early Career Researchers who co-review manuscripts.
+
+
+
+
+
+** See Nature Portfolio’s author and referees' website at www.nature.com/authors for information about policies, services and author benefits.
+
+
+This email has been sent through the Springer Nature Tracking System NY-610A-NPG&MTS
+
+Confidentiality Statement:
+
+This e-mail is confidential and subject to copyright. Any unauthorised use or disclosure of its contents is prohibited. If you have received this email in error please notify our Manuscript Tracking System Helpdesk team at http://platformsupport.nature.com .
+
+Details of the confidentiality and pre-publicity policy may be found here http://www.nature.com/authors/policies/confidentiality.html
