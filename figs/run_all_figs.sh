@@ -72,15 +72,15 @@ SCRIPTS=(
   figs/figure-03/code/table-s1.R
   figs/figure-04/code/fig-4b.R
   figs/figure-05/code/fig-5b-5c.R
-  figs/supp-fig-07/code/fig-s6.R
+  figs/supp-fig-06/code/fig-s6.R
   figs/supp-fig-01/code/fig-s1.R
   figs/supp-fig-02/code/fig-s2.R
   figs/supp-fig-03/code/fig-s3.R
-  figs/supp-fig-04/code/FigureS3_correlation.R
+  figs/supp-fig-03/code/FigureS3_correlation.R
   figs/supp-fig-04/code/fig-s4.R
   figs/supp-fig-05/code/fig-s5.R
   figs/supp-fig-06/code/fig-s6.R
-  figs/supp-fig-08/code/fig-s8.R
+  figs/supp-fig-07/code/fig-s7.R
 )
 
 STATUS_KEYS=()
