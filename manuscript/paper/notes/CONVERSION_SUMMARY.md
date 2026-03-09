@@ -28,7 +28,7 @@ Successfully converted the TUSCO paper from plain text to LaTeX format using the
   - References
 - **Figures**: All 5 main figures integrated (fig-1.pdf through fig-5.pdf)
 - **Tables**: 2 tables (cosine similarity and read counts)
-- **Citations**: Configured with BibTeX using `ref-tusco.bib`
+- **Citations**: Configured with BibTeX using the canonical repository bibliography at `ref-tusco/ref-tusco.bib`
 
 ### 3. ✅ Supplementary Information (separate files)
 - **Supplementary Figures**: `tusco_paper_supplement_figures.tex` with fig-s1.pdf through fig-s6.pdf and S-style numbering
@@ -45,20 +45,19 @@ Successfully converted the TUSCO paper from plain text to LaTeX format using the
 ## File Structure
 ```
 /manuscript/paper/
-├── tusco_paper.tex                 # Main LaTeX document
-├── tusco_paper_supplement_figures.tex   # Supplementary figures
-├── tusco_paper_supplement_tables.tex    # Supplementary tables
-├── tusco_paper.pdf                 # Generated PDF (20 pages)
-├── update_paper_values.py          # Value extraction script
-├── txt/
-│   ├── tusco_paper.txt            # Updated text file
-│   └── tusco_paper.txt.backup     # Original backup
-├── fig/                           # Figure PDFs
-│   ├── fig-1.pdf through fig-5.pdf
-│   └── fig-s1.pdf through fig-s6.pdf
-├── reference/
-│   └── ref-tusco.bib              # Bibliography file
-└── template/                       # Springer Nature template files
+├── assets/
+│   └── fig/                        # Published TeX-consumed figure PDFs
+├── build/                          # Generated PDFs and LaTeX build outputs
+├── notes/                          # Workflow notes
+├── src/
+│   ├── tusco_paper.tex
+│   ├── tusco_paper_supplement.tex
+│   ├── tusco_paper_supplement_figures.tex
+│   └── tusco_paper_supplement_tables.tex
+└── styles/                         # Springer Nature styles
+
+/ref-tusco/
+└── ref-tusco.bib                   # Sole bibliography file in the repo
 ```
 
 ## Compilation Instructions
@@ -91,7 +90,7 @@ pdflatex tusco_paper_supplement_tables.tex
 
 ## Next Steps (if needed)
 1. Review the generated PDF for any formatting adjustments
-2. Add any missing citations to `ref-tusco.bib`
+2. Add any missing citations to `ref-tusco/ref-tusco.bib`
 3. Fine-tune figure placements if needed
 4. Add supplementary methods if required
 

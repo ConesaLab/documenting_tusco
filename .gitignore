@@ -54,9 +54,12 @@ _minted-*/
 *.pygtex
 .latexrun.db
 .latexrun.db.lock
+*.fff
 
 # Temporary staging area
 tmp/
+filesToCheck/
+build/
 
 # Data directory
 data/
@@ -92,10 +95,17 @@ tools/majiq/academic/
 licenses/majiq/*.lic
 
 # Sensitivity analysis runs (large output files)
-reviewer_response/sensitivity_runs/
+reviewer_response/**/analysis/sensitivity_runs/
+reviewer_response/**/build/
+
+# Canonical bibliography export (track only the .bib file)
+ref-tusco/*
+!ref-tusco/ref-tusco.bib
 
 # Overleaf build artifacts
-overleaf_package/
+overleaf_package/*
+!overleaf_package/create_combined_zip.sh
+!overleaf_package/create_overleaf_zips.sh
 
 # macOS archive artifacts
 __MACOSX/

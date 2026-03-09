@@ -30,6 +30,8 @@ sys.path.insert(0, str(SRC_DIR))
 
 from sensitivity_configs import get_unique_configs, TUSCOConfig
 
+SENSITIVITY_RUNS_DIR = REPO_ROOT / "reviewer_response" / "round_1" / "analysis" / "sensitivity_runs"
+
 
 def run_single_config(config: TUSCOConfig, dry_run: bool = False) -> dict:
     """Run TUSCO pipeline for a single configuration.
@@ -41,7 +43,7 @@ def run_single_config(config: TUSCOConfig, dry_run: bool = False) -> dict:
     Returns:
         Dictionary with run results
     """
-    output_dir = REPO_ROOT / "reviewer_response" / "sensitivity_runs" / config.name
+    output_dir = SENSITIVITY_RUNS_DIR / config.name
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Build command
@@ -302,7 +304,7 @@ def main():
     # Generate and save summary
     summary = generate_summary(results)
 
-    output_dir = REPO_ROOT / "reviewer_response" / "sensitivity_runs"
+    output_dir = SENSITIVITY_RUNS_DIR
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Save results

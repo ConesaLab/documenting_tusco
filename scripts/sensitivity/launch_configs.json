@@ -8,7 +8,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_splice_strict",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_splice_strict",
         "--novel-threshold",
         "0.0001",
         "--min-novel-length",
@@ -63,7 +63,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_splice_default",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_splice_default",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -118,7 +118,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_splice_lenient1",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_splice_lenient1",
         "--novel-threshold",
         "0.5",
         "--min-novel-length",
@@ -173,7 +173,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_splice_lenient2",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_splice_lenient2",
         "--novel-threshold",
         "0.75",
         "--min-novel-length",
@@ -228,7 +228,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_splice_lenient3",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_splice_lenient3",
         "--novel-threshold",
         "1.0",
         "--min-novel-length",
@@ -283,7 +283,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_splice_strict",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_splice_strict",
         "--novel-threshold",
         "0.001",
         "--min-novel-length",
@@ -331,7 +331,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_splice_default",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_splice_default",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",
@@ -379,7 +379,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_splice_lenient1",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_splice_lenient1",
         "--novel-threshold",
         "0.5",
         "--min-novel-length",
@@ -427,7 +427,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_splice_lenient2",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_splice_lenient2",
         "--novel-threshold",
         "0.75",
         "--min-novel-length",
@@ -475,7 +475,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_splice_lenient3",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_splice_lenient3",
         "--novel-threshold",
         "1.0",
         "--min-novel-length",
@@ -523,7 +523,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_tss_lenient",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_tss_lenient",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -578,7 +578,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_tss_default",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_tss_default",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -633,7 +633,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_tss_strict",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_tss_strict",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -688,7 +688,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_tss_extreme",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_tss_extreme",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -743,7 +743,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_tss_lenient",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_tss_lenient",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",
@@ -791,7 +791,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_tss_default",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_tss_default",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",
@@ -839,7 +839,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_tss_strict",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_tss_strict",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",
@@ -887,7 +887,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_tss_extreme",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_tss_extreme",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",
@@ -935,7 +935,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_expr_lenient2",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_expr_lenient2",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -990,7 +990,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_expr_lenient1",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_expr_lenient1",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -1045,7 +1045,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_expr_default",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_expr_default",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -1100,7 +1100,7 @@
       "cli_args": [
         "hsa",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/hsa_expr_strict",
+        "reviewer_response/round_1/analysis/sensitivity_runs/hsa_expr_strict",
         "--novel-threshold",
         "0.01",
         "--min-novel-length",
@@ -1155,7 +1155,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_expr_lenient2",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_expr_lenient2",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",
@@ -1203,7 +1203,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_expr_lenient1",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_expr_lenient1",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",
@@ -1251,7 +1251,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_expr_default",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_expr_default",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",
@@ -1299,7 +1299,7 @@
       "cli_args": [
         "mmu",
         "--output-dir",
-        "reviewer_response/sensitivity_runs/mmu_expr_strict",
+        "reviewer_response/round_1/analysis/sensitivity_runs/mmu_expr_strict",
         "--novel-threshold",
         "0.05",
         "--min-novel-length",

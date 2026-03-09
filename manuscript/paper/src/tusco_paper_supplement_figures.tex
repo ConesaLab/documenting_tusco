@@ -6,26 +6,36 @@
 \newcommand{\SupplementFiguresContent}{%
 	  \section{Supplementary Figures}
 		  This section compiles visual summaries referenced throughout the manuscript.
-		  Supplementary Fig.~1 contrasts fundamental transcript properties between
+		  Supplementary Fig.~1 presents parameter selection sensitivity analyses for the TUSCO benchmarking framework.
+		  Supplementary Fig.~2 contrasts fundamental transcript properties between
 		  the TUSCO gene set and canonical annotations in human and mouse, while
-		  Supplementary Fig.~2 benchmarks expression and splicing invariance of
-		  genes in the TUSCO gene set against other single-isoform loci. Supplementary Fig.~3 shows false-negative
-		  rates from TUSCO evaluation grouped by sequencing platform and method. Supplementary Fig.~4 compares
+		  Supplementary Fig.~3 benchmarks the expression and splicing invariance of
+		  genes in the TUSCO gene set against other single-isoform loci. Supplementary Fig.~4 shows false-negative
+		  rates from TUSCO evaluation grouped by sequencing platform and method. Supplementary Fig.~5 compares
 		  sensitivity, false-negative rate, and false discovery rate between TUSCO
-		  evaluation and MAJIQ-L across all pipelines. Supplementary Fig.~5 examines
-		  per-read coverage distributions for transcripts in the TUSCO gene set comparing TP and PTP calls, stratified by reference transcript exonic length.
-		  Supplementary Fig.~6 evaluates how SIRV-based concordance metrics respond to replicate
-		  number, contextualising the stability of spike-in controls relative to
-		  endogenous benchmarks. Supplementary Fig.~7 presents parameter selection sensitivity analyses for the TUSCO benchmarking framework.
+		  evaluation and MAJIQ-L across all pipelines. Supplementary Fig.~6 examines
+		  per-read coverage distributions for transcripts in the TUSCO gene set, comparing TP and PTP calls and stratified by reference transcript exonic length.
+		  Supplementary Fig.~7 evaluates how SIRV-based concordance metrics respond to replicate
+		  number, contextualizing the stability of spike-in controls relative to
+		  endogenous benchmarks.
   \setcounter{figure}{0}
   \renewcommand{\figurename}{Supplementary Figure}
   \renewcommand{\thefigure}{\arabic{figure}}
 
   \begin{figure}[htbp]
       \centering
+      \includegraphics[width=\textwidth]{../assets/fig/fig-s7.pdf}
+      \caption{\textbf{Parameter selection sensitivity analysis for the TUSCO benchmarking framework.} \textbf{a}, TSS/CAGE window size validation showing cumulative fraction of genes whose annotated TSS (from refTSS database) falls within varying window sizes; ``TUSCO'' curves show within-gene sensitivity, while ``GENCODE'' curves show inter-gene collision rates. At $\pm$300~bp, human data show 96.6\% sensitivity against only 2.1\% inter-gene collision. \textbf{b}, Distribution of refTSS peak counts per gene at varying window sizes; values above 1.0 indicate potential ambiguity from multiple TSS peaks. \textbf{c}, Expression threshold sweep comparing TUSCO false-negative rates (from LRGASP evaluation) against SIRV baselines (dashed line) across four threshold configurations (Strict to More Lenient) for human and mouse. The ``Current'' configuration balances gene count against a sharp rise in false negatives under more lenient settings. \textbf{d}, Distribution of AlphaGenome-predicted tissue-median RPKM for genes in the TUSCO gene set (colored) versus other single-isoform genes (gray); dashed lines indicate medians for genes in the TUSCO gene set, demonstrating that they occupy the high-expression tail (90th--97th percentile). \textbf{e}, Novel splice junction threshold validation using AlphaGenome-predicted junction read counts, showing ECDF of the ratio $\max(\text{novel junction reads})/\mu_{\text{annotated}}$ for genes in the TUSCO gene set versus other single-isoform genes. Genes in the TUSCO gene set cluster well below the chosen $\alpha$ threshold (dashed lines; 0.01 for human, 0.05 for mouse), whereas excluded genes show markedly higher ratios.}
+	      \label{fig:s1}
+	  \end{figure}
+
+  \clearpage
+
+  \begin{figure}[htbp]
+      \centering
       \includegraphics[width=\textwidth]{../assets/fig/fig-s1.pdf}
-      \caption{\textbf{Comparative properties of transcripts in the TUSCO gene set versus reference annotations in human and mouse.} \textbf{a--b}, Transcript length distributions in discrete bins ($<$600 bp, 600--1kb, 1kb--2kb, 2kb--4kb, $>$4kb) for human \textbf{a}, and mouse \textbf{b}. \textbf{c--d}, Exon count per transcript shown as frequency within each dataset (\%) for human \textbf{c}, and mouse \textbf{d}; the ``10+'' bin groups transcripts with $\geq$10 exons. \textbf{e--f}, Kernel density of intron lengths (log10) for human \textbf{e}, and mouse \textbf{f}. \textbf{g--h}, Density of exonic GC content (\%) for human \textbf{g}, and mouse \textbf{h}; x-axis truncated to 20--80\%.}
-      \label{fig:s1}
+      \caption{\textbf{Comparative properties of transcripts in the TUSCO gene set versus reference annotations in human and mouse.} \textbf{a--b}, Transcript length distributions in discrete bins ($<$600 bp, 600--1kb, 1kb--2kb, 2kb--4kb, $>$4kb) for human \textbf{a}, and mouse \textbf{b}. \textbf{c--d}, Exon count per transcript shown as frequency within each dataset (\%) for human \textbf{c}, and mouse \textbf{d}; the ``10+'' bin groups transcripts with $\geq$10 exons. \textbf{e--f}, Intron length distributions in discrete bins ($<$100, 100--1kb, 1kb--10kb, 10kb--100kb, $>$100kb) for human \textbf{e}, and mouse \textbf{f}. \textbf{g--h}, Density of exonic GC content (\%) for human \textbf{g}, and mouse \textbf{h}; x-axis truncated to 20--80\%.}
+      \label{fig:s2}
   \end{figure}
 
   \clearpage
@@ -34,7 +44,7 @@
       \centering
       \includegraphics[width=\textwidth]{../assets/fig/fig-s2.pdf}
       \caption{\textbf{Genes in the TUSCO gene set are highly expressed and display minimal novel splicing signal.} Violin--box plots compare AlphaGenome-predicted scores for genes in the TUSCO gene set with single-isoform genes annotated in both GENCODE and RefSeq for human and mouse. \textbf{a}, Expression score (gene-level tissue-median RPKM). \textbf{b}, Splicing score (for each gene, the maximum AlphaGenome-predicted unannotated-to-annotated splice-junction count ratio across tissues). Values are plotted as $\log_{10}$ (score $+ 1 \times 10^{-4}$). Across both species, genes in the TUSCO gene set exhibit substantially higher expression and lower novel splicing score ratios than other single-isoform genes, consistent with their selection as widely expressed, splicing-invariant genes. Box centers mark medians; boxes span the interquartile range; whiskers extend $1.5 \times$ IQR. Colors: TUSCO (Human) light green, TUSCO (Mouse) dark green, Other (Human) light gray, Other (Mouse) dark gray.}
-      \label{fig:s2}
+      \label{fig:s3}
   \end{figure}
 
 	  \clearpage
@@ -43,7 +53,7 @@
 	      \centering
 	      \includegraphics[width=\textwidth]{../assets/fig/fig-s3.pdf}
       \caption{\textbf{False-negative rates differ primarily by sequencing platform and method.} Raincloud plot showing false-negative rates from TUSCO evaluation across LRGASP datasets grouped by platform and library type (PacBio-cDNA, ONT-dRNA, ONT-cDNA). In this subset, FN rates cluster by platform/protocol, with PacBio-cDNA showing the lowest FN rates. Total genes in the TUSCO gene set: human $n=46$; mouse $n=32$.}
-	      \label{fig:s3}
+	      \label{fig:s4}
 	  \end{figure}
 
 	  \clearpage
@@ -51,8 +61,8 @@
 	  \begin{figure}[htbp]
 	      \centering
 	      \includegraphics[width=\textwidth]{../assets/fig/fig-s4.pdf}
-	      \caption{\textbf{Comparison of TUSCO evaluation and MAJIQ-L benchmarking results.} Left panel: Sensitivity (TP / (TP + FN)). Middle panel: False Negative rate (FN / (TP + FN)). Right panel: False Discovery Rate ($100 \times (N - TP) / N$). Metric definitions for MAJIQ-L are provided in Supplementary Table~2. Green circles represent TUSCO evaluation metrics; red triangles represent MAJIQ-L metrics. Lines connect the two methods for each pipeline. Only cDNA-PacBio consistently ranks best in both methods; dRNA-ONT and cDNA-ONT show divergent rankings that reflect different quality dimensions (RNA integrity vs.\ sequencing depth).}
-	      \label{fig:s4}
+	      \caption{\textbf{Comparison of TUSCO evaluation and MAJIQ-L benchmarking results.} Left panel: Sensitivity (TP / (TP + FN)). Middle panel: False Negative rate (FN / (TP + FN)). Right panel: False Discovery Rate ($100 \times (N - TP) / N$). Metric definitions for MAJIQ-L are provided in Supplementary Table~2. Green circles represent TUSCO evaluation metrics; red triangles represent MAJIQ-L metrics. Lines connect the two methods for each pipeline. Only cDNA-PacBio consistently ranks best under both methods; dRNA-ONT and cDNA-ONT show divergent rankings that reflect different quality dimensions (RNA integrity vs.\ sequencing depth).}
+	      \label{fig:s5}
 	  \end{figure}
 
   \clearpage
@@ -61,7 +71,7 @@
       \centering
       \includegraphics[width=\textwidth]{../assets/fig/fig-s5.pdf}
       \caption{\textbf{Per-read coverage of transcripts in the TUSCO gene set in LRGASP Iso-Seq cDNA data, stratified by reference transcript exonic length.} Violin-plus-box plots show the distribution of per-read coverage $f = L_{\text{read}}/L_{\text{exonic}}$ for reads mapped to the TUSCO gene set, separated by species (human WTC11, mouse ES) and binned by reference transcript exonic length (All, $\leq$1kb, 1--2kb, 2--3kb, 3--5kb, $>$5kb). Blue indicates TP (true positive, full-splice match) and orange indicates PTP (partial true positive). Only multi-exon transcripts in the TUSCO gene set are included; reference- and novel-evaluation classifications are combined; no TSS-based filtering; outliers retained; y-axis 0--2.0.}
-	      \label{fig:s5}
+	      \label{fig:s6}
 	  \end{figure}
 
   \clearpage
@@ -70,15 +80,6 @@
       \centering
       \includegraphics[width=\textwidth]{../assets/fig/fig-s6.pdf}
       \caption{\textbf{SIRV spike-in controls exhibit minimal dependence on replicate number.} Concordance metrics (sensitivity, non-redundant precision, inverse redundancy, 1-FDR, PDR, F1) were computed on FLAIR-identified SIRV transcripts from PacBio Sequel IIe cDNA libraries ($\sim$5 M reads per library). Metrics were summarized across all replicate combinations for 1--5 biological replicates (bars: mean with 95\% CI; points: individual combinations). Performance was essentially invariant with replicate number: precision, inverse redundancy and 1-FDR were $\sim$100\% at all levels; brain sensitivity was 86.1\% (83.7--88.5) at 1 replicate and $\sim$85.5\% at 3--5; kidney sensitivity ranged 80.3\% (78.4--82.1; 2 replicates) to 87.0\% (5 replicates). F1 remained stable (brain $\sim$92.2\%; kidney $\sim$89.0--93.0\%). These results indicate that SIRV spike-ins yield highly consistent concordance irrespective of replicate count.}
-	      \label{fig:s6}
-	  \end{figure}
-
-  \clearpage
-
-  \begin{figure}[htbp]
-      \centering
-      \includegraphics[width=\textwidth]{../assets/fig/fig-s7.pdf}
-      \caption{\textbf{Parameter selection sensitivity analysis for the TUSCO benchmarking framework.} \textbf{a}, TSS/CAGE window size validation showing cumulative fraction of genes whose annotated TSS (from refTSS database) falls within varying window sizes; ``TUSCO'' curves show within-gene sensitivity while ``GENCODE'' curves show inter-gene collision rates. At $\pm$300~bp, human data show 96.6\% sensitivity against only 2.1\% inter-gene collision. \textbf{b}, Distribution of refTSS peak counts per gene at varying window sizes; values above 1.0 indicate potential ambiguity from multiple TSS peaks. \textbf{c}, Expression threshold sweep comparing TUSCO false-negative rates (from LRGASP evaluation) against SIRV baselines (dashed line) across four threshold configurations (Strict to More Lenient) for human and mouse. The ``Current'' configuration balances gene count against a sharp rise in false negatives under more lenient settings. \textbf{d}, Distribution of AlphaGenome-predicted tissue-median RPKM for genes in the TUSCO gene set (colored) versus other single-isoform genes (gray); dashed lines indicate medians for genes in the TUSCO gene set, demonstrating that they occupy the high-expression tail (90th--97th percentile). \textbf{e}, Novel splice junction threshold validation using AlphaGenome-predicted junction read counts, showing ECDF of the ratio $\max(\text{novel junction reads})/\mu_{\text{annotated}}$ for genes in the TUSCO gene set versus other single-isoform genes. Genes in the TUSCO gene set cluster well below the chosen $\alpha$ threshold (dashed lines; 0.01 for human, 0.05 for mouse), whereas excluded genes show markedly higher ratios.}
 	      \label{fig:s7}
 	  \end{figure}
 
@@ -111,17 +112,18 @@
 \title{Supplementary Figures for:\\
 Transcriptome Universal Single-isoform COntrol (TUSCO): a benchmarking framework for transcriptome reconstruction quality}
 
-\author[1]{\fnm{Tianyuan} \sur{Liu}}
-\author[1]{\fnm{Alejandro} \sur{Paniagua}}
-\author[2]{\fnm{Fabian} \sur{Jetzinger}}
-\author[1,3]{\fnm{Luis} \sur{Ferrández-Peral}}
+\author[1,2]{\fnm{Tianyuan} \sur{Liu}}
+\author[1,2]{\fnm{Alejandro} \sur{Paniagua}}
+\author[1,2,3]{\fnm{Fabian} \sur{Jetzinger}}
+\author[1,5]{\fnm{Luis} \sur{Ferrández-Peral}}
 \author[4]{\fnm{Adam} \sur{Frankish}}
 \author*[1]{\fnm{Ana} \sur{Conesa}}
 
 \affil[1]{Institute for Integrative Systems Biology (I2SysBio), Spanish National Research Council (CSIC), Paterna 46980, Spain}
-\affil[2]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
-\affil[3]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
+\affil[2]{Department of Computer Science, University of Valencia, Spain}
+\affil[3]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
 \affil[4]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
+\affil[5]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
 
 \maketitle
 

@@ -1,0 +1,64 @@
+{
+  "paper": {
+    "output_root": "manuscript/paper/assets/fig",
+    "files": [
+      {
+        "source": "figs/figure-01/plots/Figure1.pdf",
+        "name": "fig-1.pdf"
+      },
+      {
+        "source": "figs/figure-02/plots/Fig-2.pdf",
+        "name": "fig-2.pdf"
+      },
+      {
+        "source": "figs/figure-03/plots/Figure3.pdf",
+        "name": "fig-3.pdf"
+      },
+      {
+        "source": "figs/figure-04/plots/Figure4.pdf",
+        "name": "fig-4.pdf"
+      },
+      {
+        "source": "figs/figure-05/plots/Figure5.pdf",
+        "name": "fig-5.pdf"
+      },
+      {
+        "source": "figs/supp-fig-01/plots/fig-s1.pdf",
+        "name": "fig-s1.pdf"
+      },
+      {
+        "source": "figs/supp-fig-02/plots/fig-s2-log.pdf",
+        "name": "fig-s2.pdf"
+      },
+      {
+        "source": "figs/supp-fig-03/plots/fig-s3.pdf",
+        "name": "fig-s3.pdf"
+      },
+      {
+        "source": "figs/supp-fig-04/plots/fig-s4.pdf",
+        "name": "fig-s4.pdf"
+      },
+      {
+        "source": "figs/supp-fig-05/plots/fig-s5.pdf",
+        "name": "fig-s5.pdf"
+      },
+      {
+        "source": "figs/supp-fig-06/plots/fig-s6.pdf",
+        "name": "fig-s6.pdf"
+      },
+      {
+        "source": "figs/supp-fig-07/plots/fig-s7.pdf",
+        "name": "fig-s7.pdf"
+      }
+    ]
+  },
+  "reviewer_round_1": {
+    "output_root": "reviewer_response/round_1/assets/fig",
+    "files": [
+      {
+        "source": "figs/supp-fig-04/plots/fig-s4.pdf",
+        "name": "fig-s4.pdf"
+      }
+    ]
+  }
+}

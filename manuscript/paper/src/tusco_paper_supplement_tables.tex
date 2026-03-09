@@ -37,7 +37,7 @@
   %% Table 2: MAJIQ-L numerical results (was Table 4)
   \begin{table}[htbp]
       \centering
-      \caption{\textbf{MAJIQ-L junction-level benchmarking results.} Junction counts for each LRGASP pipeline comparing long-read reconstructions against matched short-read MAJIQ data from WTC11 human samples. TP = True Positive (junction detected by both LR and MAJIQ); FP = False Positive (LR junction not in MAJIQ); FN = False Negative (MAJIQ junction not detected by LR). Known junctions are present in the reference annotation; novel junctions are absent. ``LS'' indicates integration of long- and short-read evidence.}
+      \caption{\textbf{MAJIQ-L junction-level benchmarking results.} Junction counts for each LRGASP library preparation workflow comparing long-read reconstructions against matched short-read MAJIQ data from WTC11 human samples. TP = True Positive (junction detected by both LR and MAJIQ); FP = False Positive (junction detected by LR but not MAJIQ); FN = False Negative (junction detected by MAJIQ but not LR). Known junctions are present in the reference annotation; novel junctions are absent. ``LS'' indicates integration of long- and short-read evidence.}
       \label{tab:2}
       {\footnotesize
       \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}
@@ -141,17 +141,18 @@
 \title{Supplementary Tables for:\\
 Transcriptome Universal Single-isoform COntrol (TUSCO): a benchmarking framework for transcriptome reconstruction quality}
 
-\author[1]{\fnm{Tianyuan} \sur{Liu}}
-\author[1]{\fnm{Alejandro} \sur{Paniagua}}
-\author[2]{\fnm{Fabian} \sur{Jetzinger}}
-\author[1,3]{\fnm{Luis} \sur{Ferrández-Peral}}
+\author[1,2]{\fnm{Tianyuan} \sur{Liu}}
+\author[1,2]{\fnm{Alejandro} \sur{Paniagua}}
+\author[1,2,3]{\fnm{Fabian} \sur{Jetzinger}}
+\author[1,5]{\fnm{Luis} \sur{Ferrández-Peral}}
 \author[4]{\fnm{Adam} \sur{Frankish}}
 \author*[1]{\fnm{Ana} \sur{Conesa}}
 
 \affil[1]{Institute for Integrative Systems Biology (I2SysBio), Spanish National Research Council (CSIC), Paterna 46980, Spain}
-\affil[2]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
-\affil[3]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
+\affil[2]{Department of Computer Science, University of Valencia, Spain}
+\affil[3]{BioBam Bioinformatics S.L., Valencia, 46024, Spain}
 \affil[4]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
+\affil[5]{Current address: Biozentrum, University of Basel, Basel, Switzerland}
 
 \maketitle
 

@@ -25,6 +25,7 @@ from typing import Optional
 import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+SENSITIVITY_RUNS_DIR = REPO_ROOT / "reviewer_response" / "round_1" / "analysis" / "sensitivity_runs"
 
 
 # =============================================================================
@@ -479,7 +480,7 @@ def main():
     parser.add_argument(
         "--runs-dir",
         type=Path,
-        default=REPO_ROOT / "reviewer_response" / "sensitivity_runs",
+        default=SENSITIVITY_RUNS_DIR,
         help="Directory containing sensitivity run outputs",
     )
     parser.add_argument(

@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Optional
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+SENSITIVITY_RUNS_RELATIVE = "reviewer_response/round_1/analysis/sensitivity_runs"
 
 
 @dataclass
@@ -68,7 +69,7 @@ class TUSCOConfig:
         """Convert config to CLI arguments for tusco_selector."""
         args = [
             self.species,
-            "--output-dir", f"reviewer_response/sensitivity_runs/{self.name}",
+            "--output-dir", f"{SENSITIVITY_RUNS_RELATIVE}/{self.name}",
             # Step 3: Splice
             "--novel-threshold", str(self.novel_threshold),
             "--min-novel-length", str(self.min_novel_length),

@@ -6,7 +6,7 @@ This directory hosts the LaTeX sources and supporting assets for the TUSCO paper
 
 - `paper/`
   - `src/` – primary LaTeX sources for the manuscript and supplementary PDFs.
-  - `assets/` – figures, tabular inputs, bibliographies, and template material.
+  - `assets/` – final figure PDFs consumed by the paper build.
   - `styles/` – Springer Nature class and bibliography styles required by the SN template.
   - `scripts/` – helpers used to refresh numerical values in the manuscript.
   - `notes/` – planning and conversion notes provided by the authors.
@@ -21,10 +21,16 @@ This directory hosts the LaTeX sources and supporting assets for the TUSCO paper
 From `manuscript/paper/src`:
 
 ```bash
-TEXINPUTS=../styles//: BIBINPUTS=../assets/reference//: BSTINPUTS=../styles//: latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error -outdir=../build tusco_paper.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error tusco_paper.tex
 ```
 
 Repeat with `tusco_paper_supplement_figures.tex` and `tusco_paper_supplement_tables.tex` as needed.
+
+From repo root, refresh the staged paper figures before compiling:
+
+```bash
+python scripts/publish_assets.py --target paper
+```
 
 From `manuscript/supplementary-note/src`:
 

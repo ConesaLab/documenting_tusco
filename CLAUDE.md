@@ -31,7 +31,20 @@ Species codes: `hsa` (human), `mmu` (mouse), `dre` (zebrafish).
 ### Build LaTeX Manuscript
 From `manuscript/paper/src`:
 ```bash
-TEXINPUTS=../styles//: BIBINPUTS=../assets/reference//: BSTINPUTS=../styles//: latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error -outdir=../build tusco_paper.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error tusco_paper.tex
+```
+
+### Build Reviewer Response
+From `reviewer_response/round_1/src`:
+```bash
+latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error reviewer_response.tex
+```
+
+### Publish Staged Submission Assets
+From repo root:
+```bash
+python scripts/publish_assets.py --target paper
+python scripts/publish_assets.py --target reviewer_round_1
 ```
 
 ### Setup Conda Environment
@@ -47,7 +60,8 @@ conda activate tusco_selector-env
 - `src/tusco_novel_simulator/` - Generates synthetic GTF annotations for target genes
 - `figs/figure-0N/` and `figs/supp-fig-0N/` - Each contains `code/`, `plots/`, `tables/`
 - `data/raw/` and `data/processed/` - Input data and derived outputs (download via run script)
-- `manuscript/paper/` - LaTeX sources, styles, and assets for the publication
+- `manuscript/paper/` - LaTeX sources, styles, build outputs, and final staged figure PDFs for the publication
+- `reviewer_response/round_1/` - Active reviewer-response package with `src/`, `assets/`, `build/`, `analysis/`, and `notes/`
 
 ### R Figure Framework
 All figure scripts use `scripts/figure_utils.R` which provides:
@@ -94,15 +108,31 @@ The `run_all_figs.sh` script handles this automatically.
 | Main paper | `manuscript/paper/src/tusco_paper.tex` |
 | Supplementary figures | `manuscript/paper/src/tusco_paper_supplement_figures.tex` |
 | Supplementary tables | `manuscript/paper/src/tusco_paper_supplement_tables.tex` |
-| Reviewer response | `reviewer_response/reviewer_response.tex` |
+| Reviewer response | `reviewer_response/round_1/src/reviewer_response.tex` |
 | Figure source code | `figs/figure-0N/code/` and `figs/supp-fig-0N/code/` |
 | Figure outputs (plots) | `figs/*/plots/` |
-| Manuscript assets | `manuscript/paper/assets/` |
+| Paper assets | `manuscript/paper/assets/fig/` |
+| Reviewer assets | `reviewer_response/round_1/assets/fig/` |
+| Asset manifest | `config/submission_assets.json` |
 
 #### Revision Workflow
 
 When making manuscript edits:
 1. Update the main paper or supplementary `.tex` files as needed
-2. Copy updated figures from `figs/*/plots/` to `manuscript/paper/assets/`
+2. Publish updated staged figures with `python scripts/publish_assets.py --target paper` and, if needed, `--target reviewer_round_1`
 3. Update the reviewer response to reflect changes (include line numbers)
-4. Compile all modified LaTeX files to verify changes
+4. Compile all modified LaTeX files from their `src/` directories so outputs land in sibling `build/` folders
+
+#### Repository Rules for Agents
+1. `ref-tusco/ref-tusco.bib` is the only bibliography file in the repository
+2. Never create duplicate `.bib` files under `manuscript/` or `reviewer_response/`
+3. `figs/` is the source of truth for figure generation; staged assets are publish-ready copies only
+4. Do not manually copy figures when `scripts/publish_assets.py` can stage them
+5. Do not keep compiled PDFs, `.bak` files, or LaTeX aux files in source directories
+
+### Citation Management
+
+When writing the paper or managing citations, **only** use the papers available in the following bibliography file:
+`ref-tusco/ref-tusco.bib`
+
+**CRITICAL:** Never modify this `.bib` file yourself, and never duplicate it elsewhere in the repo. If you need to add a new paper or update an existing entry, ask the user to do it to avoid hallucinations.
