@@ -93,3 +93,9 @@ licenses/majiq/*.lic
 
 # Sensitivity analysis runs (large output files)
 reviewer_response/sensitivity_runs/
+
+# Overleaf build artifacts
+overleaf_package/
+
+# macOS archive artifacts
+__MACOSX/
