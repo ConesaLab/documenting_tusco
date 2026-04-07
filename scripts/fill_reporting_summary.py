@@ -66,7 +66,7 @@ SOFTWARE = {
         "MAJIQ-L (v3.0.16), AlphaGenome (v0.1.0), "
         "samtools (v1.21), Ensembl BioMart. "
         "All analysis scripts available at "
-        "https://github.com/ConesaLab/documenting_tusco"
+        "https://github.com/ConesaLab/tusco-paper"
     ),
 }
 
@@ -89,9 +89,11 @@ DATA_AVAILABILITY = (
     "https://github.com/ConesaLab/SQANTI3 and at the dedicated TUSCO "
     "benchmarking framework portal https://tusco.uv.es. An example of "
     "the TUSCO report is available at: "
-    "https://github.com/ConesaLab/SQANTI3/blob/master/example/"
-    "tusco_output/tusco_report.html. Source data are provided with this "
-    "paper. All data are also available from the corresponding author "
+    "https://github.com/ConesaLab/tusco-paper/blob/main/example/"
+    "tusco_output/tusco_report.html. The example input data and full "
+    "TUSCO output files are provided in the example/ directory of the "
+    "same repository. Source data are provided with this paper. "
+    "All data are also available from the corresponding author "
     "upon request."
 )
 

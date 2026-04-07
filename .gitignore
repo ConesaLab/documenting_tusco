@@ -61,6 +61,9 @@ tmp/
 filesToCheck/
 build/
 
+# Submission artifacts (not for version control)
+submission/
+
 # Data directory
 data/
 
