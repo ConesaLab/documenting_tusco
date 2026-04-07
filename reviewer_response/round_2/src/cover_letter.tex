@@ -1,0 +1,92 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\signature{Ana Conesa\\on behalf of all authors}
+\address{Institute for Integrative Systems Biology (I2SysBio)\\
+Spanish National Research Council (CSIC)\\
+Paterna 46980, Spain\\
+ana.conesa@csic.es}
+
+\date{\today}
+
+\begin{document}
+
+\begin{letter}{%
+Dr.\ Marta del Olmo\\
+Associate Editor, Interface\\
+Nature Communications}
+
+\opening{Dear Dr.\ del Olmo,}
+
+Thank you for handling the review of our manuscript entitled
+\emph{``TUSCO: benchmarking transcriptome reconstruction with endogenous single-isoform controls.''}
+We are grateful to the editor and all five reviewers for their thorough
+evaluation. We are pleased that Reviewers~\#1--3 and \#5 consider the
+manuscript ready for publication, and we thank Reviewer~\#4 for their
+additional minor comments, which have further improved the accuracy of
+the text.
+
+\bigskip
+\textbf{Summary of revisions.}
+Following Reviewer~\#4's comments, we have made four targeted corrections
+in the manuscript, all highlighted in {\color{red}red font}:
+
+\begin{enumerate}
+  \item \textbf{Comment~1a} (line~272): Corrected the description of the
+    MAJIQ-L metric to accurately state that it captures each method's
+    junction-level sensitivity against a common short-read-derived splice
+    graph, rather than reflecting sequencing depth.
+
+  \item \textbf{Comment~1b} (lines~420--426): Rewrote the Discussion
+    paragraph on short-read evaluation to clarify that (i)~MAJIQ-L
+    provides a complementary junction-level assessment rather than
+    exposing a short-read limitation, and (ii)~the affected transcripts
+    are longer, multi-exon transcripts whose 5'-proximal junctions are
+    harder to reach from the poly-A tail.
+
+  \item \textbf{Comment~2} (lines~677--686): Added a Methods subsection
+    detailing the MAJIQ-L pipeline configuration, specifying the build
+    command, annotation version, junction scope (all junctions from all
+    genes), and confirming that all parameters were set to their default
+    values.
+
+  \item \textbf{Comment~3} (lines~428--435): Added a Discussion paragraph
+    explicitly acknowledging that the datasets evaluated vary in
+    sequencing depth and that technology-level conclusions would require
+    normalization strategies such as matching sequencing cost or total
+    bases sequenced.
+\end{enumerate}
+
+\bigskip
+\textbf{TUSCO tutorial fix (Comment~4).}
+The tutorial error reported by Reviewer~\#4 stemmed from a mismatch in
+data preparation: the annotation GTF was extracted with a narrower
+flanking window than the accompanying genome FASTA, truncating
+neighbouring genes at region edges. We have regenerated the tutorial
+annotation GTF using the correct extraction window and also fixed a
+related issue where the TUSCO report R~script crashed due to regex-based
+gene ID matching. Both fixes have been submitted as pull request~\#588 to
+the SQANTI3 repository
+(\url{https://github.com/ConesaLab/SQANTI3/pull/588}) and verified on
+both macOS and Linux.
+
+\bigskip
+\textbf{Additional materials.}
+A detailed point-by-point response to all reviewer comments is attached
+as a separate document.
+
+\bigskip
+\textbf{Compliance.}
+We confirm that the revised manuscript complies with all Nature
+Communications editorial policies. Data and code availability statements
+are included in the manuscript. All computational code is publicly
+available in the SQANTI3 GitHub repository and the TUSCO paper data
+archive. The reporting summary checklist and the code and software
+submission checklist are provided with this resubmission.
+
+\closing{Yours sincerely,}
+
+\end{letter}
+\end{document}

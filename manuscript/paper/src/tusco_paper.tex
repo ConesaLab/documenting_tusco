@@ -50,7 +50,7 @@
 \begin{document}
 \linenumbers
 
-\title[\tuscoBenchmarkingFramework]{Transcriptome Universal Single-isoform COntrol (TUSCO): a benchmarking framework for transcriptome reconstruction quality}
+\title[\tuscoBenchmarkingFramework]{TUSCO: benchmarking transcriptome reconstruction with endogenous single-isoform controls}
 
 %%=============================================================%%
 %% Author information
@@ -59,24 +59,22 @@
 \author[1,2]{\fnm{Tianyuan} \sur{Liu}}
 \author[1,2]{\fnm{Alejandro} \sur{Paniagua}}
 \author[1,2,3]{\fnm{Fabian} \sur{Jetzinger}}
-\author[1,5]{\fnm{Luis} \sur{Ferrández-Peral}}
-\author[4]{\fnm{Adam} \sur{Frankish}}
+\author[1,4]{\fnm{Luis} \sur{Ferrández-Peral}}
+\author[5]{\fnm{Adam} \sur{Frankish}}
 \author*[1]{\fnm{Ana} \sur{Conesa}}
 \email{ana.conesa@csic.es}
 
 \affil[1]{Institute for Integrative Systems Biology (I2SysBio), Spanish National Research Council (CSIC), Paterna 46980, Spain}
-\affil[2]{Department of Computer Science, University of Valencia, Spain}
+\affil[2]{Department of Computer Science, University of Valencia, Burjassot 46100, Spain}
 \affil[3]{BioBam Bioinformatics S.L., Valencia, 46006, Spain}
-\affil[4]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
-\affil[5]{Current address: Biozentrum, University of Basel, Basel CH-4056, Switzerland}
+\affil[4]{Current address: Biozentrum, University of Basel, Basel CH-4056, Switzerland}
+\affil[5]{European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10 1SA, United Kingdom}
 
 %%==================================%%
 %% Abstract
 %%==================================%%
 
 \abstract{Long-read sequencing (LRS) platforms, such as Oxford Nanopore and Pacific Biosciences, enable comprehensive transcriptome analysis but face challenges such as sequencing errors, sample quality variability, and library preparation biases. Current benchmarking approaches address these issues insufficiently: BUSCO assesses transcriptome completeness using conserved single-copy orthologous genes but can misinterpret alternative splicing as gene duplications, while SIRV spike-ins and ERCCs oversimplify real sample complexity, neglecting RNA degradation and RNA-extraction artifacts, thus inflating performance metrics. Simulation algorithms are limited in their ability to recapitulate the complexity of real samples. To overcome these limitations, we introduce the Transcriptome Universal Single-isoform COntrol (TUSCO) benchmarking framework, centered on a curated \tuscoGeneSet{} of genes lacking alternative isoforms that can be confidently treated as an internal ground truth. The \tuscoEvaluation{} quantifies precision by identifying reconstructed transcripts that deviate from reference annotations and quantifies sensitivity by verifying detection completeness in human and mouse samples. Masking \tuscoGeneSet{} transcripts and replacing them with modified splice variants in the annotation creates a \tuscoNovel{} challenge that assesses reconstruction of the true, now-unannotated isoforms. Our validation demonstrates that \tuscoMetrics{} provide accurate and reliable benchmarking without external controls, significantly improving quality control standards for transcriptome reconstruction using LRS.}
-
-\keywords{Long-read sequencing, Transcriptomics, Benchmarking, Quality control, Alternative splicing}
 
 \maketitle
 
@@ -356,7 +354,7 @@ For replicate analyses, we computed \tuscoMetrics{} on a $k$-way intersection ca
 
 Publicly available LRS datasets used in this study include the LRGASP Consortium data for human WTC11 iPSC and mouse ES cells, accessible at the Synapse repository under accession syn25007472/wiki/608702. The RNA degradation datasets are deposited in the European Nucleotide Archive (ENA) under accession PRJEB53210, with supplementary FASTQ data for post-mortem brain samples available from the European Genome-Phenome Archive (EGA) under accession EGAS00001006542. The Replicated Mouse Brain and Kidney dataset, generated in-house, has been submitted in its entirety to the ENA under accessions PRJEB85167 (secondary accession ERP168594, ``Sequencing of mice brains using Iso-Seq'') and PRJEB94912 (secondary accession ERP177675, ``Sequencing of mice kidneys using Iso-Seq'').
 
-For benchmarking, the universal and tissue-specific \tuscoGeneSet{}s for human and mouse can be freely obtained at \url{https://github.com/ConesaLab/SQANTI3} and at the dedicated \tuscoBenchmarkingFramework{} portal \url{https://tusco.uv.es}. An example of the TUSCO report is available at: \url{https://github.com/ConesaLab/SQANTI3/blob/master/example/tusco_output/tusco_report.html}. Source data are provided with this paper. \textcolor{red}{All data are also available from the corresponding author upon request.}
+For benchmarking, the universal and tissue-specific \tuscoGeneSet{}s for human and mouse can be freely obtained at \url{https://github.com/ConesaLab/SQANTI3} and at the dedicated \tuscoBenchmarkingFramework{} portal \url{https://tusco.uv.es}. An example of the TUSCO report is available at: \url{https://github.com/ConesaLab/tusco-paper/blob/main/example/tusco_output/tusco_report.html}. The example input data and full TUSCO output files are provided in the \texttt{example/} directory of the same repository. Source data are provided with this paper. \textcolor{red}{All data are also available from the corresponding author upon request.}
 
 %%==================================%%
 %% Code Availability
@@ -364,7 +362,7 @@ For benchmarking, the universal and tissue-specific \tuscoGeneSet{}s for human a
 
 \section{Code availability}
 
-All scripts used to generate the Figures in this study and to implement the \tuscoGeneSet{} selector are available at \url{https://github.com/ConesaLab/documenting_tusco} (\url{https://doi.org/10.5281/zenodo.19204457}).
+All scripts used to generate the Figures in this study and to implement the \tuscoGeneSet{} selector are available at \url{https://github.com/ConesaLab/tusco-paper} (\url{https://doi.org/10.5281/zenodo.19204457}).
 
 %%==================================%%
 %% Backmatter
@@ -380,7 +378,11 @@ All scripts used to generate the Figures in this study and to implement the \tus
 
 \section{Acknowledgements}
 
-This work has been funded by the European Union Marie Sklodowska-Curie Actions Doctoral Network project LongTREC (HORIZON-MSCA-2021-DN-01 grant agreement project 101072892, to T.L., F.J., and A.C.), the Spanish MICINN (FPU21/01597, to A.P.), MICIU/AEI (PID2023-152976NB-I00, to A.C.), National Human Genome Research Institute of the National Institutes of Health (U24HG007234 and U24HG011451, to A.F.; 1R21HG011280-01, to A.C. and L.F.P.), Wellcome Trust [WT222155/Z/20/Z, to A.F.], European Molecular Biology Laboratory. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health. Computational analyses were performed on the high-performance computing cluster Garnatxa at the Institute for Integrative Systems Biology (I2SysBio). I2SysBio is a joint research centre formed by University of Valencia (UV) and Spanish National Research Council (CSIC).
+Computational analyses were performed on the high-performance computing cluster Garnatxa at the Institute for Integrative Systems Biology (I2SysBio). I2SysBio is a joint research centre formed by University of Valencia (UV) and Spanish National Research Council (CSIC).
+
+\section{Funding}
+
+This work has been funded by the European Union Marie Sklodowska-Curie Actions Doctoral Network project LongTREC (HORIZON-MSCA-2021-DN-01 grant agreement project 101072892, to T.L., F.J., and A.C.), the Spanish MICINN (FPU21/01597, to A.P.), MICIU/AEI (PID2023-152976NB-I00, to A.C.), National Human Genome Research Institute of the National Institutes of Health (U24HG007234 and U24HG011451, to A.F.; 1R21HG011280-01, to A.C. and L.F.P.), Wellcome Trust [WT222155/Z/20/Z, to A.F.], European Molecular Biology Laboratory. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health.
 
 \section{Author contributions}
 
@@ -404,14 +406,5 @@ A.C. has received in-kind support from PacBio. A.C., T.L., and F.J. are particip
 
 \clearpage
 \processdelayedfloats
-
-%%==================================%%
-%% Supplementary Information
-%%==================================%%
-
-\newpage
-\section*{Supplementary Information}
-
-Supplementary Figs.~1--7, Supplementary Tables~1--4, and Supplementary Notes~1--4 are provided as Supplementary Information file.
 
 \end{document}

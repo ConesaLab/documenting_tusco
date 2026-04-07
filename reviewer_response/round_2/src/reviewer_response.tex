@@ -1,0 +1,217 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{caption}
+
+\newcommand{\tuscoGeneSet}{TUSCO gene set}
+\newcommand{\tuscoBenchmarkingFramework}{TUSCO benchmarking framework}
+\newcommand{\tuscoEvaluation}{TUSCO evaluation}
+\newcommand{\tuscoMetrics}{TUSCO metrics}
+\newcommand{\tuscoNovel}{TUSCO-novel}
+
+% Define custom colors
+\definecolor{commentbg}{RGB}{248,248,248}
+\definecolor{commentbar}{RGB}{100,100,100}
+\definecolor{positivebg}{RGB}{245,255,245}
+\definecolor{positivebar}{RGB}{50,150,50}
+\definecolor{responsebg}{RGB}{255,255,255}
+\definecolor{responsebar}{RGB}{0,80,180}
+
+% Custom box for reviewer comments
+\newtcolorbox{reviewercomment}{
+  enhanced,
+  colback=commentbg,
+  frame hidden,
+  borderline west={3pt}{0pt}{commentbar},
+  left=10pt, right=10pt, top=10pt, bottom=10pt,
+  fontupper=\small\sffamily,
+  before upper={\textbf{\textcolor{commentbar}{Reviewer Comment}}\par\medskip},
+  breakable
+}
+
+% Custom box for positive remarks
+\newtcolorbox{positiveremarks}{
+  enhanced,
+  colback=positivebg,
+  frame hidden,
+  borderline west={3pt}{0pt}{positivebar},
+  left=10pt, right=10pt, top=10pt, bottom=10pt,
+  fontupper=\small\sffamily,
+  before upper={\textbf{\textcolor{positivebar}{Reviewer's Overall Assessment}}\par\medskip},
+  breakable
+}
+
+% Custom box for responses
+\newtcolorbox{responseboxnew}{
+  enhanced,
+  colback=responsebg,
+  frame hidden,
+  left=0pt, right=0pt, top=5pt, bottom=5pt,
+  before upper={\textbf{\textcolor{responsebar}{Response}}\par\medskip},
+  breakable
+}
+
+\title{\textbf{Point-by-Point Response to Reviewers --- Round 2}}
+\author{TUSCO Manuscript}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section*{Introduction}
+
+We thank the editor and all five reviewers for their continued evaluation of our manuscript. We are grateful that Reviewers \#1--3 and \#5 consider the manuscript ready for publication. We also thank Reviewer~\#4 for their careful re-reading and constructive minor comments, which have further improved the clarity and accuracy of the manuscript.
+
+Below we address each reviewer's comments point by point. All changes in the manuscript are highlighted in \textcolor{red}{red font}.
+
+\newpage
+
+\section{Reviewer \#1}
+
+\begin{positiveremarks}
+My comments have been addressed. I recommend publication.
+\end{positiveremarks}
+
+\begin{responseboxnew}
+We thank Reviewer~\#1 for their positive assessment and recommendation for publication.
+\end{responseboxnew}
+
+\section{Reviewer \#2}
+
+\begin{positiveremarks}
+My comments have been adequately addressed.
+\end{positiveremarks}
+
+\begin{responseboxnew}
+We thank Reviewer~\#2 for confirming that all comments have been addressed.
+\end{responseboxnew}
+
+\section{Reviewer \#3}
+
+\begin{positiveremarks}
+I am satisfied with the responses and improvements made by authors to the comments by all reviewers. I am confident that now the manuscript is in a way better shape, still it is very complex and it might be a challenge for readers. I do not have further comments.
+\end{positiveremarks}
+
+\begin{responseboxnew}
+We appreciate Reviewer~\#3's thorough evaluation and satisfaction with the revisions. We acknowledge the complexity of the manuscript and have made efforts throughout to maintain clarity in presentation.
+\end{responseboxnew}
+
+\section{Reviewer \#4}
+
+\begin{positiveremarks}
+We would first like to congratulate the authors on a job well done revising the manuscript. The response to reviewers is one of the best organized, clearly written, and thorough responses we have seen and the authors should be proud of the quality of their work. The authors did an excellent job addressing the points raised by all reviewers in the previous round, adding new analysis, new details, and improving the manuscript. We find that the manuscript has been greatly improved and all our substantive concerns have been addressed.
+
+\vspace{0.2cm}
+We did have some minor concerns that we are confident the authors can address easily, listed below, and we also failed to execute the TUSCO tutorial successfully, which is important to fix (but we are confident the authors can take care of this with no need for additional review).
+\end{positiveremarks}
+
+\begin{responseboxnew}
+We sincerely thank Reviewer~\#4 for the generous assessment and for the detailed feedback in the first round, which substantially improved the manuscript. We address each remaining point below.
+\end{responseboxnew}
+
+\subsection{Comment 1a: MAJIQ-L Description Accuracy}
+
+\begin{reviewercomment}
+When introducing the comparison (line 272) the authors state ``MAJIQ-L reflects sequencing depth across all expressed junctions'' --- since sequencing depth by MAJIQ-L approach is fixed for all methods (to make the comparison fair), this is incorrect. Maybe what the authors were trying to say is that ``MAJIQ-L reflects a given method/technology ability to achieve good coverage across all expressed junctions given a fixed sequencing depth''.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+We thank the reviewer for this correction. The reviewer is right: the short-read splice graph is fixed across all comparisons, so what MAJIQ-L measures is each long-read method's ability to recover those junctions, not sequencing depth itself.
+
+We have revised the text accordingly (line~273):
+
+\begin{quote}
+\textcolor{red}{``\ldots whereas MAJIQ-L captures each method's junction-level sensitivity against a common short-read-derived splice graph.''}
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Comment 1b: Discussion of Short-Read Evaluation}
+
+\begin{reviewercomment}
+Next, in the discussion section (lines 419--421) the authors make the following conclusion which is also incorrect ``..In contrast, short-read-based methods appear to be more sensitive to sequencing depth limitations that affect the detection of low-abundance and shorter transcripts and require'' First, this sounds like there is an issue there with short-reads, when in fact it's about evaluation using short reads (not the reads themselves) and the converse is true: They are able to capture more junctions in complex (non single isoform) genes (i.e. it's a good thing!), which results in lower sensitivity estimates of the long reads tech compared to sensitivity using TUSCO based transcripts. Second, it's actually not the shorter transcripts --- it's the longer ones, with more splice junctions that are further away from the polyA 3' end where all the long reads have to start. Making those two things clear is actually important as it highlights the complementary nature of evaluation with TUSCO and methods such as MAJIQ-L.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+We agree entirely with the reviewer's analysis and apologize for the inaccurate wording. The reviewer correctly identified two errors in our original text: (1)~the framing incorrectly suggested a limitation of short reads rather than describing a complementary evaluation dimension, and (2)~the affected transcripts are longer (with 5'-proximal junctions that are harder to reach from the poly-A tail), not shorter.
+
+We have rewritten this passage to accurately reflect the complementary nature of the two approaches (lines~422--427):
+
+\begin{quote}
+\textcolor{red}{``In contrast, evaluation using short-read-based approaches such as MAJIQ-L captures junction-level information that complements transcript-level assessment. In cDNA-based long-read protocols, reverse transcription proceeds from the poly-A tail, so 5'-proximal splice junctions in longer, multi-exon transcripts are less likely to be covered, and short-read junction data can expose these coverage gaps. However, such approaches require matched short-read data, entailing additional sequencing effort.''}
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Comment 2: MAJIQ-L Junction Parameters}
+
+\begin{reviewercomment}
+It is not clear currently which junctions were used with MAJIQ-L; was it all junctions from all quantified LSVs? Were any non-standard parameters used? It's ok to use all quantified LSV junctions with standard parameters. This information should be added to the manuscript.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+We have expanded the Methods section to clarify the MAJIQ-L pipeline, including the exact build command, annotation version, and junction scope (lines~682--689):
+
+\begin{quote}
+\textcolor{red}{``Short-read Illumina data were first processed through MAJIQ v3 (\texttt{majiq build} with the GENCODE v49 annotation and \texttt{-{}-strandness NONE}; all other build parameters at default) to construct splice graphs, which served as the reference for junction detection. Long-read transcript models (GTF files from each reconstruction pipeline) were evaluated with \texttt{voila lr}, and all junctions from all quantified local splice variations (LSVs) were included in the analysis. Default MAJIQ-L parameters were used throughout: PSI threshold of 0.05, exact junction matching (0~bp fuzziness at both 5' and 3' ends), and minimum read support of 1.''}
+\end{quote}
+
+To confirm: all junctions from all quantified LSVs were included, and all parameters were set to their default values.
+\end{responseboxnew}
+
+\subsection{Comment 3: Sequencing Depth as Confounding Factor}
+
+\begin{reviewercomment}
+We understand that in their pipeline the authors take a given experiment ``as is'' to assess it against TUSCO's isoforms, which is fine. However, the conclusions they draw are repeatedly about comparing technologies, not experiments. This is reflected in the labels of all plots. This technology comparison is problematic since these results are obviously highly dependent on sequencing depth. It's true that other factors can have a strong effect (e.g. protocol used, sample quality) but depth is mostly a design choice that has a huge impact, and the datasets used here vary greatly in coverage. In MAJIQ-L evaluations the authors noted two options to tackle such differences: match costs or match total number of bases sequenced. We believe this form of normalization is better to draw conclusions between technologies. To their defense, the authors do state clearly depth is a factor and they even point to it when comparing dRNA-ONT and cDNA-ONT. We are \emph{not} suggesting that the authors revise all their analysis --- the evaluation of an experiment ``as is'' is valid. Nonetheless, at least clearly pointing out this important factor that affects their \emph{comparative} analysis in the discussion section is warranted.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+We thank the reviewer for this thoughtful comment and fully agree that sequencing depth is an important factor. We would like to clarify that the primary goal of this study is not to draw fair comparisons between technologies, but rather to demonstrate the \tuscoBenchmarkingFramework{}'s utility for characterizing how dataset properties---including sequencing depth, library protocol, and RNA integrity---affect transcriptome reconstruction quality. The observed differences across datasets reflect a mixture of these factors, and they are not independent: achieving high sequencing depth is inherently easier for some technologies than others (e.g., cDNA-based workflows include amplification, whereas direct RNA sequencing does not). We discuss sequencing depth alongside these other properties because explaining the differences that TUSCO reveals as a function of dataset properties is central to demonstrating its value---as the reviewer notes, we do this extensively in the Results (e.g., the contrasting performance profiles of dRNA-ONT and cDNA-ONT). Evaluating each experiment under its deployed conditions is intentional, as it reflects the real-world settings in which users will apply TUSCO in practice.
+
+We have revised the Discussion paragraph to better reflect this framing (lines~430--442):
+
+\begin{quote}
+\textcolor{red}{``The platform-level comparisons presented here characterize each experiment under its deployed conditions rather than isolating intrinsic technology performance. The observed differences reflect a mixture of factors---sequencing depth, library preparation protocol, and RNA integrity---and these are not independent, as achieving high sequencing depth is inherently easier for some technologies than others (for example, cDNA-based workflows include amplification, whereas direct RNA sequencing does not). We discuss sequencing depth alongside these other properties because explaining the differences that the \tuscoBenchmarkingFramework{} reveals as a function of dataset properties is central to demonstrating its value, as illustrated by the contrasting performance profiles of dRNA-ONT and cDNA-ONT in our results. Isolating individual factors would require matched designs---for example, equalizing sequencing cost or total bases across platforms [29]---and the \tuscoBenchmarkingFramework{} is well suited to support such studies.''}
+\end{quote}
+\end{responseboxnew}
+
+\subsection{Comment 4: TUSCO Tutorial Execution}
+
+\begin{reviewercomment}
+We followed the SQANTI wiki instructions to install SQANTI3 Version 5.5.4 on Linux using Anaconda (``Dependencies and installation'' wiki). The installation succeeded. We did not additionally git clone the repository for development as described in the wiki. We added sqanti3 to the path as described in ``Running SQANTI3 from the wrapper'' wiki. However, the data files needed for the ``TUSCO quick start (SQANTI3 QC)'' were not included in the successful installation. Subsequently, we git cloned the repo since it includes those files in a /data/tusco/ directory. We then attempted to execute the ``Basic Usage'' example pointing to the data files (python sqanti3\_qc.py \textbackslash{}\ldots). However, this execution terminated with an error message written in the output log file GTF\_to\_genePred.log (see below):
+
+\smallskip
+\texttt{Error: exonFrames field is being added, but I found a gene (ENST00000568411.5) with CDS but no valid frames. This can happen if program is invoked with -genePredExt but no valid frames are given in the file.}
+
+\smallskip
+We strongly recommend fixing the tutorial, clarifying installation instructions, and including (corrected) data files in the installation distribution.
+\end{reviewercomment}
+
+\begin{responseboxnew}
+We thank the reviewer for testing the tutorial and reporting this issue. The error stems from a mismatch in the tutorial data preparation: the annotation GTF was extracted with a narrower flanking window ($\pm$5\,kb) than the accompanying genome FASTA ($\pm$50\,kb). This truncated neighbouring genes at region edges---for transcript ENST00000568411.5 (MAZ-213), only the last exon and its \texttt{stop\_codon} fell within the annotation window while all five CDS entries lay outside it, producing an orphan \texttt{stop\_codon} that \texttt{gtfToGenePred~-genePredExt} rejects on Linux.
+
+We have regenerated the tutorial annotation GTF using the correct $\pm$50\,kb extraction window, matching the genome FASTA. In addition, we identified a related issue (GitHub issue~\#565) where the TUSCO report R~script crashed when gene IDs in the classification output did not match the regex patterns used for ID-type detection; this was resolved by replacing the regex-based approach with direct column matching against the TUSCO annotation file.
+
+Both fixes have been submitted as pull request~\#588 to the SQANTI3 repository. We have verified that the tutorial now runs end-to-end on both macOS and Linux after applying these corrections. In addition, the corrected example input data (genome FASTA, annotation GTF, and input transcripts) and a complete TUSCO example output---including the interactive HTML reports, classification table, corrected transcript files, and IGV-style gene plots---have been included in the \texttt{example/} directory of the code repository (\url{https://github.com/ConesaLab/tusco-paper}).
+\end{responseboxnew}
+
+\section{Reviewer \#5}
+
+\begin{positiveremarks}
+I co-reviewed this manuscript with one of the reviewers who provided the listed reports. This is part of the Nature Communications initiative to facilitate training in peer review and to provide appropriate recognition for Early Career Researchers who co-review manuscripts.
+\end{positiveremarks}
+
+\begin{responseboxnew}
+We acknowledge Reviewer~\#5's contribution as co-reviewer and welcome the Nature Communications initiative to support training in peer review for Early Career Researchers.
+\end{responseboxnew}
+
+\end{document}

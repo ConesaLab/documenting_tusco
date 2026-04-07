@@ -1,0 +1,109 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+
+\definecolor{commentbg}{RGB}{248,248,248}
+\definecolor{commentbar}{RGB}{100,100,100}
+\definecolor{responsebg}{RGB}{255,255,255}
+\definecolor{responsebar}{RGB}{0,80,180}
+
+\newtcolorbox{editorrequest}{
+  enhanced,
+  colback=commentbg,
+  frame hidden,
+  borderline west={3pt}{0pt}{commentbar},
+  left=10pt, right=10pt, top=10pt, bottom=10pt,
+  fontupper=\small\sffamily,
+  before upper={\textbf{\textcolor{commentbar}{Editorial Request}}\par\medskip},
+  breakable
+}
+
+\newtcolorbox{responseboxnew}{
+  enhanced,
+  colback=responsebg,
+  frame hidden,
+  left=0pt, right=0pt, top=5pt, bottom=5pt,
+  before upper={\textbf{\textcolor{responsebar}{Response}}\par\medskip},
+  breakable
+}
+
+\title{\textbf{Point-by-Point Response to Editorial Requests}}
+\author{TUSCO Manuscript (NCOMMS-25-76870C)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+
+We thank the editorial team for their careful review. Below we address each editorial request point by point. All changes in the manuscript are highlighted in \textcolor{red}{red font}.
+
+\bigskip
+
+\subsection*{Request 1: Data Availability --- Reporting Summary vs.\ Manuscript}
+
+\begin{editorrequest}
+The ``Data'' section from the reporting summary says: ``Publicly available LRS datasets: LRGASP Consortium (Synapse, syn25007472); RNA degradation (ENA, PRJEB53210); post-mortem brain (EGA, EGAS00001006542). In-house mouse kidney/brain data: ENA (PRJEB94912, secondary ERP177675). TUSCO gene sets: https://github.com/ConesaLab/SQANTI3 and https://tusco.uv.es. All scripts: https://github.com/ConesaLab/documenting\_tusco. Source data are provided with this paper.'' The Data availability section from the main manuscript text is different. Please ensure that the wording in these two sections is exactly the same.
+\end{editorrequest}
+
+\begin{responseboxnew}
+We have regenerated the Reporting Summary so that its Data section now contains the same text as the Data Availability section in the main manuscript. Both sections are now identical.
+\end{responseboxnew}
+
+\subsection*{Request 2: Sequential Affiliation Numbers}
+
+\begin{editorrequest}
+Please ensure affiliations appear in sequential numerical order upon their first instance in the author list.
+\end{editorrequest}
+
+\begin{responseboxnew}
+We have renumbered the affiliations so that they appear in strictly sequential order upon first mention. The previous numbering assigned [5] (L.~Ferr\'{a}ndez-Peral's current address) before [4] (A.~Frankish's affiliation). We swapped the numbering of these two affiliations:
+
+\begin{itemize}[nosep]
+\item \textbf{[4]} Current address: Biozentrum, University of Basel, Basel CH-4056, Switzerland
+\item \textbf{[5]} European Molecular Biology Laboratory, European Bioinformatics Institute, Wellcome Genome Campus, Hinxton, Cambridge CB10\,1SA, United Kingdom
+\end{itemize}
+
+The affiliation numbers now appear in order 1, 2, 3, 4, 5 following the author sequence.
+\end{responseboxnew}
+
+\subsection*{Request 3: Affiliation Addresses}
+
+\begin{editorrequest}
+Please add affiliation addresses below the author list.
+\end{editorrequest}
+
+\begin{responseboxnew}
+Affiliation addresses were already present below the author list. We have reviewed and completed all addresses to ensure they include full city and postal code information. In particular, affiliation [2] now reads:
+
+\begin{quote}
+Department of Computer Science, University of Valencia, Burjassot 46100, Spain
+\end{quote}
+\end{responseboxnew}
+
+\subsection*{Request 4: Keywords and Supplementary Information Section}
+
+\begin{editorrequest}
+Please delete keywords and Supplementary Information section.
+\end{editorrequest}
+
+\begin{responseboxnew}
+Done. We have removed the keywords line and the Supplementary Information section from the manuscript.
+\end{responseboxnew}
+
+\subsection*{Request 5: Separate Funding Statement}
+
+\begin{editorrequest}
+Any relevant funding should now be declared in a separate funding statement.
+\end{editorrequest}
+
+\begin{responseboxnew}
+We have separated the funding information from the Acknowledgements into a dedicated Funding section. The Acknowledgements section now contains only non-funding acknowledgements (computational resources and institutional information), while all grant details appear in the new Funding section.
+\end{responseboxnew}
+
+\end{document}

@@ -16,8 +16,8 @@ import pypdf
 from pypdf.generic import NameObject, NumberObject
 
 REPO = Path(__file__).resolve().parent.parent
-INPUT_PDF = REPO / "nr-reporting-summary.pdf"
-OUTPUT_PDF = REPO / "nr-reporting-summary-filled.pdf"
+INPUT_PDF = REPO / "submission" / "templates" / "nr-reporting-summary.pdf"
+OUTPUT_PDF = REPO / "submission" / "01_for_upload" / "Reporting_Summary.pdf"
 
 # ── XFA namespace ──────────────────────────────────────────────────────
 NS = {"xfa": "http://www.xfa.org/schema/xfa-data/1.0/"}
@@ -71,12 +71,28 @@ SOFTWARE = {
 }
 
 DATA_AVAILABILITY = (
-    "Publicly available LRS datasets: LRGASP Consortium (Synapse, "
-    "syn25007472); RNA degradation (ENA, PRJEB53210); post-mortem brain "
-    "(EGA, EGAS00001006542). In-house mouse kidney/brain data: ENA "
-    "(PRJEB94912/ERP177675 for kidney; PRJEB85167/ERP168594 for brain). TUSCO gene sets: "
-    "https://github.com/ConesaLab/SQANTI3 and https://tusco.uv.es. "
-    "All scripts: https://github.com/ConesaLab/documenting_tusco"
+    "Publicly available LRS datasets used in this study include the "
+    "LRGASP Consortium data for human WTC11 iPSC and mouse ES cells, "
+    "accessible at the Synapse repository under accession "
+    "syn25007472/wiki/608702. The RNA degradation datasets are deposited "
+    "in the European Nucleotide Archive (ENA) under accession PRJEB53210, "
+    "with supplementary FASTQ data for post-mortem brain samples available "
+    "from the European Genome-Phenome Archive (EGA) under accession "
+    "EGAS00001006542. The Replicated Mouse Brain and Kidney dataset, "
+    "generated in-house, has been submitted in its entirety to the ENA "
+    'under accessions PRJEB85167 (secondary accession ERP168594, "Sequencing '
+    'of mice brains using Iso-Seq") and PRJEB94912 (secondary accession '
+    'ERP177675, "Sequencing of mice kidneys using Iso-Seq").\n'
+    "\n"
+    "For benchmarking, the universal and tissue-specific TUSCO gene sets "
+    "for human and mouse can be freely obtained at "
+    "https://github.com/ConesaLab/SQANTI3 and at the dedicated TUSCO "
+    "benchmarking framework portal https://tusco.uv.es. An example of "
+    "the TUSCO report is available at: "
+    "https://github.com/ConesaLab/SQANTI3/blob/master/example/"
+    "tusco_output/tusco_report.html. Source data are provided with this "
+    "paper. All data are also available from the corresponding author "
+    "upon request."
 )
 
 # Life Sciences Study Design
